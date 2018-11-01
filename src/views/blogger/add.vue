@@ -6,12 +6,12 @@
             <!--平台-->
             <Cell class="require" title="平台" is-link @click.native="checkResource()" :value="platformName"></Cell>
             
-            <Field class="text-left" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboUrl"></Field>
-            <Field class="text-left" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboFansNum"></Field>
-            <Field class="text-left" placeholder="抖音ID" v-if="selectedPlatform.find(item => item.value ==2)" v-model="douyinId"></Field>
-            <Field class="text-left" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item.value ==2)" v-model="douyinFansNum"></Field>
-            <Field class="text-left" placeholder="小红书链接" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsUrl"></Field>
-            <Field class="text-left" placeholder="小红书粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsFansNum"></Field>
+            <Field class="text-left" label="微博主页地址" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboUrl"></Field>
+            <Field class="text-left" label="微博粉丝数" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboFansNum"></Field>
+            <Field class="text-left" label="抖音ID" placeholder="抖音ID" v-if="selectedPlatform.find(item => item.value ==2)" v-model="douyinId"></Field>
+            <Field class="text-left" label="抖音粉丝数" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item.value ==2)" v-model="douyinFansNum"></Field>
+            <Field class="text-left" label="小红书链接" placeholder="小红书链接" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsUrl"></Field>
+            <Field class="text-left" label="小红书粉丝数" placeholder="小红书粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsFansNum"></Field>
             
             <!--类型-->
             <Cell class="require" title="类型" is-link  @click.native="changeState('popupBlogType',!popupBlogType)" :value="blogTypeSelect.name"></Cell>
@@ -33,15 +33,15 @@
                 <template>
                     <FileUpload @change="upload">
                         <span class="avatar" v-if="uploadUrl" :style="{ backgroundImage: 'url('+uploadUrl+')'}"></span>
-                        <i v-else class="iconfont icon-tianjiatupian" style="font-size:0.8rem;border-radius:50%"></i>
+                        <i v-else class="uploadIcon">+</i>
                     </FileUpload>
                 </template>
             
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark"></Field>
-            <div style='text-align:center'>
+            <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
-            </div>
+            </div> -->
         </div>
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
     </div>
@@ -347,6 +347,20 @@ export default {
     width: 0.8rem;
     height: 0.8rem;
     background-size:cover;
+}
+.uploadIcon{
+    display: inline-block;
+    width: .56rem;
+    height: .56rem;
+    border-radius: 50%;
+    background-color:#eee;
+    color:#fff;
+    font-weight: bold;
+    font-size: .48rem;
+    line-height: .56rem;
+    text-align: center;
+    font-style: normal;
+    margin-right:-0.2rem;
 }
 </style>
 

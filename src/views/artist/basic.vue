@@ -28,10 +28,12 @@
         <div class="list">
             <span class="listleft">与我司签约意向:</span>
             <span class="listright">{{yesOrNo.find(item => item.value == artistDetail.intention).name}}</span>
+            <span class="listright" v-if="artistDetail.intention == 2">-{{artistDetail.intention_desc}}</span>
         </div>
         <div class="list">
             <span class="listleft">是否签约其他公司:</span>
             <span class="listright">{{yesOrNo.find(item => item.value == artistDetail.sign_contract_other).name}}</span>
+            <span class="listright" v-if="artistDetail.sign_contract_other == 1">-{{artistDetail.sign_contract_other_name}}</span>
         </div>
         <div class="list">
             <span class="listleft">星探:</span>
@@ -57,19 +59,19 @@
             <span class="listleft">社交平台:</span>
             <span class="listright">{{platform}}</span>
         </div>
-        <div class="list" v-if="artistDetail.weibo_url">
+        <div class="list">
             <span class="listleft">微博主页地址:</span>
             <span class="listright">{{artistDetail.weibo_url}}</span>
         </div>
-        <div class="list" v-if="artistDetail.weibo_fans_num">
+        <div class="list">
             <span class="listleft">微博粉丝数:</span>
             <span class="listright">{{artistDetail.weibo_fans_num}}</span>
         </div>
-        <div class="list" v-if="artistDetail.douyin_id">
+        <div class="list">
             <span class="listleft">抖音ID:</span>
             <span class="listright">{{artistDetail.douyin_id}}</span>
         </div>
-        <div class="list" v-if="artistDetail.douyin_fans_num">
+        <div class="list">
             <span class="listleft">抖音粉丝数:</span>
             <span class="listright">{{artistDetail.douyin_fans_num}}</span>
         </div>

@@ -20,9 +20,9 @@
       align="right"
     >
     </mt-radio>
-    <div v-if="multiple" style="text-align:center;margin-top:10px">
+    <!-- <div v-if="multiple" style="text-align:center;margin-top:10px">
       <Button size="small" type="default" @click="changeShow()">保存</Button>
-    </div>
+    </div> -->
   </div>
 </template>
 

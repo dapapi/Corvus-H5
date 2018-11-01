@@ -2,7 +2,7 @@
     <div v-if="blogDetail.nickname">
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>基本资料</h4>
         <div class="list">
-            <span class="listleft">姓名:</span>
+            <span class="listleft">昵称:</span>
             <span class="listright">{{blogDetail.nickname}}</span>
         </div>
         
@@ -13,48 +13,30 @@
         <div class="list">
             <span class="listleft">与我司签约意向:</span>
             <span class="listright">{{yesOrNo.find(item => item.value == blogDetail.intention).name}}</span>
+            <span class="listright" v-if="blogDetail.intention == false">-{{intention_desc}}</span>
         </div>
         <div class="list">
             <span class="listleft">是否签约其他公司:</span>
             <span class="listright">{{yesOrNo.find(item => item.value == blogDetail.sign_contract_other).name}}</span>
-        </div>
-        <!-- <div class="list">
-            <span class="listleft">星探:</span>
-            <span class="listright">{{blogDetail.artist_scout_name}}</span>
-        </div> -->
-        <!-- <div class="list">
-            <span class="listleft">地区:</span>
-            <span class="listright">{{blogDetail.star_location}}</span>
-        </div> -->
-        <!-- <div class="list">
-            <span class="listleft">手机号:</span>
-            <span class="listright">{{blogDetail.phone}}</span>
-        </div> -->
-        <!-- <div class="list">
-            <span class="listleft">微信:</span>
-            <span class="listright">{{blogDetail.wechat}}</span>
-        </div> -->
-        <div class="list">
-            <span class="listleft">邮箱:</span>
-            <span class="listright">{{blogDetail.email}}</span>
+            <span class="listright" v-if="blogDetail.sign_contract_other == 1">{{blogDetail.sign_contract_other_name}}</span>
         </div>
         <div class="list">
             <span class="listleft">社交平台:</span>
             <span class="listright">{{platform}}</span>
         </div>
-        <div class="list" v-if="blogDetail.weibo_url">
+        <div class="list">
             <span class="listleft">微博主页地址:</span>
             <span class="listright">{{blogDetail.weibo_url}}</span>
         </div>
-        <div class="list" v-if="blogDetail.weibo_fans_num">
+        <div class="list">
             <span class="listleft">微博粉丝数:</span>
             <span class="listright">{{blogDetail.weibo_fans_num}}</span>
         </div>
-        <div class="list" v-if="blogDetail.douyin_id">
+        <div class="list">
             <span class="listleft">抖音ID:</span>
             <span class="listright">{{blogDetail.douyin_id}}</span>
         </div>
-        <div class="list" v-if="blogDetail.douyin_fans_num">
+        <div class="list">
             <span class="listleft">抖音粉丝数:</span>
             <span class="listright">{{blogDetail.douyin_fans_num}}</span>
         </div>

@@ -27,14 +27,14 @@
             <!--平台-->
             <Cell class="require" title="平台" is-link @click.native="changeState('popupPlatform',!popupPlatform)" :value="platformName"></Cell>
             
-            <Field class="text-left" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboUrl"></Field>
-            <Field class="text-left" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboFansNum"></Field>
-            <Field class="text-left" placeholder="百科地址" v-if="selectedPlatform.find(item => item.value ==2)" v-model="baikeUrl"></Field>
-            <Field class="text-left" placeholder="百科粉丝数" v-if="selectedPlatform.find(item => item.value ==2)" v-model="baikeFansNum"></Field>
-            <Field class="text-left" placeholder="抖音ID" v-if="selectedPlatform.find(item => item.value ==3)" v-model="douyinId"></Field>
-            <Field class="text-left" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="douyinFansNum"></Field>
-            <Field class="text-left" placeholder="其他地址" v-if="selectedPlatform.find(item => item.value ==4)" v-model="qitaUrl"></Field>
-            <Field class="text-left" placeholder="其他地址粉丝数" v-if="selectedPlatform.find(item => item.value ==4)" v-model="qitaFansNum"></Field>
+            <Field class="text-left" label="微博主页地址" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboUrl"></Field>
+            <Field class="text-left" label="微博粉丝数" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboFansNum"></Field>
+            <Field class="text-left" label="百科地址" placeholder="百科地址" v-if="selectedPlatform.find(item => item.value ==2)" v-model="baikeUrl"></Field>
+            <Field class="text-left" label="百科粉丝数" placeholder="百科粉丝数" v-if="selectedPlatform.find(item => item.value ==2)" v-model="baikeFansNum"></Field>
+            <Field class="text-left" label="抖音ID" placeholder="抖音ID" v-if="selectedPlatform.find(item => item.value ==3)" v-model="douyinId"></Field>
+            <Field class="text-left" label="抖音粉丝数" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="douyinFansNum"></Field>
+            <Field class="text-left" label="其他地址" placeholder="其他地址" v-if="selectedPlatform.find(item => item.value ==4)" v-model="qitaUrl"></Field>
+            <Field class="text-left" label="其他地址粉丝数" placeholder="其他地址粉丝数" v-if="selectedPlatform.find(item => item.value ==4)" v-model="qitaFansNum"></Field>
             
             <!--沟通状态-->
             <Cell class="require" title="沟通状态" is-link  @click.native="changeState('popupArtistStatus',!popupArtistStatus)" :value="artistStatus.name"></Cell>
@@ -52,14 +52,14 @@
                 <template>
                     <FileUpload @change="upload" :accept="'image/*'">
                         <span class="avatar" v-if="uploadUrl" :style="{ backgroundImage: 'url('+uploadUrl+')'}"></span>
-                        <i v-else class="iconfont icon-tianjiatupian" style="font-size:0.8rem;border-radius:50%"></i>
+                        <i v-else class="uploadIcon">+</i>
                     </FileUpload>
                 </template>
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark" rows="1"></Field>
-            <div style='text-align:center'>
+            <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addArtist()">提交</button>
-            </div>
+            </div> -->
         </div>
         <!--选择平台-->
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" :originTitle="'新增艺人'" :newTitle="'艺人平台'" :rightClick="addArtist" :leftClick ="leftClick" @change="seletedData"/>
@@ -450,6 +450,20 @@ export default {
     input{
         text-align:left!important;
     }
+}
+.uploadIcon{
+    display: inline-block;
+    width: .56rem;
+    height: .56rem;
+    border-radius: 50%;
+    background-color:#eee;
+    color:#fff;
+    font-weight: bold;
+    font-size: .48rem;
+    line-height: .56rem;
+    text-align: center;
+    font-style: normal;
+    margin-right:-0.2rem;
 }
 
 </style>

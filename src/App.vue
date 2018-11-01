@@ -32,7 +32,9 @@ body {
 .mint-cell-wrapper {
   font-size: .32rem;
   padding: 0 .2rem;
-  background-size: 100% 1px;
+  background:none;
+  border-bottom:1px solid #eaeaea;
+  // background-size: 100% 1px;
   input, textarea {
     text-align: right;
   }
@@ -49,11 +51,14 @@ body {
 .mint-field .mint-cell-value{
   padding: .01rem 0;
 }
+.mint-field.is-textarea .mint-cell-wrapper{
+  align-items:stretch!important;
+}
 .mint-field.is-textarea .mint-cell-title {
   padding: .2rem 0;
 }
 .mint-field.is-textarea .mint-cell-value {
-  padding: .2rem .2rem .2rem 0;
+  padding: 0px;
 }
 .mint-cell-value textarea {
   resize: none;
@@ -116,7 +121,7 @@ a{
   }
 }
 .mint-cell{
-  padding-left:0.14rem;
+  padding:0 0.14rem;
 }
 img{
   max-width:100%;
@@ -127,5 +132,11 @@ img{
   overflow:scroll;
   width:100%;
   max-height:100vh
+}
+.mint-field-clear{
+  display: none
+}
+.mint-cell-wrapper input, .mint-cell-wrapper textarea{
+  color:#666
 }
 </style>
