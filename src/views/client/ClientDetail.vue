@@ -10,6 +10,10 @@
       <span class="right">{{ clientDetail.grade ? clientLevelArr.find( n => clientDetail.grade === n.value ).name : '' }}</span>
     </div>
     <div class="item">
+      <span class="left">客户评级：</span>
+      <span class="right">{{ clientDetail.client_rating ? ratingArr.find( n => clientDetail.client_rating == n.value ).name : '' }}</span>
+    </div>
+    <div class="item">
       <span class="left">负责人：</span>
       <span class="right">{{ clientDetail.principal && clientDetail.principal.data.name }}</span>
     </div>
@@ -59,7 +63,8 @@ export default {
   data () {
     return {
       clientLevelArr: config.clientLevelArr,
-      clientScaleArr: config.clientScaleArr
+      clientScaleArr: config.clientScaleArr,
+      ratingArr: config.taskLevelArr
     }
   },
   mounted () {

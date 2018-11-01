@@ -74,21 +74,21 @@ export default {
   taskLevelArr: [
     {
       name: 'S',
-      value: 1
-    },
-    {
-      name: 'A',
-      value: 2
-    },
-    {
-      name: 'B',
-      value: 3
-    },
-    {
-      name: 'C',
       value: 4
     },
-],
+    {
+        name: 'A',
+        value: 3
+    },
+    {
+        name: 'B',
+        value: 2
+    },
+    {
+        name: 'C',
+        value: 1
+    },
+  ],
   // 性别
   genderArr: [{
         name: '男',

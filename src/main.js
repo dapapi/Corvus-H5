@@ -11,7 +11,8 @@ import {
   Picker,
   Search,
   Indicator, 
-  InfiniteScroll
+  InfiniteScroll,
+  MessageBox
   } from 'mint-ui'
 import App from './App.vue'
 import router from './router'
@@ -36,6 +37,8 @@ Vue.component(Checklist.name, Checklist)
 Vue.component('DatetimePicker', DatetimePicker)
 Vue.component(Picker.name, Picker)
 Vue.component('Search', Search)
+// Vue.component('MessageBox', MessageBox)
+
 Vue.use(VueWechatTitle)
 Vue.use(InfiniteScroll);
 
@@ -49,7 +52,7 @@ Vue.component('Regional', Regional)
 // 全局方法
 window.toast = Toast
 window.Indicator = Indicator
-
+window.MessageBox = MessageBox
 new Vue({
   router,
   store,

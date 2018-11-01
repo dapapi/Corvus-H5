@@ -1,7 +1,8 @@
 <template>
   <div>
     <template v-if="!checkListVisible">
-      <Cell title="关联资源" is-link @click.native="changeState('popupVisible', !popupVisible)" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
+      <Cell v-if="!query.resourceType" title="关联资源" is-link @click.native="changeState('popupVisible', !popupVisible)" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
+      <Cell v-else title="关联资源" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
       <Popup position="bottom" v-model="popupVisible" popup-transition="popup-fade" style="width: 100%">
         <Cell title="暂不关联资源" @click.native="checkResource('')"><span class="mint-cell-mask"></span></Cell>
         <Cell v-for="(item, index) in resourceList" :title="item.title" @click.native="checkResource(item)" :key="index">
@@ -51,7 +52,7 @@
             </div>
           </div>
           <div class="right">
-            <i class="iconfont icon-shanchu" @click="delAnnex(index)"></i>
+            <i class="iconfont icon-shanchu" @click="delAnnex(index, item)"></i>
           </div>
         </div>
       </div>
@@ -114,7 +115,8 @@ export default {
       code: '', // 修改关联资源需要传
       startTimeModel: new Date(), // 默认开始时间
       endTimeModel: new Date(), // 默认开始时间
-      isLoading: false
+      isLoading: false,
+      query: this.$route.query
     }
   },
   computed: {
@@ -179,6 +181,15 @@ export default {
     }
   },
   mounted () {
+    const query = this.query
+    if (query.resourceType) {
+      this.resourceId = query.resourceType
+      this.resourceName = query.resourceName
+    }
+    if (query.resourceableId) {
+      this.resourceableId = query.resourceableId
+      this.resourceableName = query.resourceableName
+    }
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
@@ -349,6 +360,7 @@ export default {
         params.resourceable_id = this.resourceableId
         params.code = this.code
       }
+
       fetch('put', '/tasks/' + this.taskId, params).then(res => {
         // 回调app原生方法
         this.isLoading = false
@@ -387,8 +399,16 @@ export default {
       )
     },
     // 删除附件
-    delAnnex (index) {
-      this.annexArr.splice(index, 1)
+    delAnnex (index, data) {
+      MessageBox.confirm('确定执行此操作?').then(res => {
+        if (data.id) {
+          fetch('delete', '/tasks/' + this.taskId + '/affixes/' + data.id).then(res => {
+            this.annexArr.splice(index, 1)
+          })
+        } else {
+          this.annexArr.splice(index, 1)
+        }
+      })
     },
     leftClickTemp () {
       tool.nativeEvent('back', 2)
