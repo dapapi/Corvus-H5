@@ -1,22 +1,25 @@
 <template>
-    <div class="selector-wrap">
-        <mt-checklist
-            v-model="checkedArr"
-            :options="['选项A', '选项B', '选项C']"
-            align="right"
-        >
-        </mt-checklist>
-        <mt-radio
-            v-model="checkedData"
-            :options="['选项A', '选项B', '选项C']"
-            align="right"
-        >
-        </mt-radio>
-    </div>
+  <div class="selector-wrap">
+    <mt-checklist
+      v-if="multiple"
+      v-model="checkedArr"
+      :options="selectorData"
+      align="right"
+    >
+    </mt-checklist>
+    <mt-radio
+      v-else
+      v-model="checkedData"
+      :options="selectorData"
+      align="right"
+    >
+    </mt-radio>
+  </div>
 </template>
 
 <script>
 export default {
+  props: ['selectorData', 'multiple'],
   data () {
     return {
       checkedArr: [],
@@ -26,7 +29,11 @@ export default {
 
   watch: {
     checkedArr () {
-      console.log(this.checkedArr)
+      this.$emit('change', this.checkedArr)
+    },
+    checkedData () {
+      const obj = this.selectorData.find(n => n.value === this.checkedData)
+      this.$emit('change', obj)
     }
   }
 }
@@ -63,6 +70,9 @@ export default {
     left: 6px;
     width: 6px;
     height:11px;
+  }
+  .mint-radiolist-label {
+    padding: 0;
   }
 }
 
