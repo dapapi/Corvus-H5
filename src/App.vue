@@ -31,6 +31,9 @@ body {
     text-align: right;
   }
 }
+.mint-cell-value {
+  color: #666;
+}
 .mint-field .mint-cell-title {
   width: 2.01rem;
 }
@@ -45,5 +48,9 @@ body {
 }
 .mint-field.is-textarea .mint-cell-value {
   padding: .2rem .2rem .2rem 0;
+}
+.iconfont {
+  font-size: .28rem;
+  margin: .12rem;
 }
 </style>
