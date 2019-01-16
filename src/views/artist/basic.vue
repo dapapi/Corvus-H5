@@ -11,7 +11,7 @@
         </div>
         <div class="list">
             <span class="listleft">出生日期:</span>
-            <span class="listright">屈素芳</span>
+            <span class="listright">屈素芳屈素芳屈素芳屈素芳屈素芳屈素芳屈素芳</span>
         </div>
         <div class="list">
             <span class="listleft">年龄:</span>
@@ -105,17 +105,20 @@
         font-size:0.28rem;
         padding:0 0.4rem 0.16rem 0.4rem;
         background-color:#fff;
+        display: flex;
+        justify-content: flex-start;
         span{
             display: inline-block;
         }
     }
     .listleft{
-        
         color:#666;
+        flex-shrink:0;
     }
     .listright{
         margin-left:0.12rem;
         color:#151515;
+        flex-shrink:1;
     }
     .bg-white{
         background-color:#fff
