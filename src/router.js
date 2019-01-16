@@ -30,6 +30,16 @@ export default new Router({
       path: '/selector',
       name: 'selector',
       component: () => import('./views/base/Selector.vue')
+    },
+    {
+      path: '/artist/add',
+      name: 'artistAdd',
+      component: () => import('./views/artist/add.vue')
+    },
+    {
+      path: '/artist/basic',
+      name: 'artistBasic',
+      component: () => import('./views/artist/basic.vue')
     }
   ]
 })
