@@ -12,5 +12,11 @@ export default {
     fetch('get', params.url, params.data).then(res => {
       commit('setResourceData', res.data)
     })
+  },
+  // 获取任务类型
+  getTaskTypes ({ commit }, params) {
+    fetch('get', '/task_types').then(res => {
+      commit('setTaskTypes', res.data)
+    })
   }
 }

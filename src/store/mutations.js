@@ -11,5 +11,11 @@ export default {
         value: n.id + ''
       }
     })
+  },
+  // 设置任务类型
+  setTaskTypes (state, data) {
+    state.taskTypes = data.map(n => {
+      return { name: n.title, value: n.id }
+    })
   }
 }

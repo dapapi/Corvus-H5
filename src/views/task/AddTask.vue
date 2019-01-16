@@ -1,15 +1,16 @@
 <template>
   <div>
     <template v-if="!checkListVisible">
-      <Cell title="关联资源" is-link @click.native="changeVisible" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
+      <Cell title="关联资源" is-link @click.native="changeState('popupVisible', !popupVisible)" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
       <Popup position="bottom" v-model="popupVisible" popup-transition="popup-fade" style="width: 100%">
         <Cell title="暂不关联资源" @click.native="checkResource('')"><span class="mint-cell-mask"></span></Cell>
         <Cell v-for="(item, index) in resourceList" :title="item.title" @click.native="checkResource(item)" :key="index">
           <span class="mint-cell-mask"></span>
         </Cell>
       </Popup>
-      <Cell title="任务类型" is-link></Cell>
-      <Field label="任务名称" />
+      <Cell title="任务类型" @click.native="changeState('taskVisible', !taskVisible)" :value="taskTypeName" is-link></Cell>
+      <Selector :visible="taskVisible" :data="taskTypes" @change="checkTaskLevel" />
+      <Field label="任务名称" v-model="title" />
       <Cell title="负责人" is-link></Cell>
       <Cell title="参与人" is-link></Cell>
       <Cell title="任务优先级" is-link></Cell>
@@ -39,17 +40,28 @@ export default {
     return {
       popupVisible: false,
       checkListVisible: false,
+      taskVisible: false,
       resourceName: '',
       resourceId: '',
       resourceableName: '',
       resourceableId: '',
-      noneResource: ''
+      noneResource: '',
+      title: '', // 任务标题
+      taskType: '', // 任务类型
+      taskTypeName: '',
+      principalId: '', // 负责人
+      participantIds: [], // 参与人
+      priority: '', // 任务优先级
+      startTime: '',
+      endTime: '',
+      desc: '' // 任务描述
     }
   },
   computed: {
     ...mapState([
       'resourceData',
-      'resourceList'
+      'resourceList',
+      'taskTypes'
     ]),
     linkResourceName () {
       let _name = ''
@@ -61,6 +73,7 @@ export default {
   },
   mounted () {
     this.getResourceList()
+    this.getTaskTypes()
   },
   methods: {
     ...mapMutations([
@@ -74,10 +87,14 @@ export default {
     },
     ...mapActions([
       'getResourceList',
-      'getRelatedResources'
+      'getRelatedResources',
+      'getTaskTypes'
     ]),
     changeVisible () {
       this.popupVisible = !this.popupVisible
+    },
+    changeState (name, value) {
+      this[name] = value
     },
     // 选中关联资源
     checkResource (data) {
@@ -104,6 +121,12 @@ export default {
         params.data.sign_contract_status = 2
       }
       this.getRelatedResources(params)
+    },
+    // 选择任务类型
+    checkTaskLevel (data) {
+      this.taskVisible = !this.taskVisible
+      this.taskType = data.value
+      this.taskTypeName = data.name
     }
   }
 }
