@@ -20,10 +20,16 @@ body {
 .mint-cell {
   min-height: .96rem;
 }
+.mint-cell-allow-right::after {
+  right: .28rem;
+}
 .mint-cell-wrapper {
   font-size: .32rem;
   padding: 0 .2rem;
   background-size: 100% 1px;
+  input, textarea {
+    text-align: right;
+  }
 }
 .mint-field .mint-cell-title {
   width: 2.01rem;
@@ -40,5 +46,4 @@ body {
 .mint-field.is-textarea .mint-cell-value {
   padding: .2rem .2rem .2rem 0;
 }
-// D8D8D8
 </style>

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Button, Cell, Popup, Checklist, Radio, Field } from 'mint-ui'
+import { Button, Cell, Popup, Checklist, Radio, Field, DatetimePicker } from 'mint-ui'
 import App from './App.vue'
 import router from './router'
 import store from './store/index'
@@ -15,6 +15,7 @@ Vue.component('Popup', Popup)
 Vue.component('Field', Field)
 Vue.component(Radio.name, Radio)
 Vue.component(Checklist.name, Checklist)
+Vue.component('DatetimePicker', DatetimePicker)
 
 // 自定义组件
 Vue.component('CheckList', CheckList)

@@ -8,15 +8,26 @@
           <span class="mint-cell-mask"></span>
         </Cell>
       </Popup>
-      <Cell title="任务类型" @click.native="changeState('taskVisible', !taskVisible)" :value="taskTypeName" is-link></Cell>
-      <Selector :visible="taskVisible" :data="taskTypes" @change="checkTaskLevel" />
+      <Cell title="任务类型" @click.native="changeState('typeVisible', !typeVisible)" :value="taskTypeName" is-link></Cell>
+      <Selector :visible="typeVisible" :data="taskTypes" @change="checkTaskType" />
       <Field label="任务名称" v-model="title" />
       <Cell title="负责人" is-link></Cell>
       <Cell title="参与人" is-link></Cell>
-      <Cell title="任务优先级" is-link></Cell>
-      <Cell title="开始时间" is-link></Cell>
-      <Cell title="截止时间" is-link></Cell>
-      <Field type="textarea" rows="1" label="任务说明" />
+      <Cell title="任务优先级" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" is-link></Cell>
+      <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
+      <Cell title="开始时间" @click.native="showStartPicker" :value="startTime" is-link></Cell>
+      <DatetimePicker
+        ref="startPicker"
+        type="datetime"
+        @confirm="startConfirm"
+      />
+      <Cell title="截止时间" @click.native="showEndPicker" :value="endTime" is-link></Cell>
+      <DatetimePicker
+        ref="endPicker"
+        type="datetime"
+        @confirm="endConfirm"
+      />
+      <Field type="textarea" rows="1" label="任务说明" v-model="desc" />
       <div class="attachment">
         <FileUpload />
       </div>
@@ -33,14 +44,19 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import config from '@/utils/config'
+import moment from 'moment'
 
 export default {
   name: 'AddTask',
   data () {
     return {
+      taskLevelArr: config.taskLevelArr,
       popupVisible: false,
       checkListVisible: false,
-      taskVisible: false,
+      typeVisible: false,
+      levelVisible: false,
+      startTimeVisible: false,
       resourceName: '',
       resourceId: '',
       resourceableName: '',
@@ -52,6 +68,7 @@ export default {
       principalId: '', // 负责人
       participantIds: [], // 参与人
       priority: '', // 任务优先级
+      priorityName: '',
       startTime: '',
       endTime: '',
       desc: '' // 任务描述
@@ -123,10 +140,30 @@ export default {
       this.getRelatedResources(params)
     },
     // 选择任务类型
-    checkTaskLevel (data) {
-      this.taskVisible = !this.taskVisible
+    checkTaskType (data) {
+      this.typeVisible = !this.typeVisible
       this.taskType = data.value
       this.taskTypeName = data.name
+    },
+    // 选择任务优先级
+    checkTaskLevel (data) {
+      this.levelVisible = !this.levelVisible
+      this.priority = data.value
+      this.priorityName = data.name
+    },
+    // 显示开始时间
+    showStartPicker () {
+      this.$refs.startPicker.open()
+    },
+    // 显示结束时间
+    showEndPicker () {
+      this.$refs.endPicker.open()
+    },
+    startConfirm (date) {
+      this.startTime = moment(date).format('YYYY-MM-DD HH-SS')
+    },
+    endConfirm (date) {
+      this.endTime = moment(date).format('YYYY-MM-DD HH-SS')
     }
   }
 }
