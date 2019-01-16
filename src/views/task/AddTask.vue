@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="!checkListVisible">
-      <Cell title="关联资源" is-link @click.native="changeVisible" :value="linkResourceName"></Cell>
+      <Cell title="关联资源" is-link @click.native="changeVisible" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
       <Popup position="bottom" v-model="popupVisible" popup-transition="popup-fade" style="width: 100%">
         <Cell title="暂不关联资源" @click.native="checkResource('')"><span class="mint-cell-mask"></span></Cell>
         <Cell v-for="(item, index) in resourceList" :title="item.title" @click.native="checkResource(item)" :key="index">
@@ -42,7 +42,8 @@ export default {
       resourceName: '',
       resourceId: '',
       resourceableName: '',
-      resourceableId: ''
+      resourceableId: '',
+      noneResource: ''
     }
   },
   computed: {
@@ -68,7 +69,6 @@ export default {
     // 返回选中数据
     seletedData (data) {
       this.resourceableName = data.label
-      console.log(data)
       this.resourceableId = data.value
       this.checkListVisible = false
     },
@@ -84,11 +84,13 @@ export default {
       this.popupVisible = false
       if (!data) {
         this.resourceName = ''
+        this.noneResource = '暂不关联资源'
         this.resourceId = ''
         this.resourceableName = ''
         this.resourceableId = ''
         return
       }
+      this.noneResource = ''
       this.checkListVisible = true
       this.resourceName = data.title
       this.resourceId = data.id
