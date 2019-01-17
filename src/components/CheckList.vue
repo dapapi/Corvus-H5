@@ -14,6 +14,9 @@
       align="right"
     >
     </mt-radio>
+    <div style="text-align:center;margin-top:10px">
+      <Button size="small" type="default" @click="changeShow()">保存</Button>
+    </div>
   </div>
 </template>
 
@@ -23,17 +26,24 @@ export default {
   data () {
     return {
       checkedArr: [],
-      checkedData: ''
+      checkedData: '',
+      isHidden:false
     }
   },
 
   watch: {
-    checkedArr () {
-      this.$emit('change', this.checkedArr)
-    },
+    // checkedArr () {
+    //   this.$emit('change', this.checkedArr)
+    // },
     checkedData () {
       const obj = this.selectorData.find(n => n.value === this.checkedData)
       this.$emit('change', obj)
+    }
+  },
+  methods:{
+    changeShow(){
+      this.isHidden = true
+      this.$emit('change', this.checkedArr,this.isHidden)
     }
   }
 }
@@ -41,6 +51,15 @@ export default {
 
 <style lang="scss" scoped>
 .selector-wrap /deep/ {
+  position: absolute;
+  left:0px;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  width: 100%;
+  height: 100%;
+  background-color:#fff;
+  z-index:1000;
   .mint-checklist-title, .mint-radiolist-title {
     margin: 0;
   }
