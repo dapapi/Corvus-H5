@@ -24,12 +24,17 @@ export default new Router({
     {
       path: '/task/add',
       name: 'task/add',
-      component: () => import('./views/task/AddTask.vue')
+      component: () => import('./views/task/Task.vue')
     },
     {
       path: '/task/detail/:id',
       name: 'task/detail',
       component: () => import('./views/task/TaskDetail.vue')
+    },
+    {
+      path: '/task/edit/:id',
+      name: 'task/edit',
+      component: () => import('./views/task/Task.vue')
     },
     {
       path: '/selector',

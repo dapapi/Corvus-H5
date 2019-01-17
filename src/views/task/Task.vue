@@ -48,7 +48,7 @@ import config from '@/utils/config'
 import moment from 'moment'
 
 export default {
-  name: 'AddTask',
+  name: 'Task',
   data () {
     return {
       taskLevelArr: config.taskLevelArr,
@@ -78,7 +78,8 @@ export default {
     ...mapState([
       'resourceData',
       'resourceList',
-      'taskTypes'
+      'taskTypes',
+      'taskDetail'
     ]),
     linkResourceName () {
       let _name = ''
@@ -88,11 +89,39 @@ export default {
       return _name
     }
   },
+  watch: {
+    taskDetail () {
+      console.log(this.taskDetail)
+      const taskDetail = this.taskDetail
+      if (taskDetail.resource) {
+        this.resourceId = taskDetail.resource.data.resource.data.id
+        this.resourceName = taskDetail.resource.data.resource.data.title
+        this.resourceableName = taskDetail.resource.data.resourceable.data.name
+        this.resourceableId = taskDetail.resource.data.resourceable.data.id
+      }
+      this.title = taskDetail.title
+      this.taskType = taskDetail.type.data.id
+      this.taskTypeName = taskDetail.type.data.title
+      // principalId: '', // 负责人
+      // participantIds: [], // 参与人
+      this.priority = taskDetail.priority
+      if (taskDetail.priority) {
+        this.priorityName = this.taskLevelArr.find(n => taskDetail.priority === n.value).name
+      }
+      this.startTime = taskDetail.start_at
+      this.endTime = taskDetail.stop_at
+      this.desc = taskDetail.desc
+    }
+  },
   mounted () {
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
     window.addTasks = this.addNewTask()
+    console.log(this.$route.params.id)
+    if (this.$route.params.id) {
+      this.getTaskDetail()
+    }
   },
   methods: {
     ...mapMutations([
@@ -108,7 +137,8 @@ export default {
       'getResourceList',
       'getRelatedResources',
       'getTaskTypes',
-      'addTask'
+      'addTask',
+      'getTasks'
     ]),
     changeVisible () {
       this.popupVisible = !this.popupVisible
@@ -185,6 +215,14 @@ export default {
       }
       console.log(params)
       // this.addTask(params)
+    },
+    getTaskDetail () {
+      const params = {}
+      params.data = {
+        include: 'creator,principal,pTask,tasks.type,resource.resourceable,resource.resource,affixes,participants'
+      }
+      params.id = this.$route.params.id
+      this.getTasks(params)
     }
   }
 }
