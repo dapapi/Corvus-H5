@@ -27,7 +27,7 @@ export default new Router({
       component: () => import('./views/task/AddTask.vue')
     },
     {
-      path: '/task/detail',
+      path: '/task/detail/:id',
       name: 'task/detail',
       component: () => import('./views/task/TaskDetail.vue')
     },

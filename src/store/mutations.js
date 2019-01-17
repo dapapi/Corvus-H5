@@ -17,5 +17,9 @@ export default {
     state.taskTypes = data.map(n => {
       return { name: n.title, value: n.id }
     })
+  },
+  // 设置任务详情
+  setTaskDetail (state, data) {
+    state.taskDetail = data
   }
 }

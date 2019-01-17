@@ -18,5 +18,16 @@ export default {
     fetch('get', '/task_types').then(res => {
       commit('setTaskTypes', res.data)
     })
+  },
+  // 获取任务详情
+  getTasks ({ commit }, params) {
+    fetch('get', `/tasks/${params.id}`, params.data).then(res => {
+      console.log(res.data)
+      commit('setTaskDetail', res.data)
+    })
+  },
+  // 添加任务
+  addTask (params) {
+    fetch('post', '/tasks', params)
   }
 }
