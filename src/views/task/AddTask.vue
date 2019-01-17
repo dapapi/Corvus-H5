@@ -91,6 +91,8 @@ export default {
   mounted () {
     this.getResourceList()
     this.getTaskTypes()
+    // 赋值给浏览器
+    window.addTasks = this.addNewTask()
   },
   methods: {
     ...mapMutations([
@@ -105,7 +107,8 @@ export default {
     ...mapActions([
       'getResourceList',
       'getRelatedResources',
-      'getTaskTypes'
+      'getTaskTypes',
+      'addTask'
     ]),
     changeVisible () {
       this.popupVisible = !this.popupVisible
@@ -164,6 +167,24 @@ export default {
     },
     endConfirm (date) {
       this.endTime = moment(date).format('YYYY-MM-DD HH-SS')
+    },
+    addNewTask () {
+      const params = {
+        type: this.taskType,
+        title: this.title,
+        principal_id: this.principalId,
+        participant_ids: this.participantIds,
+        priority: this.priority,
+        start_at: this.startTime,
+        end_at: this.endTime,
+        desc: this.desc
+      }
+      if (this.resourceName && this.resourceableName) {
+        params.resource_type = this.resourceId
+        params.resourceable_id = this.resourceableId
+      }
+      console.log(params)
+      // this.addTask(params)
     }
   }
 }
