@@ -21,5 +21,22 @@ export default {
   // 设置任务详情
   setTaskDetail (state, data) {
     state.taskDetail = data
+  },
+  //艺人详情
+  setArtistDetail(state, data){
+    state.artistDetail = data
+  },
+
+  //博主类型
+  setBlogType(state, data) {
+    state.blogType = data.map(n => {
+      return {
+        name: n.name,
+        value: n.id
+      }
+    })
+  },
+  setBlogDetail(state,data){
+    state.blogDetail = data
   }
 }

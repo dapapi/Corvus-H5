@@ -29,5 +29,24 @@ export default {
   // 添加任务
   addTask (params) {
     fetch('post', '/tasks', params)
-  }
+  },
+  //获取艺人详情
+  getArtistDetail({commit}, params){
+    fetch('get', `/stars/${params.id}`, params.data).then(res => {
+      commit('setArtistDetail', res.data)
+    })
+  },
+  //获取博主类型
+  getBlogType({commit}) {
+    fetch('get', '/bloggers/gettype').then(function (res) {
+      commit('setBlogType',res.data)
+
+    })
+  },
+  //获取博主详情
+  getBlogDetail({commit}, params) {
+    fetch('get', `/bloggers/${params.id}`, params.data).then(res => {
+      commit('setBlogDetail', res.data)
+    })
+  },
 }

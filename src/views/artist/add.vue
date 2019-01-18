@@ -54,11 +54,12 @@
             </Cell>
             <Field label="备注" v-model="remark"></Field>
         </div>
-        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :multiple="true" @change="seletedData"/>
+        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" @change="seletedData"/>
     </div>
 </template>
 <script>
 import config from '@/utils/config.js'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
 export default {
     data(){
@@ -107,11 +108,65 @@ export default {
             remark:'',//备注
         }
     },
+    computed:{
+        ...mapState([
+            'artistDetail'
+        ])
+    },
+    watch:{
+        artistDetail(){
+            this.username = this.artistDetail.name
+            this.gender = this.genderArr.find(item =>item.value == this.artistDetail.gender)
+            this.bornTime = this.artistDetail.birthday
+            this.defaultDate = this.artistDetail.birthday
+            this.artistSource = this.artistSourceArr.find(item => item.value == this.artistDetail.source)
+            this.email = this.artistDetail.email
+            this.phone = this.artistDetail.phone
+            this.wechat = this.artistDetail.wechat
+            this.region =this.artistDetail.star_location
+            this.artistStatus = this.artistStatusArr.find(item => item.value == this.artistDetail.communication_status)
+            this.intention = this.yesOrNo.find(item => item.value == this.artistDetail.intention)
+            this.sign = this.yesOrNo.find(item => item.value == this.artistDetail.sign_contract_other)
+            this.remark = this.artistDetail.desc
+           
+            this.weiboUrl =this.artistDetail.weibo_url
+            this.weiboFansNum=this.artistDetail.weibo_fans_num
+            this.douyinId=this.artistDetail.douyin_id
+            this.douyinFansNum=this.artistDetail.douyin_fans_num
+            this.baikeUrl=this.artistDetail.baike_url
+            this.baikeFansNum=this.artistDetail.baike_fans_num
+            this.qitaUrl=this.artistDetail.qita_url
+            this.qitaFansNum=this.artistDetail.qita_fans_num
+            
+            this.selectedPlatform = this.artistDetail.platform.split(',')
+            let aPlatformName =[]
+            for (let i = 0; i < this.artistPlatformList.length; i++) {               
+                if(this.selectedPlatform.find(item => item ==this.artistPlatformList[i].value)){
+                    aPlatformName.push(this.artistPlatformList[i].label)
+                }
+            }
+            this.platformName = aPlatformName.join(',')
+       }
+    },
     created(){
         this.startDate = new Date('1900')
+        if(this.$route.params.id){
+            this.getArtist()
+        }
     },
     methods:{
-        
+        ...mapActions([
+            'getArtistDetail'
+        ]),
+        //获取艺人详情
+        getArtist () {
+            const params = {}
+            params.data = {
+                include: 'creator,affixes'
+            }
+            params.id = this.$route.params.id
+            this.getArtistDetail(params)
+        },
         changeState (name, value) {
             this[name] = value
         },
@@ -165,12 +220,10 @@ export default {
                
            }
            this.platformName = platformName.join(',')
-           console.log(this.platformName)
            
         },
         checkResource:function(){
-           this.popupPlatform = !this.popupPlatform
-           
+           this.popupPlatform = !this.popupPlatform           
         },
         //添加艺人
         addArtist:function(){

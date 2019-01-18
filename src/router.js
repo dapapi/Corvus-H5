@@ -41,15 +41,38 @@ export default new Router({
       name: 'selector',
       component: () => import('./views/base/Selector.vue')
     },
+    //艺人
+
     {
       path: '/artist/add',
       name: 'artistAdd',
       component: () => import('./views/artist/add.vue')
     },
     {
-      path: '/artist/basic',
+      path: '/artist/edit/:id',
+      name: 'artistEdit',
+      component: () => import('./views/artist/add.vue')
+    },
+    {
+      path: '/artist/basic/:id',
       name: 'artistBasic',
       component: () => import('./views/artist/basic.vue')
+    },
+    //博主
+    {
+      path: '/blogger/add',
+      name: 'bloggerAdd',
+      component: () => import('./views/blogger/add.vue')
+    },
+    {
+      path: '/blogger/edit/:id',
+      name: 'bloggerEdit',
+      component: () => import('./views/blogger/add.vue')
+    }, 
+    {
+      path: '/blogger/basic/:id',
+      name: 'bloggerBasic',
+      component: () => import('./views/blogger/basic.vue')
     }
   ]
 })

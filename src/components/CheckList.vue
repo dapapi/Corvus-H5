@@ -14,7 +14,7 @@
       align="right"
     >
     </mt-radio>
-    <div style="text-align:center;margin-top:10px">
+    <div v-if="multiple" style="text-align:center;margin-top:10px">
       <Button size="small" type="default" @click="changeShow()">保存</Button>
     </div>
   </div>
@@ -22,22 +22,31 @@
 
 <script>
 export default {
-  props: ['selectorData', 'multiple'],
+  props: ['selectorData', 'multiple','selectedData'],
   data () {
     return {
       checkedArr: [],
       checkedData: '',
-      isHidden:false
+      isHidden:false,
+      
     }
   },
-
+  
   watch: {
-    // checkedArr () {
-    //   this.$emit('change', this.checkedArr)
-    // },
+    checkedArr () {
+      
+      this.$emit('change', this.checkedArr)
+    },
     checkedData () {
       const obj = this.selectorData.find(n => n.value === this.checkedData)
       this.$emit('change', obj)
+    },
+    selectedData(){
+      if(this.multiple){
+          this.checkedArr = this.selectedData
+        }else{
+          this.checkedData = this.selectedData
+        }
     }
   },
   methods:{

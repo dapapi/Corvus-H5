@@ -121,6 +121,17 @@ export default {
         value: 2
       }
     ],
+    
+    blogBoolean:[
+      {
+        name:'是',
+        value:'1'
+      },
+      {
+        name:'否',
+        value:'0'
+      }
+    ],
     artistPlatformList: [{
         value: 1,
         label: '微博'
@@ -137,6 +148,62 @@ export default {
         value: 4,
         label: '其他'
       },
+    ],
+    //社交平台
+    platformArr: [{
+      value: 1,
+      label: '微博'
+    }, {
+      value: 2,
+      label: '抖音'
+    }, {
+      value: 3,
+      label: '小红书',
+    }],
+    // 博主沟通状态
+    papiCommunicationStatusArr: [
+      {
+        name: '初步接触',
+        value: 1,
+        color: '#00bcd4'
+      },
+      {
+        name: '沟通中',
+        value: 2,
+        color: '#00b0ff'
+      },
+      {
+        name: '合同中',
+        value: 3,
+        color: '#ff9800'
+      },
+      {
+        name: '沟通完成',
+        value: 4,
+        color: '#4caf50'
+      },
+    ],
+    attachmentTypeArr: [{
+        name: '艺人简报',
+        value: 2
+      },
+      {
+        name: '独白视频',
+        value: 3
+      },
+      {
+        name: '艺人规划',
+        value: 4
+      },
+      {
+        name: '自我介绍视频',
+        value: 5
+      },
+      {
+        name: '其他',
+        value: 6
+      }
+
     ],
 }
 

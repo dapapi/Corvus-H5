@@ -1,110 +1,92 @@
 <template>
-    <div v-if="artistDetail.name">
+    <div v-if="blogDetail.nickname">
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>基本资料</h4>
         <div class="list">
             <span class="listleft">姓名:</span>
-            <span class="listright">{{artistDetail.name}}</span>
+            <span class="listright">{{blogDetail.nickname}}</span>
         </div>
-        <div class="list">
-            <span class="listleft">性别:</span>
-            <span class="listright">{{genderArr.find(item =>item.value==artistDetail.gender).name}}</span>
-        </div>
-        <div class="list">
-            <span class="listleft">出生日期:</span>
-            <span class="listright">{{artistDetail.birthday}}</span>
-        </div>
-        <div class="list">
-            <span class="listleft">年龄:</span>
-            <span class="listright">{{artistDetail.birthday|jsGetAge}}</span>
-        </div>
-        <div class="list">
-            <span class="listleft">艺人来源:</span>
-            <span class="listright">{{artistSourceArr.find(item => item.value ==artistDetail.source).name}}</span>
-        </div>
+        
         <div class="list">
             <span class="listleft">沟通状态:</span>
-            <span class="listright">{{artistStatusArr.find(item => item.value ==artistDetail.communication_status).name}}</span>
+            <span class="listright">{{artistStatusArr.find(item => item.value ==blogDetail.communication_status).name}}</span>
         </div>
         <div class="list">
             <span class="listleft">与我司签约意向:</span>
-            <span class="listright">{{yesOrNo.find(item => item.value == artistDetail.intention).name}}</span>
+            <span class="listright">{{yesOrNo.find(item => item.value == blogDetail.intention).name}}</span>
         </div>
         <div class="list">
             <span class="listleft">是否签约其他公司:</span>
-            <span class="listright">{{yesOrNo.find(item => item.value == artistDetail.sign_contract_other).name}}</span>
+            <span class="listright">{{yesOrNo.find(item => item.value == blogDetail.sign_contract_other).name}}</span>
         </div>
-        <div class="list">
+        <!-- <div class="list">
             <span class="listleft">星探:</span>
-            <span class="listright">{{artistDetail.artist_scout_name}}</span>
-        </div>
-        <div class="list">
+            <span class="listright">{{blogDetail.artist_scout_name}}</span>
+        </div> -->
+        <!-- <div class="list">
             <span class="listleft">地区:</span>
-            <span class="listright">{{artistDetail.star_location}}</span>
-        </div>
-        <div class="list">
+            <span class="listright">{{blogDetail.star_location}}</span>
+        </div> -->
+        <!-- <div class="list">
             <span class="listleft">手机号:</span>
-            <span class="listright">{{artistDetail.phone}}</span>
-        </div>
-        <div class="list">
+            <span class="listright">{{blogDetail.phone}}</span>
+        </div> -->
+        <!-- <div class="list">
             <span class="listleft">微信:</span>
-            <span class="listright">{{artistDetail.wechat}}</span>
-        </div>
+            <span class="listright">{{blogDetail.wechat}}</span>
+        </div> -->
         <div class="list">
             <span class="listleft">邮箱:</span>
-            <span class="listright">{{artistDetail.email}}</span>
+            <span class="listright">{{blogDetail.email}}</span>
         </div>
         <div class="list">
             <span class="listleft">社交平台:</span>
             <span class="listright">{{platform}}</span>
         </div>
-        <div class="list" v-if="artistDetail.weibo_url">
+        <div class="list" v-if="blogDetail.weibo_url">
             <span class="listleft">微博主页地址:</span>
-            <span class="listright">{{artistDetail.weibo_url}}</span>
+            <span class="listright">{{blogDetail.weibo_url}}</span>
         </div>
-        <div class="list" v-if="artistDetail.weibo_fans_num">
+        <div class="list" v-if="blogDetail.weibo_fans_num">
             <span class="listleft">微博粉丝数:</span>
-            <span class="listright">{{artistDetail.weibo_fans_num}}</span>
+            <span class="listright">{{blogDetail.weibo_fans_num}}</span>
         </div>
-        <div class="list" v-if="artistDetail.douyin_id">
+        <div class="list" v-if="blogDetail.douyin_id">
             <span class="listleft">抖音ID:</span>
-            <span class="listright">{{artistDetail.douyin_id}}</span>
+            <span class="listright">{{blogDetail.douyin_id}}</span>
         </div>
-        <div class="list" v-if="artistDetail.douyin_fans_num">
+        <div class="list" v-if="blogDetail.douyin_fans_num">
             <span class="listleft">抖音粉丝数:</span>
-            <span class="listright">{{artistDetail.douyin_fans_num}}</span>
+            <span class="listright">{{blogDetail.douyin_fans_num}}</span>
         </div>
         <div class="list">
             <span class="listleft">备注:</span>
-            <span class="listright">{{artistDetail.desc}}</span>
+            <span class="listright">{{blogDetail.desc}}</span>
         </div>
-        <div class="section" v-if="artistDetail.affixes.data">
-            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index"><span>{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</span></Cell>
-        </div>
-        <h4 class="head-title"><i class="iconfont icon-biaoti"></i>更新信息</h4>
+        <h4 class="head-title" style="margin-top:0.1rem"><i class="iconfont icon-biaoti" ></i>更新信息</h4>
         <div class="list">
             <span class="listleft">录入人:</span>
-            <span class="listright">{{artistDetail.creator.data.name}}</span>
+            <span class="listright">{{blogDetail.creator.data.name}}</span>
         </div>
         <div class="list">
             <span class="listleft">录入时间:</span>
-            <span class="listright">{{artistDetail.created_at}}</span>
+            <span class="listright">{{blogDetail.created_at}}</span>
         </div>
         <div class="list">
             <span class="listleft">最近更新人:</span>
             <span class="listright">
-                <template v-if="artistDetail.last_updated_user">
-                    {{artistDetail.last_updated_user}}
+                <template v-if="blogDetail.last_updated_user">
+                    {{blogDetail.last_updated_user}}
                 </template>
-                <template v-else>{{ artistDetail.creator.data.name }}</template>
+                <template v-else>{{ blogDetail.creator.data.name }}</template>
             </span>
         </div>
         <div class="list">
             <span class="listleft">更新时间:</span>
             <span class="listright">
-                <template v-if="artistDetail.last_follow_up_at">
-                    {{artistDetail.last_follow_up_at}}
+                <template v-if="blogDetail.last_follow_up_at">
+                    {{blogDetail.last_follow_up_at}}
                 </template>
-                <template v-else>{{ artistDetail.created_at }}</template>
+                <template v-else>{{ blogDetail.created_at }}</template>
             </span>
         </div>
     </div>
@@ -118,20 +100,20 @@ export default {
             genderArr:config.genderArr,//性别
             artistSourceArr:config.artistSourceArr,//艺人来源
             artistStatusArr:config.artistStatusArr,//沟通状态
-            yesOrNo:config.yesOrNo,
+            yesOrNo:config.blogBoolean,
             attachmentTypeArr:config.attachmentTypeArr,//附件类型
-            artistPlatformList:config.artistPlatformList,//平台列表
+            artistPlatformList:config.platformArr,//平台列表
             platform:''
         }
     },
     computed:{
         ...mapState([
-            'artistDetail'
+            'blogDetail'
         ])
     },
     watch:{
-        artistDetail(){
-           let aPlatform = this.artistDetail.platform.split(',')
+        blogDetail(){
+           let aPlatform = this.blogDetail.platform.split(',')
            let aPlatformName =[]
            for (let i = 0; i < this.artistPlatformList.length; i++) {               
                if(aPlatform.find(item => item ==this.artistPlatformList[i].value)){
@@ -147,15 +129,15 @@ export default {
     },
     methods:{
         ...mapActions([
-            'getArtistDetail'
+            'getBlogDetail'
         ]),
         getArtist () {
             const params = {}
             params.data = {
-                include: 'creator,affixes'
+                include: 'creator'
             }
             params.id = this.$route.params.id
-            this.getArtistDetail(params)
+            this.getBlogDetail(params)
         }
     },
     filters: {
