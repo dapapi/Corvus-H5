@@ -249,8 +249,8 @@ export default {
         //添加--编辑艺人
         addArtist:function(id){
             alert('调用新建艺人')
-            // alert(window.back(2))
-            // window.back(2)
+            alert(window.back(2))
+            window.back(2)
             let plat =[]
             for (let i = 0; i < this.selectedPlatform.length; i++) {
                 plat.push(this.selectedPlatform[i].value)
