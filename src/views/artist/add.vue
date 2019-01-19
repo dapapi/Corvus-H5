@@ -49,7 +49,9 @@
 
             <Cell title="艺人头像">
                 <template>
-                    <FileUpload />
+                    <FileUpload>
+                        <i class="iconfont icon-tianjiatupian" style="font-size:40px;border-radius:50%"></i>
+                    </FileUpload>
                 </template>
             </Cell>
             <Field label="备注" v-model="remark"></Field>
@@ -248,6 +250,7 @@ export default {
             let platform = this.plat.join(',')
             console.log(platform)
             alert('调用新建艺人')
+            window.back(2) 
             let params= {
                 toast:'添加艺人成功',
                 data:{},
