@@ -86,7 +86,7 @@ export default {
             this.intention = this.yesOrNo.find(item => item.value == this.blogDetail.intention)
             this.sign = this.yesOrNo.find(item => item.value == this.blogDetail.sign_contract_other)
             this.remark = this.blogDetail.desc
-           
+            
             this.weiboUrl =this.blogDetail.weibo_url
             this.weiboFansNum=this.blogDetail.weibo_fans_num
             this.douyinId=this.blogDetail.douyin_id
@@ -111,13 +111,14 @@ export default {
         if(this.$route.params.id){
             this.getBlog()
         }
+        window.addArtist = this.addArtist
     },
     methods:{
         ...mapActions([
             'getBlogDetail',
             'getBlogType'
         ]),
-        //获取艺人详情
+        //获取博主详情
         getBlog () {
             const params = {}
             params.data = {
@@ -169,9 +170,11 @@ export default {
         checkResource:function(){
            this.popupPlatform = !this.popupPlatform           
         },
-        //添加艺人
-        addArtist:function(){
-          
+        //添加和编辑博主
+        addBlog:function(){
+            let params = {
+                
+            }
         }
     }
 }

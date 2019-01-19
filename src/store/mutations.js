@@ -36,7 +36,13 @@ export default {
       }
     })
   },
+  //博主详情
   setBlogDetail(state,data){
     state.blogDetail = data
+  },
+
+  //设置提示信息
+  setToastTxt(state,data){
+    state.toastTxt = data
   }
 }

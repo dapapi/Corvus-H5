@@ -12,4 +12,7 @@ export default {
   blogType:[],//博主类型
   blogDetail:{},//博主详情
 
+  //提示信息
+  toastTxt:''
+
 }

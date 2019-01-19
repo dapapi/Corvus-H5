@@ -1,5 +1,5 @@
 import fetch from '@/utils/fetch'
-
+import { Toast } from 'mint-ui'
 export default {
   // 关联资源
   getResourceList ({ commit }) {
@@ -36,6 +36,18 @@ export default {
       commit('setArtistDetail', res.data)
     })
   },
+  //添加艺人
+  postArtist({commit}, params) {
+    fetch('post', `/stars`, params.data).then(res => {
+      Toast(params.toast)
+    })
+  },
+  //编辑艺人
+  putArtist({commit}, params) {
+    fetch('put', `/stars/${params.id}`, params.data).then(res => {
+      Toast(params.toast)
+    })
+  },
   //获取博主类型
   getBlogType({commit}) {
     fetch('get', '/bloggers/gettype').then(function (res) {
@@ -48,5 +60,5 @@ export default {
     fetch('get', `/bloggers/${params.id}`, params.data).then(res => {
       commit('setBlogDetail', res.data)
     })
-  },
+  }
 }
