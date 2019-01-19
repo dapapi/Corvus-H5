@@ -169,6 +169,7 @@ export default {
         setTimeout(() => {
             alert(Cookies.get('Authorization'))
         })
+        this.addArtist()
     },
     methods:{
         ...mapActions([
@@ -248,14 +249,16 @@ export default {
         //添加--编辑艺人
         addArtist:function(id){
             alert('调用新建艺人')
+            // alert(window.back(2))
+            // window.back(2)
             let plat =[]
             for (let i = 0; i < this.selectedPlatform.length; i++) {
-                
                 plat.push(this.selectedPlatform[i].value)
             }
-            let platform = this.plat.join(',')
+            console.log(plat)
+            let platform = this.selectedPlatform
             console.log(platform)
-            window.back(2)
+            
             let params= {
                 toast:'添加艺人成功',
                 data:{},
