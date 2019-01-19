@@ -153,9 +153,7 @@ export default {
         if(this.$route.params.id){
             this.getArtist()
         }
-        this.addArtist()
         window.addArtist = this.addArtist
-        window.editArtist = this.editArtist
     },
     methods:{
         ...mapActions([

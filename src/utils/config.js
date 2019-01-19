@@ -1,6 +1,7 @@
 export default {
   tokenString: 'CORVUS-ACCESS-TOKEN',
   apiUrl: 'https://sandbox-api-crm.papitube.com',
+  imgUrl: 'https://res-crm.papitube.com/',
   getHeaders: function () {
     let headers = {
       'Accept': 'application/vnd.Corvus.v1+json',
