@@ -249,7 +249,7 @@ export default {
         //添加--编辑艺人
         addArtist:function(id){
             alert('测试返回')
-            window.back(2)
+            window.webView.back();
             alert('调用新建艺人')
             let plat =[]
             console.log(this.selectedPlatform)
