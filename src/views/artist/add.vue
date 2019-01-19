@@ -61,6 +61,8 @@
 import config from '@/utils/config.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
+import Cookies from 'js-cookie'
+
 export default {
     data(){
         return {
@@ -159,6 +161,7 @@ export default {
             this.getArtist()
         }
         window.addArtist = this.addArtist
+        alert(Cookies.get('Authorization'))
     },
     methods:{
         ...mapActions([
@@ -237,8 +240,6 @@ export default {
         },
         //添加--编辑艺人
         addArtist:function(id){
-            
-            
             let plat =[]
             for (let i = 0; i < this.selectedPlatform.length; i++) {
                 
@@ -246,6 +247,7 @@ export default {
             }
             let platform = this.plat.join(',')
             console.log(platform)
+            alert('调用新建艺人')
             let params= {
                 toast:'添加艺人成功',
                 data:{},
