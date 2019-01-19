@@ -173,14 +173,14 @@ export default {
         changeState (name, value) {
             this[name] = value
         },
-        //性别
+        // 性别
         changeGender:function(data){
            this.popupGender = !this.popupGender
            this.gender = data
         },
-        //出生日期
-        changeBornTime:function(){
-            if(!this.bornTime){
+        // 出生日期
+        changeBornTime:function (){
+            if (!this.bornTime) {
                this.bornTime = moment(this.defaultDate).format('YYYY-MM-DD')
             }
            this.$refs.bornPicker.open()
@@ -188,28 +188,28 @@ export default {
         bornConfirm (date) {
             this.bornTime = moment(date).format('YYYY-MM-DD')
         },
-        //艺人来源
+        // 艺人来源
         changeArtistSource:function(data){
             
             this.popupArtistSource = !this.popupArtistSource
             this.artistSource = data
         },
-        //沟通状态
+        // 沟通状态
         changeArtistStatus:function(data){
             this.popupArtistStatus = !this.popupArtistStatus
             this.artistStatus = data
         },
-        //签约意向
+        // 签约意向
         changeIntention:function(data){
             this.popupIntention = !this.popupIntention
             this.intention = data
         },
-        //签约公司
+        // 签约公司
         changeSign:function(data){
             this.popupSign = !this.popupSign
             this.sign = data
         },
-        //平台
+        // 平台
         seletedData:function(data,isHidden){
            if(isHidden){
                this.popupPlatform = false
@@ -228,7 +228,6 @@ export default {
         checkResource:function(){
            this.popupPlatform = !this.popupPlatform           
         },
-        
         //添加--编辑艺人
         addArtist:function(id){
             
@@ -269,12 +268,11 @@ export default {
             }
             //id存在 编辑  否则添加
             id?this.putArtist(params):this.postArtist(params)
-            
         }
     }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .attachment {
   margin-top: .2rem;
   padding: .2rem;

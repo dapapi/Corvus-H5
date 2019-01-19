@@ -53,4 +53,7 @@ body {
   font-size: .28rem;
   margin: .12rem;
 }
+textarea:disabled, input:disabled {
+  background-color: #fff;
+}
 </style>

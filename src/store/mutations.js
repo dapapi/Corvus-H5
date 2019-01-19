@@ -22,6 +22,24 @@ export default {
   setTaskDetail (state, data) {
     state.taskDetail = data
   },
+  // 设置所有客户
+  setClientsAll (state, data) {
+    state.clientsAll = data
+  },
+  // 设置新客户
+  setNewClient (state, data) {
+    state.client.company = data.company
+    state.client.grade = data.grade
+    state.client.gradeName = data.gradeName
+  },
+  // 设置行业
+  setIndustriesArr (state, data) {
+    state.industriesArr = data
+  },
+  // 艺人和博主
+  setStarAndBlogger (state, data) {
+    state.starAndBlogger = data
+  },
   //艺人详情
   setArtistDetail(state, data){
     state.artistDetail = data

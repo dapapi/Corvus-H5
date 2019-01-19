@@ -52,7 +52,10 @@ export default {
   methods:{
     changeShow(){
       this.isHidden = true
-      this.$emit('change', this.checkedArr,this.isHidden)
+      const data = this.selectorData.filter(n =>
+        this.checkedArr.indexOf(n.value) > -1
+      )
+      this.$emit('change', data, this.isHidden)
     }
   }
 }
