@@ -218,12 +218,14 @@ export default {
            }
            let platformName =[]
            this.selectedPlatform = data
-           for (let i = 0; i < this.artistPlatformList.length; i++) {
-               if(this.selectedPlatform.find(item => item ==this.artistPlatformList[i].value)){
-                   platformName.push(this.artistPlatformList[i].label)
-               }
-               
-           }
+        //    for (let i = 0; i < this.artistPlatformList.length; i++) {
+        //        if(this.selectedPlatform.find(item => item ==this.artistPlatformList[i].value)){
+        //            platformName.push(this.artistPlatformList[i].label)
+        //        }
+        //    }
+           data.map(n => {
+               platformName.push(n.label)
+           })
            this.platformName = platformName.join(',')
            
         },
