@@ -251,52 +251,46 @@ export default {
             alert('测试返回')
             window.webView.back(2);
             alert('调用新建艺人')
-            let plat =[]
-            console.log(this.selectedPlatform)
-            for (let i = 0; i < this.selectedPlatform.length; i++) {
-                plat.push(this.selectedPlatform[i].value)
-            }
-            console.log(plat)
-            
-            let platform = plat.join(',')
-            console.log(platform)
-            
-            let params= {
-                toast:'添加艺人成功',
-                data:{},
-                id:id
-            }
-            
-            params.data = {
-                name: this.username,//名字
-                gender: this.gender.value,//性别
-                birthday: this.bornTime,//生日
-                source: this.artistSource.value, //艺人来源
-                email: this.email, //邮箱
-                phone: this.phone, //手机
-                wechat: this.wechat, //微信
-                communication_status: this.artistStatus.value, //沟通状态
-                intention: this.intention.value, //签约意向
-                intention_desc: this.intentionTxt, //不签约理由
-                sign_contract_other: this.sign, //是否签约其他公司
-                sign_contract_other_name: this.company, //签约其他公司名称
-                artist_scout_name: this.scout,//星探名称
-                star_location: this.region, //明星地区
-                platform: platform,//社交平台
-                weibo_url: this.weiboUrl,
-                weibo_fans_num: this.weiboFansNum,
-                baike_url: this.baikeUrl,
-                baike_fans_num: this.baikeFansNum,
-                douyin_id: this.douyinId,
-                douyin_fans_num: this.douyinFansNum,
-                qita_url: this.qitaUrl,
-                qita_fans_num: this.qitaFansNum,
-                // affix: this.affixes,//附件
-                desc: this.artistDesc,//  备注
-                // avatar: this.uploadUrl
-            }
+            // let plat =[]
+            // for (let i = 0; i < this.selectedPlatform.length; i++) {
+            //     plat.push(this.selectedPlatform[i].value)
+            // }
+            // let platform = plat.join(',')
+            // let params= {
+            //     toast:'添加艺人成功',
+            //     data:{},
+            //     id:id
+            // }
+            // params.data = {
+            //     name: this.username,//名字
+            //     gender: this.gender.value,//性别
+            //     birthday: this.bornTime,//生日
+            //     source: this.artistSource.value, //艺人来源
+            //     email: this.email, //邮箱
+            //     phone: this.phone, //手机
+            //     wechat: this.wechat, //微信
+            //     communication_status: this.artistStatus.value, //沟通状态
+            //     intention: this.intention.value, //签约意向
+            //     intention_desc: this.intentionTxt, //不签约理由
+            //     sign_contract_other: this.sign, //是否签约其他公司
+            //     sign_contract_other_name: this.company, //签约其他公司名称
+            //     artist_scout_name: this.scout,//星探名称
+            //     star_location: this.region, //明星地区
+            //     platform: platform,//社交平台
+            //     weibo_url: this.weiboUrl,
+            //     weibo_fans_num: this.weiboFansNum,
+            //     baike_url: this.baikeUrl,
+            //     baike_fans_num: this.baikeFansNum,
+            //     douyin_id: this.douyinId,
+            //     douyin_fans_num: this.douyinFansNum,
+            //     qita_url: this.qitaUrl,
+            //     qita_fans_num: this.qitaFansNum,
+            //     // affix: this.affixes,//附件
+            //     desc: this.artistDesc,//  备注
+            //     // avatar: this.uploadUrl
+            // }
             //id存在 编辑  否则添加
-            id?this.putArtist(params):this.postArtist(params)
+            // id?this.putArtist(params):this.postArtist(params)
         }
     }
 }
