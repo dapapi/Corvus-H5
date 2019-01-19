@@ -54,11 +54,12 @@
             </Cell>
             <Field label="备注" v-model="remark"></Field>
         </div>
-        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :multiple="true" @change="seletedData"/>
+        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" @change="seletedData"/>
     </div>
 </template>
 <script>
 import config from '@/utils/config.js'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
 export default {
     data(){
@@ -107,11 +108,70 @@ export default {
             remark:'',//备注
         }
     },
+    computed:{
+        ...mapState([
+            'artistDetail'
+        ])
+    },
+    watch:{
+        artistDetail(){
+            this.username = this.artistDetail.name
+            this.gender = this.genderArr.find(item =>item.value == this.artistDetail.gender)
+            this.bornTime = this.artistDetail.birthday
+            this.defaultDate = this.artistDetail.birthday
+            this.artistSource = this.artistSourceArr.find(item => item.value == this.artistDetail.source)
+            this.email = this.artistDetail.email
+            this.phone = this.artistDetail.phone
+            this.wechat = this.artistDetail.wechat
+            this.region =this.artistDetail.star_location
+            this.artistStatus = this.artistStatusArr.find(item => item.value == this.artistDetail.communication_status)
+            this.intention = this.yesOrNo.find(item => item.value == this.artistDetail.intention)
+            this.sign = this.yesOrNo.find(item => item.value == this.artistDetail.sign_contract_other)
+            this.remark = this.artistDetail.desc
+           
+            this.weiboUrl =this.artistDetail.weibo_url
+            this.weiboFansNum=this.artistDetail.weibo_fans_num
+            this.douyinId=this.artistDetail.douyin_id
+            this.douyinFansNum=this.artistDetail.douyin_fans_num
+            this.baikeUrl=this.artistDetail.baike_url
+            this.baikeFansNum=this.artistDetail.baike_fans_num
+            this.qitaUrl=this.artistDetail.qita_url
+            this.qitaFansNum=this.artistDetail.qita_fans_num
+            
+            this.selectedPlatform = this.artistDetail.platform.split(',')
+            let aPlatformName =[]
+            for (let i = 0; i < this.artistPlatformList.length; i++) {               
+                if(this.selectedPlatform.find(item => item ==this.artistPlatformList[i].value)){
+                    aPlatformName.push(this.artistPlatformList[i].label)
+                }
+            }
+            this.platformName = aPlatformName.join(',')
+       }
+    },
     created(){
         this.startDate = new Date('1900')
+        if(this.$route.params.id){
+            this.getArtist()
+        }
+        this.addArtist()
+        window.addArtist = this.addArtist
+        window.editArtist = this.editArtist
     },
     methods:{
-        
+        ...mapActions([
+            'getArtistDetail',//获取艺人详情
+            'postArtist',//添加艺人
+            'putArtist',//编辑艺人
+        ]),
+        //获取艺人详情
+        getArtist () {
+            const params = {}
+            params.data = {
+                include: 'creator,affixes'
+            }
+            params.id = this.$route.params.id
+            this.getArtistDetail(params)
+        },
         changeState (name, value) {
             this[name] = value
         },
@@ -165,16 +225,51 @@ export default {
                
            }
            this.platformName = platformName.join(',')
-           console.log(this.platformName)
            
         },
         checkResource:function(){
-           this.popupPlatform = !this.popupPlatform
-           
+           this.popupPlatform = !this.popupPlatform           
         },
-        // 添加艺人
-        addArtist:function(){
-          
+        //添加--编辑艺人
+        addArtist:function(id){
+            
+            let platform = this.selectedPlatform.join(',')
+            let params= {
+                toast:'添加艺人成功',
+                data:{},
+                id:id
+            }
+            
+            params.data = {
+                name: this.username,//名字
+                gender: this.gender.value,//性别
+                birthday: this.bornTime,//生日
+                source: this.artistSource.value, //艺人来源
+                email: this.email, //邮箱
+                phone: this.phone, //手机
+                wechat: this.wechat, //微信
+                communication_status: this.artistStatus.value, //沟通状态
+                intention: this.intention.value, //签约意向
+                intention_desc: this.intentionTxt, //不签约理由
+                sign_contract_other: this.sign, //是否签约其他公司
+                sign_contract_other_name: this.company, //签约其他公司名称
+                artist_scout_name: this.scout,//星探名称
+                star_location: this.region, //明星地区
+                platform: platform,//社交平台
+                weibo_url: this.weiboUrl,
+                weibo_fans_num: this.weiboFansNum,
+                baike_url: this.baikeUrl,
+                baike_fans_num: this.baikeFansNum,
+                douyin_id: this.douyinId,
+                douyin_fans_num: this.douyinFansNum,
+                qita_url: this.qitaUrl,
+                qita_fans_num: this.qitaFansNum,
+                // affix: this.affixes,//附件
+                desc: this.artistDesc,//  备注
+                // avatar: this.uploadUrl
+            }
+            //id存在 编辑  否则添加
+            id?this.putArtist(params):this.postArtist(params)
         }
     }
 }

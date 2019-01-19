@@ -39,5 +39,28 @@ export default {
   // 艺人和博主
   setStarAndBlogger (state, data) {
     state.starAndBlogger = data
+  },
+  //艺人详情
+  setArtistDetail(state, data){
+    state.artistDetail = data
+  },
+
+  //博主类型
+  setBlogType(state, data) {
+    state.blogType = data.map(n => {
+      return {
+        name: n.name,
+        value: n.id
+      }
+    })
+  },
+  //博主详情
+  setBlogDetail(state,data){
+    state.blogDetail = data
+  },
+
+  //设置提示信息
+  setToastTxt(state,data){
+    state.toastTxt = data
   }
 }
