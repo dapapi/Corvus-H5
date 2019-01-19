@@ -95,13 +95,18 @@ export default {
             this.xhsFansNum=this.blogDetail.baike_fans_num
             
             
-            this.selectedPlatform = this.blogDetail.platform.split(',')
+            let rPlatform = this.artistDetail.platform.split(',')
             let aPlatformName =[]
             for (let i = 0; i < this.artistPlatformList.length; i++) {               
-                if(this.selectedPlatform.find(item => item ==this.artistPlatformList[i].value)){
+                if(rPlatform.find(item => item ==this.artistPlatformList[i].value)){
+                    this.selectedPlatform.push({
+                        value:this.artistPlatformList[i].value,
+                        label:this.artistPlatformList[i].label
+                    })
                     aPlatformName.push(this.artistPlatformList[i].label)
                 }
             }
+            console.log(this.selectedPlatform)
             this.platformName = aPlatformName.join(',')
        }
     },
@@ -146,19 +151,17 @@ export default {
             this.popupSign = !this.popupSign
             this.sign = data
         },
-        //平台
+        // 平台
         seletedData:function(data,isHidden){
            if(isHidden){
                this.popupPlatform = false
            }
            let platformName =[]
            this.selectedPlatform = data
-           for (let i = 0; i < this.artistPlatformList.length; i++) {
-               if(this.selectedPlatform.find(item => item ==this.artistPlatformList[i].value)){
-                   platformName.push(this.artistPlatformList[i].label)
-               }
-               
-           }
+       
+           data.map(n => {
+               platformName.push(n.label)
+           })
            this.platformName = platformName.join(',')
            
         },

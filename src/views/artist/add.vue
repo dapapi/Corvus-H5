@@ -26,14 +26,14 @@
             <!--平台-->
             <Cell title="平台" is-link @click.native="checkResource()" :value="platformName"></Cell>
             
-            <Field class="text-left" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item ==1)" v-model="weiboUrl"></Field>
-            <Field class="text-left" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item ==1)" v-model="weiboFansNum"></Field>
-            <Field class="text-left" placeholder="百科地址" v-if="selectedPlatform.find(item => item ==2)" v-model="baikeUrl"></Field>
-            <Field class="text-left" placeholder="百科粉丝数" v-if="selectedPlatform.find(item => item ==2)" v-model="baikeFansNum"></Field>
-            <Field class="text-left" placeholder="抖音ID" v-if="selectedPlatform.find(item => item ==3)" v-model="douyinId"></Field>
-            <Field class="text-left" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item ==3)" v-model="douyinFansNum"></Field>
-            <Field class="text-left" placeholder="其他地址" v-if="selectedPlatform.find(item => item ==4)" v-model="qitaUrl"></Field>
-            <Field class="text-left" placeholder="其他地址粉丝数" v-if="selectedPlatform.find(item => item ==4)" v-model="qitaFansNum"></Field>
+            <Field class="text-left" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboUrl"></Field>
+            <Field class="text-left" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboFansNum"></Field>
+            <Field class="text-left" placeholder="百科地址" v-if="selectedPlatform.find(item => item.value ==2)" v-model="baikeUrl"></Field>
+            <Field class="text-left" placeholder="百科粉丝数" v-if="selectedPlatform.find(item => item.value ==2)" v-model="baikeFansNum"></Field>
+            <Field class="text-left" placeholder="抖音ID" v-if="selectedPlatform.find(item => item.value ==3)" v-model="douyinId"></Field>
+            <Field class="text-left" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="douyinFansNum"></Field>
+            <Field class="text-left" placeholder="其他地址" v-if="selectedPlatform.find(item => item.value ==4)" v-model="qitaUrl"></Field>
+            <Field class="text-left" placeholder="其他地址粉丝数" v-if="selectedPlatform.find(item => item.value ==4)" v-model="qitaFansNum"></Field>
             
             <!--沟通状态-->
             <Cell title="沟通状态" is-link  @click.native="changeState('popupArtistStatus',!popupArtistStatus)" :value="artistStatus.name"></Cell>
@@ -138,13 +138,18 @@ export default {
             this.qitaUrl=this.artistDetail.qita_url
             this.qitaFansNum=this.artistDetail.qita_fans_num
             
-            this.selectedPlatform = this.artistDetail.platform.split(',')
+            let rPlatform = this.artistDetail.platform.split(',')
             let aPlatformName =[]
             for (let i = 0; i < this.artistPlatformList.length; i++) {               
-                if(this.selectedPlatform.find(item => item ==this.artistPlatformList[i].value)){
+                if(rPlatform.find(item => item ==this.artistPlatformList[i].value)){
+                    this.selectedPlatform.push({
+                        value:this.artistPlatformList[i].value,
+                        label:this.artistPlatformList[i].label
+                    })
                     aPlatformName.push(this.artistPlatformList[i].label)
                 }
             }
+            console.log(this.selectedPlatform)
             this.platformName = aPlatformName.join(',')
        }
     },
@@ -233,7 +238,14 @@ export default {
         //添加--编辑艺人
         addArtist:function(id){
             
-            let platform = this.selectedPlatform.join(',')
+            
+            let plat =[]
+            for (let i = 0; i < this.selectedPlatform.length; i++) {
+                
+                plat.push(this.selectedPlatform[i].value)
+            }
+            let platform = this.plat.join(',')
+            console.log(platform)
             let params= {
                 toast:'添加艺人成功',
                 data:{},

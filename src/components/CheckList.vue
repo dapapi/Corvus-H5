@@ -33,19 +33,18 @@ export default {
   },
   
   watch: {
-    checkedArr () {
-      
-      this.$emit('change', this.checkedArr)
-    },
+    
     checkedData () {
       const obj = this.selectorData.find(n => n.value === this.checkedData)
       this.$emit('change', obj)
     },
     selectedData(){
       if(this.multiple){
-          this.checkedArr = this.selectedData
+          for (let i = 0; i < this.selectedData.length; i++) {
+            this.checkedArr.push(this.selectedData[i].value)
+          }
         }else{
-          this.checkedData = this.selectedData
+          this.checkedData = this.selectedData.value
         }
     }
   },
