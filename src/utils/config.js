@@ -138,5 +138,63 @@ export default {
         label: '其他'
       },
     ],
+  // 客户类别
+  clientLevelArr: [ 
+    {
+      name: '直客',
+      value: 1
+    },
+    {
+      name: '代理公司',
+      value: 2
+    }
+  ],
+  // 线索来源
+  trailOrigin: [
+    {
+      name: '商务邮箱',
+      value: 1
+    },
+    {
+      name: '工作室邮箱',
+      value: 2
+    },
+    {
+      name: '微信公众号',
+      value: 3
+    },
+    {
+      name: '员工',
+      value: 4
+    },
+    {
+      name: '公司高管',
+      value: 5
+    },
+    {
+      name: '纯中介',
+      value: 6
+    },
+    {
+      name: '香港中介',
+      value: 7
+    },
+    {
+      name: '台湾中介',
+      value: 8
+    },
+    {
+      name: '复购直客',
+      value: 9
+    },
+    {
+      name: '媒体介绍',
+      value: 10
+    },
+    {
+      name: '公关or广告公司',
+      value: 11
+    }
+  ],
 }
 

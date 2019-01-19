@@ -37,6 +37,21 @@ export default new Router({
       component: () => import('./views/task/Task.vue')
     },
     {
+      path: '/trail/add',
+      name: 'trail/add',
+      component: () => import('./views/trail/Trail.vue')
+    },
+    {
+      path: '/trail/detail/:id',
+      name: 'trail/detail',
+      component: () => import('./views/trail/TrailDetail.vue')
+    },
+    {
+      path: '/trail/edit/:id',
+      name: 'trail/edit',
+      component: () => import('./views/trail/Trail.vue')
+    },
+    {
       path: '/selector',
       name: 'selector',
       component: () => import('./views/base/Selector.vue')

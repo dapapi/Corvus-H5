@@ -6,6 +6,7 @@ import store from './store/index'
 import CheckList from '@/components/CheckList'
 import FileUpload from '@/components/FileUpload'
 import Selector from '@/components/Selector'
+import AddClient from '@/components/AddClient'
 
 Vue.config.productionTip = false
 // mint组件
@@ -21,6 +22,7 @@ Vue.component('DatetimePicker', DatetimePicker)
 Vue.component('CheckList', CheckList)
 Vue.component('FileUpload', FileUpload)
 Vue.component('Selector', Selector)
+Vue.component('AddClient', AddClient)
 
 new Vue({
   router,
