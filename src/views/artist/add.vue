@@ -163,6 +163,11 @@ export default {
         window.addArtist = this.addArtist
         alert(Cookies.get('Authorization'))
     },
+    mounted () {
+        setTimeout(() => {
+            alert(Cookies.get('Authorization'))
+        })
+    },
     methods:{
         ...mapActions([
             'getArtistDetail',//获取艺人详情
@@ -240,6 +245,7 @@ export default {
         },
         //添加--编辑艺人
         addArtist:function(id){
+            alert('调用新建艺人')
             let plat =[]
             for (let i = 0; i < this.selectedPlatform.length; i++) {
                 
@@ -247,7 +253,6 @@ export default {
             }
             let platform = this.plat.join(',')
             console.log(platform)
-            alert('调用新建艺人')
             let params= {
                 toast:'添加艺人成功',
                 data:{},
