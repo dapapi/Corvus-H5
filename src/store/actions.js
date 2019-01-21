@@ -87,7 +87,7 @@ export default {
   postArtist({commit}, params) {
     fetch('post', `/stars`, params.data).then(res => {
       Toast(params.toast)
-      window.back(2) 
+      window.webView.back(2)
     })
   },
   //编辑艺人
