@@ -172,7 +172,6 @@ export default {
         // setTimeout(() => {
         //     alert(Cookies.get('Authorization'))
         // })
-        
     },
     methods:{
         ...mapActions([
@@ -251,7 +250,17 @@ export default {
         },
         //添加--编辑艺人
         addArtist:function(id){
-            
+            let u = navigator.userAgent
+            let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
+            let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+            if (isIOS) {
+                alert('调用ios方法')
+                window.webkit.messageHandlers.back.postMessage(2)
+            }
+            if (isAndroid) {
+                alert('调用安卓方法')
+                window.webView.back(2)
+            }
             let plat =[]
             let platform= ''
             if(this.selectedPlatform){
