@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="!clientsVisible || !isAddClients || !industryVisible || !expectationsVisible">
+    <template v-if="!clientsVisible && !isAddClients && !industryVisible && !expectationsVisible && !recommendationsVisible">
       <Field label="品牌名称" v-model="brand" />
       <Cell title="公司名称" @click.native="changeState('clientsVisible', !clientsVisible)" :value="clientName" isLink></Cell>
       <Field label="线索名称" v-model="title"></Field>
@@ -9,7 +9,7 @@
       <Cell title="行业" @click.native="changeState('industryVisible', !industryVisible)" :value="industryName" isLink></Cell>
       <Cell title="负责人" :value="principalName"></Cell>
       <Cell title="目标艺人" :value="expectationsName" @click.native="changeState('expectationsVisible', !expectationsVisible)" isLink></Cell>
-      <Cell title="推荐艺人" :value="recommendationsName" isLink></Cell>
+      <Cell title="推荐艺人" :value="recommendationsName" @click.native="changeState('recommendationsVisible', !recommendationsVisible)" isLink></Cell>
       <Cell title="优先级" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" isLink></Cell>
       <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
       <Field label="联系人" v-model="contact.name"></Field>
@@ -41,6 +41,12 @@
       :multiple="true"
       @change="selectExpectations"
     />
+    <CheckList
+      v-if="recommendationsVisible"
+      :selectorData="starAndBlogger"
+      :multiple="true"
+      @change="selectRecommendations"
+    />
   </div>
 </template>
 
@@ -58,6 +64,7 @@ export default {
       taskLevelArr: config.taskLevelArr,
       levelVisible: false,
       expectationsVisible: false,
+      recommendationsVisible: false,
       title: '', // 线索名称
       brand: '', // 品牌名称
       clientInfo: '', // 公司id
@@ -179,6 +186,17 @@ export default {
       })
       this.expectationsName = expectationsName
       this.expectations = expectations
+    },
+    selectRecommendations (data) {
+      this.recommendationsVisible = false
+      const recommendations = []
+      const recommendationsName = []
+      data.map(n => {
+        recommendations.push(n.value)
+        recommendationsName.push(n.label)
+      })
+      this.recommendationsName = recommendationsName
+      this.recommendations = recommendations
     }
   }
 }
