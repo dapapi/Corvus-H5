@@ -108,5 +108,23 @@ export default {
     fetch('get', `/bloggers/${params.id}`, params.data).then(res => {
       commit('setBlogDetail', res.data)
     })
+  },
+  //获取公告列表
+  getNoticeList({commit}) {
+    fetch('get', `/announcements?include=creator`).then(res => {
+      commit('setNoticeList', res.data)
+    })
+  },
+  //获取公告详情
+  getNoticeDetail({commit},params){
+    fetch('get', `/announcements/${params.id}?include=scope,creator`).then(res => {
+      commit('setNoticeDetail', res.data)
+    })
+  },
+  getProjectDetail({commit},params){
+    fetch('get', `/projects/${params.id}`,params.data).then(res => {
+      console.log(res.data)
+      commit('setProjectDetail', res.data)
+    })
   }
 }

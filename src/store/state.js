@@ -14,5 +14,11 @@ export default {
   blogType:[],//博主类型
   blogDetail:{},//博主详情
   //提示信息
-  toastTxt:''
+  toastTxt:'',
+  //公告
+  noticeList:[],//公告列表
+  noticeDetail:{},//公告详情
+  //项目
+  projectDetail: {} //项目详情
+  
 }

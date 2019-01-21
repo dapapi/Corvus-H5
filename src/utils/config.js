@@ -276,5 +276,89 @@ export default {
       }
 
     ],
+    //公告类型
+    classifyArr: [{
+        name: '规则制度',
+        value: 1
+      },
+      {
+        name: '内部公告',
+        value: 2
+      }
+    ],
+    //项目来源
+    trailOrigin: [{
+        name: '商务邮箱',
+        value: 1
+      },
+      {
+        name: '工作室邮箱',
+        value: 2
+      },
+      {
+        name: '微信公众号',
+        value: 3
+      },
+      {
+        name: '员工',
+        value: 4
+      },
+      {
+        name: '公司高管',
+        value: 5
+      },
+      {
+        name: '纯中介',
+        value: 6
+      },
+      {
+        name: '香港中介',
+        value: 7
+      },
+      {
+        name: '台湾中介',
+        value: 8
+      },
+      {
+        name: '复购直客',
+        value: 9
+      },
+      {
+        name: '媒体介绍',
+        value: 10
+      },
+      {
+        name: '公关or广告公司',
+        value: 11
+      }
+    ],
+    //优先级
+    levelArr: [{
+        name: 'S',
+        value: 4
+      },
+      {
+        name: 'A',
+        value: 3
+      },
+      {
+        name: 'B',
+        value: 2
+      },
+      {
+        name: 'C',
+        value: 1
+      }
+    ],
+    //可见范围
+    visibleRangeArr: [{
+        name: '私有',
+        value: '1'
+      },
+      {
+        name: '公开',
+        value: '0'
+      }
+    ],
 }
 

@@ -1,5 +1,14 @@
 import Vue from 'vue'
-import { Button, Cell, Popup, Checklist, Radio, Field, DatetimePicker,Toast } from 'mint-ui'
+import {
+  Button,
+  Cell,
+  Popup,
+  Checklist,
+  Radio,
+  Field,
+  DatetimePicker,
+  Toast,InfiniteScroll
+  }from 'mint-ui'
 import App from './App.vue'
 import router from './router'
 import store from './store/index'
@@ -18,7 +27,8 @@ Vue.component(Radio.name, Radio)
 Vue.component(Checklist.name, Checklist)
 Vue.component('DatetimePicker', DatetimePicker)
 Vue.component('Toast', Toast)
-
+// Vue.component('InfiniteScroll', InfiniteScroll)
+Vue.use(InfiniteScroll);
 // 自定义组件
 Vue.component('CheckList', CheckList)
 Vue.component('FileUpload', FileUpload)

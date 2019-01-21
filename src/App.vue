@@ -56,4 +56,35 @@ body {
 textarea:disabled, input:disabled {
   background-color: #fff;
 }
+
+/*公共样式*/
+ul,li{
+  padding:0px;
+  margin: 0px;
+}
+li{
+  list-style: none
+}
+.clearfix::after,.clearfix::before{
+    display: block;
+    clear: both;
+    content: "";
+}
+.float-left{
+  float: left;
+}
+.float-right{
+  float: right;
+}
+a{
+  text-decoration: none;
+  color:#333;
+  &:hover{
+    color:#333
+  };
+  &:visited{
+    color:#333
+  }
+
+}
 </style>

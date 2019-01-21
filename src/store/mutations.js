@@ -62,5 +62,18 @@ export default {
   //设置提示信息
   setToastTxt(state,data){
     state.toastTxt = data
+  },
+
+  //公告列表
+  setNoticeList(state,data){
+    state.noticeList = data
+  },
+  //公告详情
+  setNoticeDetail(state,data){
+    state.noticeDetail = data
+  },
+  //项目详情
+  setProjectDetail(state,data){
+    state.projectDetail = data
   }
 }

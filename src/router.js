@@ -88,6 +88,23 @@ export default new Router({
       path: '/blogger/basic/:id',
       name: 'bloggerBasic',
       component: () => import('./views/blogger/basic.vue')
-    }
+    },
+    //项目
+    {
+      path: '/project/basic/:id',
+      name: 'projectBasic',
+      component: () => import('./views/project/basic.vue')
+    },
+    //公告
+    {
+      path: '/notice/list',
+      name: 'noticeList',
+      component: () => import('./views/notice/list.vue')
+    },
+    {
+      path: '/notice/detail/:id',
+      name: 'noticeDetail',
+      component: () => import('./views/notice/detail.vue')
+    },
   ]
 })
