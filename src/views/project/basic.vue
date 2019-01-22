@@ -22,7 +22,7 @@
             <span class="listleft">项目来源:</span>
             <span class="listright" v-if="projectDetail.trail">{{trailOrigin.find(item => item.value == projectDetail.trail.data.resource_type).name}}</span>
         </div>
-        <div class="list">
+        <div class="list" v-if="projectDetail.type != 5">
             <span class="listleft">目标艺人:</span>
             <span class="listright" v-if="projectDetail.trail && projectDetail.trail.data.expectations">
                 <template v-for="artist in projectDetail.trail.data.expectations.data">
@@ -47,10 +47,10 @@
             <span class="listleft">截止时间:</span>
             <span class="listright" v-if='projectDetail.end_at'>{{projectDetail.end_at.split(' ')[0]}}</span>
         </div>
-        <div v-if="projectDetail.fields">
-            <div class="list" v-for="(item,index) in projectDetail.fields.data" :key="index">
-                <span class="listleft">{{item.field.key}}:</span>
-                <span class="listright">{{item.value}}</span>
+        <div v-if="projectDetailMeta.fields">
+            <div class="list" v-for="(item,index) in projectDetailMeta.fields.data" :key="index">
+                <span class="listleft">{{item.key}}:</span>
+                <span class="listright">{{item.values.data.value}}</span>
             </div>
         </div>
         <div class="list">
@@ -96,11 +96,15 @@
                 <span v-for="(item,index) in projectDetail.relate_tasks.data" :key="index">{{item.title}}</span>
             </span>
         </div>
+        <div class="list isMargin" v-if="projectDetail.form_instance_number">
+            <ApprovalProgress :formid="projectDetail.form_instance_number"></ApprovalProgress>
+        </div>
     </div>
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import config from '@/utils/config'
+import ApprovalProgress from '@/components/ApprovalProgress.vue'
 export default {
     data(){
         return {
@@ -112,8 +116,12 @@ export default {
     },
     computed:{
         ...mapState([
-            'projectDetail'
+            'projectDetail',
+            'projectDetailMeta'
         ])
+    },
+    components:{
+       ApprovalProgress
     },
     watch:{
         projectDetail(){
@@ -125,6 +133,9 @@ export default {
            })
            this.participantsName = aParticipantsName.join(',')
 
+
+        },
+        projectDetailMeta(){
 
         }
     },

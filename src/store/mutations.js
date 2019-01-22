@@ -74,6 +74,10 @@ export default {
   },
   //项目详情
   setProjectDetail(state,data){
-    state.projectDetail = data
+    state.projectDetail = data.data
+    state.projectDetailMeta = data.meta
+  },
+  setApproval(state,data){
+    state.approvalProgress = data
   }
 }

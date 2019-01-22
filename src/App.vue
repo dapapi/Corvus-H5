@@ -58,7 +58,7 @@ textarea:disabled, input:disabled {
 }
 
 /*公共样式*/
-ul,li{
+ul,li,p{
   padding:0px;
   margin: 0px;
 }

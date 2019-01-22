@@ -121,10 +121,21 @@ export default {
       commit('setNoticeDetail', res.data)
     })
   },
+  //获取项目详情
   getProjectDetail({commit},params){
     fetch('get', `/projects/${params.id}`,params.data).then(res => {
-      console.log(res.data)
-      commit('setProjectDetail', res.data)
+      // console.log(res.data)
+      commit('setProjectDetail', res)
     })
+  },
+  //项目审批流程
+  getApproval({commit},params) {
+
+    fetch('get', `/approval_instances/${params.id}/chains`).then(res => {
+      // console.log(res)
+      commit('setApproval', res.data)
+    })
+
+
   }
 }

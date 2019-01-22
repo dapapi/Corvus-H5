@@ -29,9 +29,14 @@
             <Field class="text-left" v-show="sign.value == 1" v-model="company" placeholder="请输入已签约公司名称"></Field>
 
             <Cell title="头像">
+                
                 <template>
-                    <FileUpload />
+                    <FileUpload @change="upload">
+                        <span class="avatar" v-if="uploadUrl" :style="{ backgroundImage: 'url('+uploadUrl+')'}"></span>
+                        <i v-else class="iconfont icon-tianjiatupian" style="font-size:0.8rem;border-radius:50%"></i>
+                    </FileUpload>
                 </template>
+            
             </Cell>
             <Field label="备注" v-model="remark"></Field>
         </div>
@@ -69,6 +74,7 @@ export default {
             intentionTxt:'',//不签约 ---原因
             popupSign:false,//是否与其他公司签约
             sign:{},
+            uploadUrl:'',//头像
             company:'',//签约公司名称
             remark:'',//备注
         }
@@ -173,6 +179,11 @@ export default {
         checkResource:function(){
            this.popupPlatform = !this.popupPlatform           
         },
+        //上传头像
+        upload:function(url){
+            console.log('上唇'+url)
+           this.uploadUrl = url
+        },
         //添加和编辑博主
         addBlog:function(){
             let params = {
@@ -193,6 +204,11 @@ export default {
         text-align:left!important;
     }
 }
-
+.avatar{
+    display: inline-block;
+    width: 0.8rem;
+    height: 0.8rem;
+    background-size:cover;
+}
 </style>
 
