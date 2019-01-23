@@ -106,5 +106,16 @@ export default new Router({
       name: 'noticeDetail',
       component: () => import('./views/notice/detail.vue')
     },
+    // 客户
+    {
+      path: '/client/add',
+      name: 'client/add',
+      component: () => import('./views/client/Client.vue')
+    },
+    {
+      path: '/client/edit',
+      name: 'client/edit',
+      component: () => import('./views/client/Client.vue')
+    }
   ]
 })

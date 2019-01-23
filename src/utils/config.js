@@ -360,5 +360,27 @@ export default {
         value: '0'
       }
     ],
+  // 客户级别
+  clientLevelArr: [
+    {
+      name: '直客',
+      value: 1
+    },
+    {
+      name: '代理公司',
+      value: 2
+    }
+  ],
+  // 客户规模
+  clientScaleArr: [
+    {
+      name: '上市公司',
+      value: 1
+    },
+    {
+      name: '500强',
+      value: 2
+    },
+  ],
 }
 
