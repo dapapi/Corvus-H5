@@ -116,6 +116,11 @@ export default new Router({
       path: '/client/edit',
       name: 'client/edit',
       component: () => import('./views/client/Client.vue')
+    },
+    {
+      path: '/client/detail/:id',
+      name: 'client/detail',
+      component: () => import('./views/client/ClientDetail.vue')
     }
   ]
 })
