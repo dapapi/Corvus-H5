@@ -8,14 +8,14 @@
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="loading"
         infinite-scroll-distance="10" class="nav-ul">
-        <li v-for="(item,index) in noticeList" :key="index">
+        <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive ">
             <router-link :to="`/notice/detail/${item.id}`">
                 <div class="nav-title">
                     <i class="iconfont icon-biaoti"></i>
                     <span class="title">{{item.title}}</span>
                 </div>
                 <div class="clearfix details">
-                    <img class="float-left" :src="item.creator.data.icon_url" alt="">
+                    <img class="float-left picImg" :src="item.creator.data.icon_url" alt="">
                     <span class="float-left name">{{item.creator.data.name}}</span>
                     <span class="float-left type">{{classifyArr.find(classifyArr => classifyArr.value == item.classify).name}}</span>
                     <span class="float-right time">{{item.created_at}}</span>
@@ -43,15 +43,14 @@ export default {
                 {
                     value:0,
                     name:'未读',
-                    params:''
+                    
                 },
                 {
                     value:1,
                     name:'已读',
-                    params:''
                 }
             ],
-            isActive:1,
+            isActive:0,
             posLeft:0,//选中状态的位置
             activeLineWidth:0,//选中状态的宽度
         }
@@ -129,7 +128,8 @@ export default {
            }
            img{
                 width:0.48rem;
-                height:0.48rem
+                height:0.48rem;
+                border-radius: 50%;
            }
            .details{
                .name{

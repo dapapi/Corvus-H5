@@ -1,4 +1,5 @@
 import fetch from '@/utils/fetch'
+import config from '@/utils/config'
 import { Toast } from 'mint-ui'
 export default {
   // 关联资源
@@ -85,15 +86,17 @@ export default {
   },
   //添加艺人
   postArtist({commit}, params) {
+    console.log(params.data)
     fetch('post', `/stars`, params.data).then(res => {
       Toast(params.toast)
-      window.webView.back(2)
+      config.deviceBack(2)
     })
   },
   //编辑艺人
   putArtist({commit}, params) {
     fetch('put', `/stars/${params.id}`, params.data).then(res => {
       Toast(params.toast)
+      config.deviceBack(2)
     })
   },
   //获取博主类型
@@ -107,6 +110,21 @@ export default {
   getBlogDetail({commit}, params) {
     fetch('get', `/bloggers/${params.id}`, params.data).then(res => {
       commit('setBlogDetail', res.data)
+    })
+  },
+  //添加博主
+  postBlogger({commit}, params) {
+    console.log(params.data)
+    fetch('post', `/bloggers`, params.data).then(res => {
+      Toast(params.toast)
+      config.deviceBack(2)
+    })
+  },
+  //编辑博主
+  putBlogger({commit}, params) {
+    fetch('put', `/bloggers/${params.id}`, params.data).then(res => {
+      Toast(params.toast)
+      config.deviceBack(2)
     })
   },
   //获取公告列表
