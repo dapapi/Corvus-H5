@@ -113,7 +113,7 @@ export default new Router({
       component: () => import('./views/client/Client.vue')
     },
     {
-      path: '/client/edit',
+      path: '/client/edit:id',
       name: 'client/edit',
       component: () => import('./views/client/Client.vue')
     },
