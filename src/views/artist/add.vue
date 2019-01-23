@@ -56,6 +56,9 @@
                 </template>
             </Cell>
             <Field label="备注" v-model="remark"></Field>
+            <!-- <div style='text-align:center'>
+                <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addArtist()">提交</button>
+            </div> -->
         </div>
         <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" @change="seletedData"/>
     </div>
@@ -64,7 +67,7 @@
 import config from '@/utils/config.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
-import Cookies from 'js-cookie'
+import { Toast } from 'mint-ui'
 
 export default {
     data(){
@@ -133,7 +136,9 @@ export default {
             this.region =this.artistDetail.star_location
             this.artistStatus = this.artistStatusArr.find(item => item.value == this.artistDetail.communication_status)
             this.intention = this.yesOrNo.find(item => item.value == this.artistDetail.intention)
+            this.intentionTxt = this.artistDetail.intention_desc
             this.sign = this.yesOrNo.find(item => item.value == this.artistDetail.sign_contract_other)
+            this.company = this.artistDetail.sign_contract_other_name
             this.remark = this.artistDetail.desc
            
             this.weiboUrl =this.artistDetail.weibo_url
@@ -144,7 +149,8 @@ export default {
             this.baikeFansNum=this.artistDetail.baike_fans_num
             this.qitaUrl=this.artistDetail.qita_url
             this.qitaFansNum=this.artistDetail.qita_fans_num
-            
+            this.uploadUrl = this.artistDetail.avatar
+
             let rPlatform = this.artistDetail.platform.split(',')
             let aPlatformName =[]
             for (let i = 0; i < this.artistPlatformList.length; i++) {               
@@ -166,12 +172,9 @@ export default {
             this.getArtist()
         }
         window.addArtist = this.addArtist
-        // alert(Cookies.get('Authorization'))
     },
     mounted () {
-        // setTimeout(() => {
-        //     alert(Cookies.get('Authorization'))
-        // })
+        
     },
     methods:{
         ...mapActions([
@@ -216,16 +219,23 @@ export default {
         changeArtistStatus:function(data){
             this.popupArtistStatus = !this.popupArtistStatus
             this.artistStatus = data
+
         },
         // 签约意向
         changeIntention:function(data){
             this.popupIntention = !this.popupIntention
             this.intention = data
+            if(this.intention.value == 1){
+                this.intentionTxt = ''
+            }
         },
         // 签约公司
         changeSign:function(data){
             this.popupSign = !this.popupSign
             this.sign = data
+            if(this.sign.value == 1){
+                this.company = ''
+            }
         },
         // 平台
         seletedData:function(data,isHidden){
@@ -245,34 +255,79 @@ export default {
         },
         //上传头像
         upload:function(url){
-            console.log('上唇'+url)
+            // console.log('上唇'+url)
            this.uploadUrl = url
         },
         //添加--编辑艺人
-        addArtist:function(id){
-            let u = navigator.userAgent
-            let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
-            let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-            if (isIOS) {
-                alert('调用ios方法')
-                window.webkit.messageHandlers.back.postMessage(2)
-            }
-            if (isAndroid) {
-                alert('调用安卓方法')
-                window.webView.back(2)
-            }
+        addArtist:function(){
             let plat =[]
             let platform= ''
+            let toast,id
+            id = this.$route.params.id
             if(this.selectedPlatform){
                 for (let i = 0; i < this.selectedPlatform.length; i++) {
                     plat.push(this.selectedPlatform[i].value)
                 }
                 platform = plat.join(',')
             }
+            console.log(platform)
+            if(id){
+                toast = '编辑艺人成功'
+            }else{
+                toast = '添加艺人成功'
+            }
             let params= {
-                toast:'添加艺人成功',
+                toast:toast,
                 data:{},
                 id:id
+            }
+            if(!this.username){
+                Toast('请输入姓名')
+                return false
+            }
+            if(!this.gender.value){
+                Toast('请选择性别')
+                return false
+            }
+            if(!this.bornTime){
+                Toast('请选择出生日期')
+                return false
+            }
+            if(!this.artistSource.value){
+                Toast('请选择艺人来源')
+                return false
+            }
+            if(!this.email){
+                Toast('请输入邮箱')
+                return false
+            }
+            if(!this.phone){
+                Toast('请输入手机')
+                return false
+            }
+            if(!this.artistStatus.value){
+                Toast('请选择沟通状态')
+                return false
+            }
+            if(!this.intention.value){
+                Toast('请选择签约意向')
+                return false
+            }
+            if(this.intention.value == 2&&!this.intentionTxt){
+                Toast('请输入不签约理由')
+                return false
+            }
+            if(!this.sign.value){
+                Toast('请选择是否签约其他公司')
+                return false
+            }
+            if(this.sign.value == 1&&!this.company){
+                Toast('请输入签约其他公司名称')
+                return false
+            }
+            if(!platform){
+                Toast('请选择平台')
+                return false
             }
             params.data = {
                 name: this.username,//名字
@@ -282,10 +337,10 @@ export default {
                 email: this.email, //邮箱
                 phone: this.phone, //手机
                 wechat: this.wechat, //微信
-                communication_status: this.artistStatus.value, //沟通状态
+                communication_status: this.artistStatus.value, //沟通状态  value 1是 2否
                 intention: this.intention.value, //签约意向
                 intention_desc: this.intentionTxt, //不签约理由
-                sign_contract_other: this.sign, //是否签约其他公司
+                sign_contract_other: this.sign.value, //是否签约其他公司
                 sign_contract_other_name: this.company, //签约其他公司名称
                 artist_scout_name: this.scout,//星探名称
                 star_location: this.region, //明星地区
@@ -299,7 +354,7 @@ export default {
                 qita_url: this.qitaUrl,
                 qita_fans_num: this.qitaFansNum,
                 // affix: this.affixes,//附件
-                desc: this.artistDesc,//  备注
+                desc: this.remark,//  备注
                 avatar: this.uploadUrl
             }
             //id存在 编辑  否则添加
@@ -315,8 +370,10 @@ export default {
   background-color: #fff;
 }
 .avatar{
+    display: inline-block;
     width: 0.8rem;
     height: 0.8rem;
+    background-size:cover;
 }
 .text-left{
     input{

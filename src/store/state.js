@@ -19,6 +19,8 @@ export default {
   noticeList:[],//公告列表
   noticeDetail:{},//公告详情
   //项目
-  projectDetail: {} //项目详情
+  projectDetail: {}, //项目详情
+  projectDetailMeta:{},//项目详情type字段
+  approvalProgress:[],//项目审批
   
 }

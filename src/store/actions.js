@@ -1,4 +1,5 @@
 import fetch from '@/utils/fetch'
+import config from '@/utils/config'
 import { Toast } from 'mint-ui'
 export default {
   // 关联资源
@@ -85,15 +86,17 @@ export default {
   },
   //添加艺人
   postArtist({commit}, params) {
+    console.log(params.data)
     fetch('post', `/stars`, params.data).then(res => {
       Toast(params.toast)
-      window.webView.back(2)
+      config.deviceBack(2)
     })
   },
   //编辑艺人
   putArtist({commit}, params) {
     fetch('put', `/stars/${params.id}`, params.data).then(res => {
       Toast(params.toast)
+      config.deviceBack(2)
     })
   },
   //获取博主类型
@@ -109,6 +112,21 @@ export default {
       commit('setBlogDetail', res.data)
     })
   },
+  //添加博主
+  postBlogger({commit}, params) {
+    console.log(params.data)
+    fetch('post', `/bloggers`, params.data).then(res => {
+      Toast(params.toast)
+      config.deviceBack(2)
+    })
+  },
+  //编辑博主
+  putBlogger({commit}, params) {
+    fetch('put', `/bloggers/${params.id}`, params.data).then(res => {
+      Toast(params.toast)
+      config.deviceBack(2)
+    })
+  },
   //获取公告列表
   getNoticeList({commit}) {
     fetch('get', `/announcements?include=creator`).then(res => {
@@ -121,10 +139,21 @@ export default {
       commit('setNoticeDetail', res.data)
     })
   },
+  //获取项目详情
   getProjectDetail({commit},params){
     fetch('get', `/projects/${params.id}`,params.data).then(res => {
-      console.log(res.data)
-      commit('setProjectDetail', res.data)
+      // console.log(res.data)
+      commit('setProjectDetail', res)
     })
+  },
+  //项目审批流程
+  getApproval({commit},params) {
+
+    fetch('get', `/approval_instances/${params.id}/chains`).then(res => {
+      // console.log(res)
+      commit('setApproval', res.data)
+    })
+
+
   }
 }

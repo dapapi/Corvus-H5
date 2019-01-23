@@ -29,10 +29,10 @@ Vue.component('Field', Field)
 Vue.component(Radio.name, Radio)
 Vue.component(Checklist.name, Checklist)
 Vue.component('DatetimePicker', DatetimePicker)
-Vue.component('Toast', Toast)
 Vue.component(Picker.name, Picker)
-// Vue.component('InfiniteScroll', InfiniteScroll)
 Vue.use(InfiniteScroll)
+Vue.use(Toast)
+
 // 自定义组件
 Vue.component('CheckList', CheckList)
 Vue.component('FileUpload', FileUpload)

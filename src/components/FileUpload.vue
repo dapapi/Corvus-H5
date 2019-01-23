@@ -49,7 +49,7 @@
                 let conf = null;
                 let fileSize = file.size;
                 this.getQiniuAccessToken((token) => {
-                  console.log(token)
+                //   console.log(token)
                     let observable = qiniu.upload(file, key, token, putExtra, conf);
                     let subscription = observable.subscribe(function (res) {
                     }, function (error) {
@@ -61,7 +61,7 @@
                         setTimeout(() => {
                             _this.progressShow = false
                         }, 1000)
-                        console.log(fileUrl,fileName)
+                        // console.log(fileUrl,fileName)
                         _this.$emit('change', fileUrl, fileName, fileSize, _this.id);
                         _this.$emit('changePlus', {fileUrl, fileName, fileSize})
                         _this.fileName = fileName

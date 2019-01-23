@@ -1,26 +1,21 @@
 <template>
     <div>
         <ul class="nav">
-            <li>
-               已读
-            </li>
-            <li>
-                未读
-            </li>
-            <div class="active-line"></div>
+            <li @click="changeActive(item.value,item.params)" :class="isActive == item.value?'active':''" v-for="(item,index) in navList" :key="index">{{item.name}}</li>
+            <div class="active-line" :style="{left:`${posLeft}%`,width:`${activeLineWidth}%`}"></div>
         </ul>
         <ul
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="loading"
         infinite-scroll-distance="10" class="nav-ul">
-        <li v-for="(item,index) in noticeList" :key="index">
+        <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive ">
             <router-link :to="`/notice/detail/${item.id}`">
                 <div class="nav-title">
                     <i class="iconfont icon-biaoti"></i>
                     <span class="title">{{item.title}}</span>
                 </div>
                 <div class="clearfix details">
-                    <img class="float-left" :src="item.creator.data.icon_url" alt="">
+                    <img class="float-left picImg" :src="item.creator.data.icon_url" alt="">
                     <span class="float-left name">{{item.creator.data.name}}</span>
                     <span class="float-left type">{{classifyArr.find(classifyArr => classifyArr.value == item.classify).name}}</span>
                     <span class="float-right time">{{item.created_at}}</span>
@@ -34,6 +29,7 @@
 <script>
 import config from '@/utils/config.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
+import fetch from '@/utils/fetch.js'
 import moment from 'moment'
 import Cookies from 'js-cookie'
 export default {
@@ -42,30 +38,51 @@ export default {
         return {
             classifyArr:config.classifyArr,
             loading:false,
+            noticeList:[],
+            navList:[
+                {
+                    value:0,
+                    name:'未读',
+                    
+                },
+                {
+                    value:1,
+                    name:'已读',
+                }
+            ],
+            isActive:0,
+            posLeft:0,//选中状态的位置
+            activeLineWidth:0,//选中状态的宽度
         }
     },
+    
     mounted(){
+        this.isActive = this.navList[0].value
+        this.posLeft = (100/this.navList.length/4)
+        this.activeLineWidth =(100/this.navList.length/2)
         this.getNoticeList()
     },
-    computed:{
-       ...mapState([
-           'noticeList'
-       ])
-    },
-    // watch:{
-    //    noticeList(){
-    //     //    this.loading = false
-    //    }
-    // },
+    
     methods:{
-       ...mapActions([
-           'getNoticeList'
-       ]),
+    
        loadMore:function(){
          this.loading = true
          this.getNoticeList()
          
        },
+       changeActive:function(value,params){
+           this.isActive = value
+           this.posLeft = (100/this.navList.length/4)+(100/this.navList.length*(value))
+           this.getNoticeList(value,params)
+       },
+       getNoticeList(value,params){
+           let data ={
+  
+           }
+           fetch('get', `/announcements?include=creator`,data).then(res => {
+               this.noticeList = res.data
+           })
+       }
 
     }
 }
@@ -75,9 +92,22 @@ export default {
         display: flex;
         height: 0.96rem;
         line-height: .96rem;
+        background-color:#fff;
+        position: relative;
         li{ 
             flex: 1;
             text-align: center;
+        }
+        .active{
+            color:#3F51B5;
+        }
+        .active-line{
+            background-color:#3F51B5;
+            height: 1px;
+            
+            position: absolute;
+            bottom: 0px;
+            
         }
     }
     .nav-ul{
@@ -85,7 +115,10 @@ export default {
        li{ 
            background-color:#fff;
            padding:0.2rem 0.4rem 0.32rem 0.4rem;
-           border-bottom:1px solid #ECECEC ;
+           border-top:1px solid #ECECEC ;
+           &:hover{
+               background-color:#F9F9F9;
+           }
            .nav-title{
                margin-bottom:0.3rem;
            }
@@ -95,7 +128,8 @@ export default {
            }
            img{
                 width:0.48rem;
-                height:0.48rem
+                height:0.48rem;
+                border-radius: 50%;
            }
            .details{
                .name{

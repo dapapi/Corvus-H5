@@ -28,7 +28,8 @@ axios.interceptors.request.use((config) => {
     // if(flag == true){
     //   config.data = qs.stringify(config.data)
     // }
-    config.data = qs.stringify(config.data)
+    // config.data = qs.stringify(config.data)
+    console.log(typeof config.data)
   }
   return config
 }, (error) => {
