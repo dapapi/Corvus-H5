@@ -148,12 +148,21 @@ export default {
   },
   //项目审批流程
   getApproval({commit},params) {
-
     fetch('get', `/approval_instances/${params.id}/chains`).then(res => {
       // console.log(res)
       commit('setApproval', res.data)
     })
-
-
+  },
+  // 获取客户信息
+  getClientDetail ({ commit }, params) {
+    fetch('get', `/clients/${params.id}`,{include: 'principal,creator'}, ).then(res => {
+      commit('setClientDetail', res.data)
+    })
+  },
+  // 获取销售线索概况
+  getTrailDetail ({ commit }, params) {
+    fetch('get',`/trails/${params.id}`,{include: 'principal,client,contact,starexceptions,bloggerexceptions,starrecommendations,bloggerrecommendations,project'}).then(res => {
+      commit('setTrailDetail', res.data)
+    })
   }
 }

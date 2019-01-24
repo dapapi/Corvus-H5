@@ -4,8 +4,9 @@
       <Field label="品牌名称" v-model="brand" />
       <Cell title="公司名称" @click.native="changeState('clientsVisible', !clientsVisible)" :value="clientName" isLink></Cell>
       <Field label="线索名称" v-model="title"></Field>
-      <Cell title="线索来源" :value="resourceTypeName"></Cell>
-      <Cell title="线索来源人员"></Cell>
+      <Cell title="线索来源" @click.native="changeState('trailVisible', !trailVisible)" :value="resourceTypeName" isLink></Cell>
+      <Selector :visible="trailVisible" :data="trailOriginArr" @change="checkTrailOrigin" />
+      <Field v-if="resourceTypeNum < 6 && resourceTypeNum > 0" v-model="resourceTypeDetail"></Field>
       <Cell title="行业" @click.native="changeState('industryVisible', !industryVisible)" :value="industryName" isLink></Cell>
       <Cell title="负责人" :value="principalName"></Cell>
       <Cell title="目标艺人" :value="expectationsName" @click.native="changeState('expectationsVisible', !expectationsVisible)" isLink></Cell>
@@ -16,6 +17,7 @@
       <Field label="联系人电话" v-model="contact.phone"></Field>
       <Field label="销售进展" disabled v-model="salesProgressText"></Field>
       <Field label="预计订单收入" v-model="fee"></Field>
+      <!-- papi的可以锁价 -->
       <Cell title="是否锁价" isLink></Cell>
       <Field label="备注" v-model="desc"></Field>
     </template>
@@ -62,15 +64,19 @@ export default {
       isAddClients: false,
       industryVisible: false,
       taskLevelArr: config.taskLevelArr,
+      trailOriginArr: config.trailOrigin,
       levelVisible: false,
       expectationsVisible: false,
       recommendationsVisible: false,
+      trailVisible: false,
       title: '', // 线索名称
       brand: '', // 品牌名称
       clientInfo: '', // 公司id
       clientName: '', // 公司名称
       resourceType: '', // 线索来源, 不同来源对应不同来源人员
       resourceTypeName: '', // 线索来源
+      resourceTypeDetail: '',
+      resourceTypeNum: 0,
       recommendations: [], // 推荐艺人
       recommendationsName: [], // 推荐艺人
       expectations: [], // 目标艺人
@@ -197,6 +203,13 @@ export default {
       })
       this.recommendationsName = recommendationsName
       this.recommendations = recommendations
+    },
+    // 选择线索来源
+    checkTrailOrigin (data) {
+      // console.log(data)
+      this.trailVisible = !this.trailVisible
+      this.resourceTypeName = data.name
+      this.resourceTypeNum = data.value
     }
   }
 }

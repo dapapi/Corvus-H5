@@ -79,5 +79,13 @@ export default {
   },
   setApproval(state,data){
     state.approvalProgress = data
+  },
+  // 设置客户详情
+  setClientDetail (state, data) {
+    state.clientDetail = data
+  },
+  //
+  setTrailDetail (state, data) {
+    state.trailDetail = data
   }
 }
