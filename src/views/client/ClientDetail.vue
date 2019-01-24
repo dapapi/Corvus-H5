@@ -108,7 +108,6 @@ export default {
     }
   }
   .line {
-    width: 100%;
     height: 0;
     margin: 0 .2rem;
     border-bottom: 1px solid #D8D8D8;

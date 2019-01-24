@@ -399,5 +399,16 @@ export default {
       value: 2
     },
   ],
+  // 是否锁价
+  lockArr: [
+    {
+      name: '否',
+      value: 2
+    },
+    {
+      name: '是',
+      value: 1
+    }
+  ],
 }
 

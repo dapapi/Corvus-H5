@@ -13,17 +13,23 @@
       <span class="left">负责人：</span>
       <span class="right">{{ trailDetail.principal && trailDetail.principal.data.name }}</span>
     </div>
-     <div v-if="!isPapi" class="item">
+     <div v-if="trailDetail.type !== 4" class="item">
       <span class="left">预计费用：</span>
       <span class="right"></span>
     </div>
     <div class="item">
       <span class="left">目标艺人：</span>
-      <span class="right"></span>
+      <span class="right">
+        {{ trailDetail.bloggerexceptions && trailDetail.bloggerexceptions.data.map(n => n.nickname).join('、') }}
+        {{ trailDetail.starexceptions && trailDetail.starexceptions.data.map(n => n.nickname).join('、') }}
+      </span>
     </div>
     <div class="item">
       <span class="left">推荐艺人：</span>
-      <span class="right"></span>
+      <span class="right">
+         {{ trailDetail.bloggerrecommendations && trailDetail.bloggerrecommendations.data.map(n => n.nickname).join('、') }}
+         {{ trailDetail.starrecommendations && trailDetail.starrecommendations.data.map(n => n.nickname).join('、') }}
+      </span>
     </div>
     <div class="item">
       <span class="left">优先级：</span>
@@ -33,9 +39,11 @@
       <span class="left">行业：</span>
       <span class="right">{{ trailDetail.industry }}</span>
     </div>
-    <div class="item" v-if="isPapi">
+    <div class="item" v-if="trailDetail.type === 4">
       <span class="left">是否锁价：</span>
-      <span class="right"></span>
+      <span class="right">
+        {{ trailDetail.lock_status && lockArr.find(n => (trailDetail.lock_status === 0 ? 2 : 1) === n.value).name}}
+      </span>
     </div>
     <template v-else>
       <div class="item">
@@ -91,7 +99,7 @@
       <span class="left">更新时间：</span>
       <span class="right">{{ trailDetail.last_updated_at }}</span>
     </div>
-    <template v-if="isPapi">
+    <template v-if="trailDetail.type === 4">
       <div class="item">
         <span class="left">锁价人：</span>
         <span class="right"></span>
@@ -113,10 +121,10 @@ export default {
   name: 'TaskDetail',
   data () {
     return {
-      isPapi: false,
       clientLevelArr: config.clientLevelArr,
       trailOrigin: config.trailOrigin,
-      taskLevelArr: config.taskLevelArr
+      taskLevelArr: config.taskLevelArr,
+      lockArr: config.lockArr
     }
   },
   mounted () {
@@ -164,7 +172,6 @@ export default {
     }
   }
   .line {
-    width: 100%;
     height: 0;
     margin: 0 .2rem;
     border-bottom: 1px solid #D8D8D8;
