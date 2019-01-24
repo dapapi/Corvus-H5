@@ -159,5 +159,12 @@ export default {
       console.log(res)
       commit('setClientDetail', res.data)
     })
+  },
+  // 获取销售线索概况
+  getTrailDetail ({ commit }, params) {
+    fetch('get',`/trails/${params.id}`,{include: 'principal,client,contact,starexceptions,bloggerexceptions,starrecommendations,bloggerrecommendations,project'}).then(res => {
+      console.log(res)
+      commit('setTrailDetail', res.data)
+    })
   }
 }

@@ -23,5 +23,7 @@ export default {
   projectDetailMeta:{},//项目详情type字段
   approvalProgress:[],//项目审批
   // 客户
-  clientDetail: {}
+  clientDetail: {},
+  // 线索
+  trailDetail: {}
 }
