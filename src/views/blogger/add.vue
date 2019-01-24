@@ -134,7 +134,7 @@ export default {
         if(this.$route.params.id){
             this.getBlog()
         }
-        window.addArtist = this.addArtist
+        window.addBlog = this.addBlog
     },
     methods:{
         ...mapActions([
