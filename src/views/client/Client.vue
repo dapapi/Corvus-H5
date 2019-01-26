@@ -6,7 +6,7 @@
     <Cell title="地区" @click.native="changeState('regionVisible', !regionVisible)" :value="region" isLink></Cell>
     <Regional :visible="regionVisible" @change="checkRegional" />
     <Field label="详细地址" v-model="detailAddress" />
-    <Cell title="负责人" isLink></Cell>
+    <Cell title="负责人" :value="principalName" isLink></Cell>
     <Field label="联系人" v-model="contactName" />
     <Cell title="关键决策人" @click.native="changeState('keyVisible', !keyVisible)" :value="isKey" isLink></Cell>
     <Selector :visible="keyVisible" :data="yesOrNoArr" @change="checkKey" />
@@ -21,6 +21,7 @@
 <script>
 import config from '@/utils/config'
 import fetch from '@/utils/fetch'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -44,11 +45,55 @@ export default {
       city: '',
       area: '',
       region: '', // 地区
-      scale: '' // 规模
+      scale: '', // 规模
+      principalName: '' // 负责人
+    }
+  },
+
+  computed: {
+    ...mapState([
+      'clientDetail',
+      'clientContact'
+    ])
+  },
+  mounted () {
+    if (this.$route.name === 'client/edit') {
+      this.getClientInfo()
+      this.getClientContactInfo()
+    }
+  },
+
+  watch: {
+    clientDetail () {
+      console.log(this.clientDetail)
+      const clientDetail = this.clientDetail
+      this.companyName = clientDetail.company
+      this.clientLevel = this.clientLevelArr.find(n => n.value === clientDetail.grade).name
+      if (clientDetail.province) {
+        this.region = clientDetail.province + '-' + clientDetail.city + '-' + clientDetail.district
+      }
+      this.detailAddress = clientDetail.address
+      // this.contactName = clientDetail.
+      // this.contactPhone = 
+      this.scale = this.clientScaleArr.find(n => n.value === clientDetail.size).name
+      this.desc = clientDetail.desc
+      this.principalName = clientDetail.principal && clientDetail.principal.data.name
+    },
+    clientContact () {
+      console.log(this.clientContact)
+      if (this.clientContact.length > 0) {
+        this.contactName = this.clientContact[0].name
+        this.contactPhone = this.clientContact[0].phone
+        this.isKey = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).name
+      }
     }
   },
 
   methods: {
+    ...mapActions([
+      'getClientDetail',
+      'getClientContact'
+    ]),
     changeState (name, value) {
       this[name] = value
     },
@@ -98,6 +143,20 @@ export default {
       if (data) {
         this.region = data.join('-')
       }
+    },
+    // 获取客户信息
+    getClientInfo () {
+      const params = {
+        id: this.$route.params.id
+      }
+      this.getClientDetail(params)
+    },
+    // 获取联系人
+    getClientContactInfo () {
+      const params = {
+        id: this.$route.params.id
+      }
+      this.getClientContact(params)
     }
   }
 }

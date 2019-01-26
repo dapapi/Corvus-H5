@@ -215,6 +215,11 @@ export default {
       }
       console.log(params)
       // this.addTask(params)
+      if (this.$route.name === 'task/addSubTask') {
+        // 执行添加子任务
+      } else {
+        // 执行添加任务
+      }
     },
     getTaskDetail () {
       const params = {}

@@ -27,6 +27,11 @@ export default new Router({
       component: () => import('./views/task/Task.vue')
     },
     {
+      path: '/task/add/:id',
+      name: 'task/addSubTask',
+      component: () => import('./views/task/Task.vue')
+    },
+    {
       path: '/task/detail/:id',
       name: 'task/detail',
       component: () => import('./views/task/TaskDetail.vue')
@@ -113,7 +118,7 @@ export default new Router({
       component: () => import('./views/client/Client.vue')
     },
     {
-      path: '/client/edit:id',
+      path: '/client/edit/:id',
       name: 'client/edit',
       component: () => import('./views/client/Client.vue')
     },

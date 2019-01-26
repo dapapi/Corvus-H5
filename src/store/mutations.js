@@ -84,7 +84,10 @@ export default {
   setClientDetail (state, data) {
     state.clientDetail = data
   },
-  //
+  setClientContact (state, data) {
+    state.clientContact = data
+  },
+  // 设置线索详情
   setTrailDetail (state, data) {
     state.trailDetail = data
   }

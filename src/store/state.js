@@ -24,6 +24,7 @@ export default {
   approvalProgress:[],//项目审批
   // 客户
   clientDetail: {},
+  clientContact: [], // 客户中联系人列表
   // 线索
   trailDetail: {}
 }

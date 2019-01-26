@@ -159,6 +159,13 @@ export default {
       commit('setClientDetail', res.data)
     })
   },
+  // 获取客户联系人
+  getClientContact ({ commit }, params) {
+    fetch('get', `clients/${params.id}/contacts`).then(res => {
+      console.log(res)
+      commit('setClientContact', res.data)
+    })
+  },
   // 获取销售线索概况
   getTrailDetail ({ commit }, params) {
     fetch('get',`/trails/${params.id}`,{include: 'principal,client,contact,starexceptions,bloggerexceptions,starrecommendations,bloggerrecommendations,project'}).then(res => {
