@@ -1,6 +1,10 @@
 <template>
   <div>
     <template v-if="!clientsVisible && !isAddClients && !industryVisible && !expectationsVisible && !recommendationsVisible">
+      <template v-if="types !== 4">
+        <Cell title="合作类型" @click.native="changeState('cooperationVisible', !cooperationVisible)" :value="cooperationType" isLink></Cell>
+        <Selector :visible="cooperationVisible" :data="cooperationTypeArr" @change="checkCooperation" />
+      </template>
       <Field label="品牌名称" v-model="brand" />
       <Cell title="公司名称" @click.native="changeState('clientsVisible', !clientsVisible)" :value="clientName" isLink></Cell>
       <Field label="线索名称" v-model="title"></Field>
@@ -15,11 +19,19 @@
       <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
       <Field label="联系人" v-model="contact.name"></Field>
       <Field label="联系人电话" v-model="contact.phone"></Field>
+      <template v-if="types !== 4">
+        <Cell title="线索状态" @click.native="changeState('statusVisible', !statusVisible)" :value="trailStatus" isLink></Cell>
+        <Selector :visible="statusVisible" :data="trailStatusArr" @change="checkStatus" />
+      </template>
       <Field label="销售进展" disabled v-model="salesProgressText"></Field>
       <Field label="预计订单收入" v-model="fee"></Field>
       <!-- papi的可以锁价 -->
-      <Cell title="是否锁价" isLink></Cell>
+      <template v-if="types === 4">
+        <Cell title="是否锁价" :value="lockName" @click.native="changeState('lockVisible', !lockVisible)" isLink></Cell>
+        <Selector :visible="lockVisible" :data="lockArr" @change="checkLock" />
+      </template>
       <Field label="备注" v-model="desc"></Field>
+      <Button @click="addNewTrail">add</Button>
     </template>
     <!-- 选择客户 -->
     <CheckList
@@ -55,32 +67,40 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import config from '@/utils/config'
+import fetch from '@/utils/fetch'
 
 export default {
   name: 'Task',
   data () {
     return {
+      cooperationVisible: false,
       clientsVisible: false,
       isAddClients: false,
       industryVisible: false,
+      statusVisible: false,
       taskLevelArr: config.taskLevelArr,
       trailOriginArr: config.trailOrigin,
+      lockArr: config.lockArr,
+      trailStatusArr: config.trailStatusArr,
+      cooperationTypeArr: config.cooperationTypeArr,
       levelVisible: false,
       expectationsVisible: false,
       recommendationsVisible: false,
       trailVisible: false,
+      lockVisible: false,
+      cooperationType: '', // 合作类型
       title: '', // 线索名称
       brand: '', // 品牌名称
-      clientInfo: '', // 公司id
+      client: {}, // 公司
       clientName: '', // 公司名称
       resourceType: '', // 线索来源, 不同来源对应不同来源人员
       resourceTypeName: '', // 线索来源
       resourceTypeDetail: '',
       resourceTypeNum: 0,
       recommendations: [], // 推荐艺人
-      recommendationsName: [], // 推荐艺人
+      recommendationsName: '', // 推荐艺人
       expectations: [], // 目标艺人
-      expectationsName: [], // 目标艺人数组
+      expectationsName: '', // 目标艺人数组
       contact: {
         name: '', // 联系人
         phone: '' // 联系人电话
@@ -94,7 +114,10 @@ export default {
       principalName: '', // 负责人
       priority: '', // 优先级
       priorityName: '', // 优先级
-      salesProgressText: '未确定合作' // 销售进展，新增为未确定合作
+      salesProgressText: '未确定合作', // 销售进展，新增为未确定合作
+      lockName: '', // 是否锁价
+      types: -1, // 1为影视项目，2为综艺项目，3为商务项目 4为papi项目
+      trailStatus: '', // 销售线索状态
     }
   },
   computed: {
@@ -102,7 +125,8 @@ export default {
       'clientsAll',
       'newClient',
       'industriesArr',
-      'starAndBlogger'
+      'starAndBlogger',
+      'trailDetail'
     ]),
   },
   watch: {
@@ -112,19 +136,68 @@ export default {
         this.client.company = this.newClient.company
         this.client.grade = this.newClient.grade
       }
+    },
+    trailDetail () {
+      console.log(this.trailDetail)
+      const trailDetail = this.trailDetail
+      this.cooperationType = this.cooperationTypeArr.find(n => n.value === trailDetail.cooperation_type).name
+      this.title = trailDetail.title
+      this.brand = trailDetail.brand
+      // client: {}, // 公司
+      this.clientName = trailDetail.client.data.company
+      this.resourceType = trailDetail.resource_type
+      this.resourceTypeName = this.trailOriginArr.find( n => n.value === trailDetail.resource_type).name
+      // resourceTypeDetail: '',
+      // resourceTypeNum: 0,
+      // recommendations: [], // 推荐艺人
+      this.recommendationsName = [
+        ...trailDetail.bloggerrecommendations.data.map(n => n.nickname),
+        ...trailDetail.starrecommendations.data.map(n => n.name)].join('、')
+
+      if (trailDetail.bloggerexpectations || trailDetail.starexpectations) {
+        this.expectationsName = [
+          ...trailDetail.bloggerexpectations.data.map(n => n.nickname),
+          ...trailDetail.starexpectations.data.map(n => n.name)].join('、')
+      }
+      // expectations: [], // 目标艺人
+      // expectationsName: '', // 目标艺人数组
+      this.contact = {
+        name: trailDetail.contact.data.name,
+        phone: trailDetail.contact.data.phone
+      },
+      this.fee = trailDetail.fee
+      this.desc = trailDetail.desc
+      this.industryName = trailDetail.industry
+      // industryId: '', // 行业id
+      // type: '', // 销售线索
+      // principalId: '', // 负责人
+      this.principalName = trailDetail.principal.data.name
+      this.priority = trailDetail.priority
+      this.priorityName = this.taskLevelArr.find(n => n.value === trailDetail.priority).name
+      // salesProgressText: '未确定合作', // 销售进展，新增为未确定合作
+      // lockName: '', // 是否锁价
+      this.types = trailDetail.type
+      this.trailStatus = this.trailStatusArr.find(n => n.value === trailDetail.status).name
     }
   },
   mounted () {
     this.getClients()
     this.getIndustries()
     this.getStarAndBlogger()
+    this.types = this.$route.query.type
+    // 提交按钮
+    window.submit = this.addNewTrail
+    if (this.$route.name === 'trail/edit') {
+      this.getTrailDetailInfo()
+    }
   },
   methods: {
     ...mapActions([
       'addTrail',
       'getClients',
       'getIndustries',
-      'getStarAndBlogger'
+      'getStarAndBlogger',
+      'getTrailDetail'
     ]),
     changeState (name, value) {
       this[name] = value
@@ -147,9 +220,13 @@ export default {
         type: this.type, // 销售线索
         principal_id: this.principalId, // 负责人
         priority: this.priority, // 优先级
-        priorityName: '' // 优先级
+        priorityName: '', // 优先级
+        status: this.trailStatus // 线索状态
       }
-      console.log(params)
+
+      fetch('post', '/trails', params).then(res => {
+        console.log(res)
+      })
     },
     // 选择客户
     seletedClient (data) {
@@ -173,7 +250,6 @@ export default {
       this.industryVisible = !this.industryVisible
       this.industryId = data.value
       this.industryName = data.label
-      console.log(data)
     },
     // 选择任务级别
     checkTaskLevel (data) {
@@ -190,7 +266,7 @@ export default {
         expectations.push(n.value)
         expectationsName.push(n.label)
       })
-      this.expectationsName = expectationsName
+      this.expectationsName = expectationsName.join('、')
       this.expectations = expectations
     },
     selectRecommendations (data) {
@@ -201,7 +277,7 @@ export default {
         recommendations.push(n.value)
         recommendationsName.push(n.label)
       })
-      this.recommendationsName = recommendationsName
+      this.recommendationsName = recommendationsName.join('、')
       this.recommendations = recommendations
     },
     // 选择线索来源
@@ -210,6 +286,29 @@ export default {
       this.trailVisible = !this.trailVisible
       this.resourceTypeName = data.name
       this.resourceTypeNum = data.value
+    },
+    // 选择锁价
+    checkLock (data) {
+      this.lockVisible = false
+      console.log(data)
+      this.lockName = data.name
+    },
+    // 合作类型
+    checkCooperation (data) {
+      this.cooperationVisible = !this.cooperationVisible
+      this.cooperationType = data.name
+    },
+    // 线索状态
+    checkStatus (data) {
+      this.statusVisible = !this.statusVisible
+      this.trailStatus = data.name
+    },
+    // 获取线索详情
+    getTrailDetailInfo () {
+      const params = {
+        id: this.$route.params.id
+      }
+      this.getTrailDetail(params)
     }
   }
 }

@@ -46,9 +46,9 @@ export default {
     },
     {
       name: 'C',
-      value: 0
-    }
-  ],
+      value: 4
+    },
+],
   // 性别
   genderArr: [{
         name: '男',
@@ -409,6 +409,104 @@ export default {
       name: '是',
       value: 1
     }
+  ],
+  // 合作类型
+  cooperationTypeArr: [
+    {
+      name: '代言',
+      value: 1
+    },
+    {
+      name: '合作',
+      value: 2
+    },
+    {
+      name: '活动',
+      value: 3
+    },
+    {
+      name: '微博',
+      value: 4
+    },
+    {
+      name: '抖音',
+      value: 5
+    },
+    {
+      name: '短期代言',
+      value: 6
+    },
+    {
+      name: '时装周',
+      value: 7
+    },
+    {
+      name: '未确定',
+      value: 8
+    }
+  ],
+  // 销售线索状态
+  trailStatusArr: [
+    {
+      name: '开始接洽',
+      value: 1,
+      color: '#00b0ff'
+    },
+    {
+      name: '主动拒绝',
+      value: 2,
+      color: '#9e9e9e'
+    },
+    {
+      name: '客户拒绝',
+      value: 3,
+      color: '#f44336'
+    },
+    {
+      name: '进入谈判',
+      value: 4,
+      color: '#00bcd4'
+    },
+    {
+      name: '意向签约',
+      value: 5,
+      color: '#f44336'
+    },
+    {
+      name: '签约中',
+      value: 6,
+      color: '#ff9800'
+    },
+    {
+      name: '签约完成',
+      value: 7,
+      color: '#4caf50'
+    },
+    {
+      name: '待执行',
+      value: 8,
+      color: '#ff9800'
+    },
+    {
+      name: '在执行',
+      value: 9,
+      color: '#00bcd4'
+    },
+    {
+      name: '已执行',
+      value: 10,
+      color: '#4caf50'
+    },
+    {
+      name: '客户回款',
+      value: 11,
+      color: '#9c27b0'
+    },
+    {
+      name: '客户反馈分析及项目复盘',
+      value: 12,
+      color: '#3f51b5'
+    },
   ],
 }
 
