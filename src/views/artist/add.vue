@@ -172,6 +172,7 @@ export default {
             this.getArtist()
         }
         window.addArtist = this.addArtist
+        // window.goback = this.goback  //返回
     },
     mounted () {
         

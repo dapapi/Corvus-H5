@@ -39,9 +39,9 @@
             
             </Cell>
             <Field label="备注" v-model="remark"></Field>
-            <div style='text-align:center'>
+            <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
-            </div>
+            </div> -->
         </div>
         <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" @change="seletedData"/>
     </div>
@@ -134,7 +134,7 @@ export default {
         if(this.$route.params.id){
             this.getBlog()
         }
-        window.addArtist = this.addArtist
+        window.addBlog = this.addBlog
     },
     methods:{
         ...mapActions([

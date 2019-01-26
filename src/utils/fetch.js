@@ -13,7 +13,7 @@ axios.defaults.headers.common['Access-Control-Expose-Headers'] = 'Location'
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Authorization'
 const token = window[config.tokenString] ? window[config.tokenString] : tempToken
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencodedcharset=UTF-8'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 axios.defaults.baseURL = config.apiUrl
 
 // POST传参序列化
@@ -29,8 +29,8 @@ axios.interceptors.request.use((config) => {
     // if(flag == true){
     //   config.data = qs.stringify(config.data)
     // }
-    // config.data = qs.stringify(config.data)
-    console.log(typeof config.data)
+    config.data = qs.stringify(config.data)
+    // console.log(typeof config.data)
   }
   return config
 }, (error) => {
