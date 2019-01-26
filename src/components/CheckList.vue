@@ -33,20 +33,27 @@ export default {
   },
   
   watch: {
-    
     checkedData () {
       const obj = this.selectorData.find(n => n.value === this.checkedData)
       this.$emit('change', obj)
     },
     selectedData(){
+      //去重
       if(this.multiple){
-          for (let i = 0; i < this.selectedData.length; i++) {
-            this.checkedArr.push(this.selectedData[i].value)
+          let arrCheck = []
+          for (let i = 0; i < this.checkedArr.length; i++) {
+            for (let t = 0; t < this.selectedData.length; t++) {
+               if(this.checkedArr[t]!=this.selectedData[i].value){
+                 arrCheck.push(this.selectedData[i].value)
+               }
+            }
           }
+          this.checkedArr.concat(arrCheck)
         }else{
           this.checkedData = this.selectedData.value
         }
     }
+    
   },
   methods:{
     changeShow(){
