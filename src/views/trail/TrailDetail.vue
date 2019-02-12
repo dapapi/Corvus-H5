@@ -15,20 +15,20 @@
     </div>
      <div v-if="trailDetail.type !== 4" class="item">
       <span class="left">预计费用：</span>
-      <span class="right"></span>
+      <span class="right">{{ trailDetail.fee }}</span>
     </div>
     <div class="item">
       <span class="left">目标艺人：</span>
       <span class="right">
         {{ trailDetail.bloggerexceptions && trailDetail.bloggerexceptions.data.map(n => n.nickname).join('、') }}
-        {{ trailDetail.starexceptions && trailDetail.starexceptions.data.map(n => n.nickname).join('、') }}
+        {{ trailDetail.starexpectations && trailDetail.starexpectations.data.map(n => n.name).join('、') }}
       </span>
     </div>
     <div class="item">
       <span class="left">推荐艺人：</span>
       <span class="right">
          {{ trailDetail.bloggerrecommendations && trailDetail.bloggerrecommendations.data.map(n => n.nickname).join('、') }}
-         {{ trailDetail.starrecommendations && trailDetail.starrecommendations.data.map(n => n.nickname).join('、') }}
+         {{ trailDetail.starrecommendations && trailDetail.starrecommendations.data.map(n => n.name).join('、') }}
       </span>
     </div>
     <div class="item">
@@ -47,12 +47,12 @@
     </div>
     <template v-else>
       <div class="item">
-        <span class="left">销售线索：</span>
-        <span class="right"></span>
+        <span class="left">线索状态：</span>
+        <span class="right">{{ trailDetail.status && trailStatusArr.find(n => n.value === trailDetail.status).name }}</span>
       </div>
       <div class="item">
         <span class="left">合作类型：</span>
-        <span class="right"></span>
+        <span class="right">{{ trailDetail.cooperation_type && cooperationTypeArr.find(n => n.value === trailDetail.cooperation_type).name }}</span>
       </div>
     </template>
     <div class="line"></div>
@@ -102,11 +102,11 @@
     <template v-if="trailDetail.type === 4">
       <div class="item">
         <span class="left">锁价人：</span>
-        <span class="right"></span>
+        <span class="right">{{ trailDetail.lockuser && trailDetail.lockuser.data.name }}</span>
       </div>
       <div class="item">
         <span class="left">锁价时间：</span>
-        <span class="right"></span>
+        <span class="right">{{ trailDetail.lock_at }}</span>
       </div>
     </template>
    
@@ -124,7 +124,9 @@ export default {
       clientLevelArr: config.clientLevelArr,
       trailOrigin: config.trailOrigin,
       taskLevelArr: config.taskLevelArr,
-      lockArr: config.lockArr
+      lockArr: config.lockArr,
+      trailStatusArr: config.trailStatusArr, // 线索状态
+      cooperationTypeArr: config.cooperationTypeArr // 合作类型
     }
   },
   mounted () {

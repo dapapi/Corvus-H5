@@ -11,11 +11,11 @@
     </div>
     <div class="item">
       <span class="left">负责人：</span>
-      <span class="right">{{ clientDetail.keyman }}</span>
+      <span class="right">{{ clientDetail.principal && clientDetail.principal.data.name }}</span>
     </div>
     <div class="item">
       <span class="left">地区：</span>
-      <span class="right">{{ clientDetail.province }} - {{ clientDetail.city }} - {{ clientDetail.district }}</span>
+      <span class="right">{{ clientDetail.province }} {{ clientDetail.city }} {{ clientDetail.district }}</span>
     </div>
     <div class="item">
       <span class="left">详细地址：</span>
@@ -45,7 +45,7 @@
     </div>
     <div class="item">
       <span class="left">最近更新时间：</span>
-      <span class="right">{{ clientDetail.last_updated_at }}</span>
+      <span class="right">{{ clientDetail.updated_at }}</span>
     </div>
   </div>
 </template>

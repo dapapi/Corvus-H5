@@ -168,7 +168,7 @@ export default {
   },
   // 获取销售线索概况
   getTrailDetail ({ commit }, params) {
-    fetch('get',`/trails/${params.id}`,{include: 'principal,client,contact,starexceptions,bloggerexceptions,starrecommendations,bloggerrecommendations,project'}).then(res => {
+    fetch('get',`/trails/${params.id}`,{include: 'principal,client,lockuser,contact,starexpectations,bloggerexpectations,starrecommendations,bloggerrecommendations,project'}).then(res => {
       commit('setTrailDetail', res.data)
     })
   }

@@ -6,7 +6,10 @@
       <span class="right">
         <template v-if="taskDetail.resource">
           {{ taskDetail.resource.data.resource.data.title }} -
-          {{ taskDetail.resource.data.resourceable.data.name }}
+          {{ taskDetail.resource.data.resourceable.data.name ||
+            taskDetail.resource.data.resourceable.data.title || 
+            taskDetail.resource.data.resourceable.data.nickname || 
+            taskDetail.resource.data.resourceable.data.company }}
         </template>
       </span>
     </div>
@@ -16,7 +19,8 @@
     </div>
     <div class="item">
       <span class="left">参与人：</span>
-      <span class="right">xxxxxx</span>
+      <span class="right">{{ taskDetail.participants && taskDetail.participants.data && taskDetail.participants.data.length > 0 
+        ? taskDetail.participants.data.map(n => n.name).join('、') : '' }}</span>
     </div>
     <div class="item">
       <span class="left">开始时间：</span>
