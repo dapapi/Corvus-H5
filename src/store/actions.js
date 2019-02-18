@@ -27,10 +27,6 @@ export default {
       commit('setTaskDetail', res.data)
     })
   },
-  // 添加任务
-  addTask (params) {
-    fetch('post', '/tasks', params)
-  },
   // 添加销售线索
   addTrail (params) {
     fetch('post', '/trails', params)

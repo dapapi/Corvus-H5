@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="display: inline-block;">
         <label :for="`fileUploader${mulId}`">
             <slot></slot>
         </label>

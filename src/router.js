@@ -62,7 +62,6 @@ export default new Router({
       component: () => import('./views/base/Selector.vue')
     },
     //艺人
-
     {
       path: '/artist/add',
       name: 'artistAdd',

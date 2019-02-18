@@ -27,9 +27,11 @@
         type="datetime"
         @confirm="endConfirm"
       />
-      <Field type="textarea" rows="1" label="任务说明" v-model="desc" />
+      <Field type="textarea" ref='textarea' rows="1" label="任务说明" v-model="desc" />
       <div class="attachment">
-        <FileUpload />
+        <FileUpload>
+          <div class="upload">+</div>
+        </FileUpload>
       </div>
     </template>
     <div v-else class="resource">
@@ -39,6 +41,7 @@
         @change="seletedData"
       />
     </div>
+    <Button @click="addNewTask">保存</Button>
   </div>
 </template>
 
@@ -46,6 +49,7 @@
 import { mapState, mapActions, mapMutations } from 'vuex'
 import config from '@/utils/config'
 import moment from 'moment'
+import fetch from '@/utils/fetch'
 
 export default {
   name: 'Task',
@@ -71,7 +75,8 @@ export default {
       priorityName: '',
       startTime: '',
       endTime: '',
-      desc: '' // 任务描述
+      desc: '', // 任务描述
+      taskId: this.$route.params.id, // 任务id
     }
   },
   computed: {
@@ -111,15 +116,21 @@ export default {
       this.startTime = taskDetail.start_at
       this.endTime = taskDetail.stop_at
       this.desc = taskDetail.desc
+    },
+    // 监听textara的变化,自动改变textarea的高度
+    desc () {
+      const el = this.$refs.textarea.$el.querySelector('textarea')
+      el.style.height = el.scrollHeight - 4 + 'px'
     }
   },
   mounted () {
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
-    window.addTasks = this.addNewTask()
-    console.log(this.$route.params.id)
-    if (this.$route.params.id) {
+    window.save = this.addNewTask // 保存
+    window.edit = this.editTask // 编辑
+
+    if (this.taskId) {
       this.getTaskDetail()
     }
   },
@@ -137,7 +148,6 @@ export default {
       'getResourceList',
       'getRelatedResources',
       'getTaskTypes',
-      'addTask',
       'getTasks'
     ]),
     changeVisible () {
@@ -198,6 +208,7 @@ export default {
     endConfirm (date) {
       this.endTime = moment(date).format('YYYY-MM-DD HH-SS')
     },
+    // 新建任务，子任务
     addNewTask () {
       const params = {
         type: this.taskType,
@@ -217,16 +228,43 @@ export default {
       // this.addTask(params)
       if (this.$route.name === 'task/addSubTask') {
         // 执行添加子任务
+        fetch('post', '/tasks/' + this.taskId + '/subtask', data).then(function (response) {
+          // 回调app原生方法
+        })
       } else {
         // 执行添加任务
+        fetch('post', '/tasks', params).then(res => {
+          console.log(res)
+          // 回调app原生方法
+        })
       }
+    },
+    // 编辑任务，子任务
+    editTask () {
+      const params = {
+        type: this.taskType,
+        title: this.title,
+        principal_id: this.principalId,
+        participant_ids: this.participantIds,
+        priority: this.priority,
+        start_at: this.startTime,
+        end_at: this.endTime,
+        desc: this.desc
+      }
+      if (this.resourceName && this.resourceableName) {
+        params.resource_type = this.resourceId
+        params.resourceable_id = this.resourceableId
+      }
+      fetch('put', '/tasks/' + this.taskId, params).then(res => {
+        // 回调app原生方法
+      })
     },
     getTaskDetail () {
       const params = {}
       params.data = {
         include: 'creator,principal,pTask,tasks.type,resource.resourceable,resource.resource,affixes,participants'
       }
-      params.id = this.$route.params.id
+      params.id = this.taskId
       this.getTasks(params)
     }
   }
@@ -245,5 +283,14 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+}
+.upload {
+  width: 1rem;
+  height: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  border: 1px dashed #E0E0E0;
+  color: #E0E0E0;
+  font-size: .8rem;
 }
 </style>

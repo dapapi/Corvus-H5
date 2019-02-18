@@ -49,6 +49,9 @@ body {
 .mint-field.is-textarea .mint-cell-value {
   padding: .2rem .2rem .2rem 0;
 }
+.mint-cell-value textarea {
+  resize: none;
+}
 .iconfont {
   font-size: .28rem;
   margin: .12rem;
