@@ -46,7 +46,9 @@ export default {
       area: '',
       region: '', // 地区
       scale: '', // 规模
-      principalName: '' // 负责人
+      principalName: '', // 负责人
+      clientId: this.$route.params.id,
+      type: this.$route.query.type,
     }
   },
 
@@ -61,6 +63,8 @@ export default {
       this.getClientInfo()
       this.getClientContactInfo()
     }
+    window.save = this.addClient
+    window.edit = this.editClient
   },
 
   watch: {
@@ -77,6 +81,7 @@ export default {
       // this.contactPhone = 
       this.scale = this.clientScaleArr.find(n => n.value === clientDetail.size).name
       this.desc = clientDetail.desc
+      this.type = clientDetail.type
       this.principalName = clientDetail.principal && clientDetail.principal.data.name
     },
     clientContact () {
@@ -115,7 +120,7 @@ export default {
     // 新增客户
     addClient () {
       let data = {
-        type: '', // 需要移动端传入，新增客户的类型
+        type: this.type, // 需要移动端传入，新增客户的类型
         company: this.companyName,
         grade: this.clientLevel,
         province: this.province,
@@ -135,6 +140,32 @@ export default {
       }
       fetch('post', '/clients', data).then(res => {
         console.log(res)
+        // 回调
+      })
+    },
+    // 编辑客户
+    editClient () {
+      let data = {
+        type: this.type, // 需要移动端传入，新增客户的类型
+        company: this.companyName,
+        grade: this.clientLevel,
+        province: this.province,
+        city: this.city,
+        district: this.area,
+        principalId: '',
+        address: this.detailAddress,
+        contact: {
+            name: this.contactName,
+            phone: this.contactPhone,
+            position: this.position,
+            type: this.isKey,
+        },
+        // keyman: this.clientDecision,
+        size: this.scale,
+        desc: this.desc
+      }
+      fetch('put', '/clients/' + this.clientId, data).then(res => {
+        // 回调
       })
     },
     // 选择地区
@@ -147,14 +178,14 @@ export default {
     // 获取客户信息
     getClientInfo () {
       const params = {
-        id: this.$route.params.id
+        id: this.clientId
       }
       this.getClientDetail(params)
     },
     // 获取联系人
     getClientContactInfo () {
       const params = {
-        id: this.$route.params.id
+        id: this.clientId
       }
       this.getClientContact(params)
     }

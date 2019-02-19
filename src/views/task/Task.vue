@@ -129,8 +129,7 @@ export default {
     // 赋值给浏览器
     window.save = this.addNewTask // 保存
     window.edit = this.editTask // 编辑
-
-    if (this.taskId) {
+    if (this.$route.name === 'task/edit') {
       this.getTaskDetail()
     }
   },

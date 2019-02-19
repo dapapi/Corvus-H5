@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="!clientsVisible && !isAddClients && !industryVisible && !expectationsVisible && !recommendationsVisible">
-      <template v-if="types !== 4">
+      <template v-if="type !== 4">
         <Cell title="合作类型" @click.native="changeState('cooperationVisible', !cooperationVisible)" :value="cooperationType" isLink></Cell>
         <Selector :visible="cooperationVisible" :data="cooperationTypeArr" @change="checkCooperation" />
       </template>
@@ -19,14 +19,14 @@
       <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
       <Field label="联系人" v-model="contact.name"></Field>
       <Field label="联系人电话" v-model="contact.phone"></Field>
-      <template v-if="types !== 4">
+      <template v-if="type !== 4">
         <Cell title="线索状态" @click.native="changeState('statusVisible', !statusVisible)" :value="trailStatus" isLink></Cell>
         <Selector :visible="statusVisible" :data="trailStatusArr" @change="checkStatus" />
       </template>
       <Field label="销售进展" disabled v-model="salesProgressText"></Field>
       <Field label="预计订单收入" v-model="fee"></Field>
       <!-- papi的可以锁价 -->
-      <template v-if="types === 4">
+      <template v-if="type === 4">
         <Cell title="是否锁价" :value="lockName" @click.native="changeState('lockVisible', !lockVisible)" isLink></Cell>
         <Selector :visible="lockVisible" :data="lockArr" @change="checkLock" />
       </template>
@@ -116,7 +116,7 @@ export default {
       priorityName: '', // 优先级
       salesProgressText: '未确定合作', // 销售进展，新增为未确定合作
       lockName: '', // 是否锁价
-      types: -1, // 1为影视项目，2为综艺项目，3为商务项目 4为papi项目
+      type: -1, // 1为影视项目，2为综艺项目，3为商务项目 4为papi项目
       trailStatus: '', // 销售线索状态
     }
   },
@@ -176,7 +176,7 @@ export default {
       this.priorityName = this.taskLevelArr.find(n => n.value === trailDetail.priority).name
       // salesProgressText: '未确定合作', // 销售进展，新增为未确定合作
       // lockName: '', // 是否锁价
-      this.types = trailDetail.type
+      this.type = trailDetail.type
       this.trailStatus = this.trailStatusArr.find(n => n.value === trailDetail.status).name
     }
   },
@@ -184,9 +184,10 @@ export default {
     this.getClients()
     this.getIndustries()
     this.getStarAndBlogger()
-    this.types = this.$route.query.type
+    this.type = this.$route.query.type
     // 提交按钮
-    window.submit = this.addNewTrail
+    window.save = this.addNewTrail
+    window.edit = this.editTrail
     if (this.$route.name === 'trail/edit') {
       this.getTrailDetailInfo()
     }
@@ -226,6 +227,31 @@ export default {
 
       fetch('post', '/trails', params).then(res => {
         console.log(res)
+      })
+    },
+    editTrail () {
+      const params = {
+        title: this.title, // 线索名称
+        brand: this.brand, // 品牌名称
+        client: this.client, // 公司id
+        resource_type: this.resourceType, // 线索来源, 不同来源对应不同来源人员
+        recommendations: this.recommendations, // 推荐艺人
+        expectations: this.expectations, // 目标艺人
+        contact: {
+          name: this.contact.name, // 联系人
+          phone: this.contact.phone // 联系人电话
+        },
+        fee: this.fee, // 预计订单收入
+        desc: this.desc, // 备注
+        industry_id: this.industryId, // 行业
+        type: this.type, // 销售线索
+        principal_id: this.principalId, // 负责人
+        priority: this.priority, // 优先级
+        priorityName: '', // 优先级
+        status: this.trailStatus // 线索状态
+      }
+      fetch('put', '/trails/' + this.trailId, params).then(() => {
+        // 回调
       })
     },
     // 选择客户
