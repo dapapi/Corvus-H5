@@ -3,7 +3,7 @@
         <label :for="`fileUploader${mulId}`">
             <slot></slot>
         </label>
-        <input type="file" @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false">
+        <input type="file" accept="image/*" capture="camera"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false">
     </div>
 </template>
 
