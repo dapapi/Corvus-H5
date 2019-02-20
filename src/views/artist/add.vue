@@ -13,6 +13,7 @@
                 v-model="defaultDate"
                 :startDate="startDate"
                 @confirm="bornConfirm"
+                @visible-change="handleValueChange"
             />
             <!--艺人来源-->
             <Cell title="艺人来源" is-link @click.native="changeState('popupArtistSource',!popupArtistSource)" :value="artistSource.name"></Cell>
@@ -68,6 +69,9 @@ import config from '@/utils/config.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
 import { Toast } from 'mint-ui'
+const handler = function(e) {
+    e.preventDefault();
+}
 
 export default {
     data(){
@@ -360,6 +364,13 @@ export default {
             }
             //id存在 编辑  否则添加
             id?this.putArtist(params):this.postArtist(params)
+        },
+        handleValueChange: function (val) {
+            if(val) {
+                document.getElementsByTagName('body')[0].addEventListener('touchmove', this.handler, { passive: false });
+            } else {
+                document.getElementsByTagName('body')[0].addEventListener('touchmove', this.handler, { passive: false });
+            }
         }
     }
 }

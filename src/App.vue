@@ -73,7 +73,8 @@ body {
 textarea:disabled, input:disabled {
   background-color: #fff;
 }
-
+//解决datePicker  有的手机不显示问题
+.picker-items{width:100%}
 /*公共样式*/
 ul,li,p{
   padding:0px;
@@ -104,4 +105,5 @@ a{
   }
 
 }
+
 </style>
