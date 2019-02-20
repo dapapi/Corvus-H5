@@ -15,6 +15,7 @@
                 @confirm="bornConfirm"
                 @visible-change="handleValueChange"
             />
+            <div>测试更新</div>
             <!--艺人来源-->
             <Cell title="艺人来源" is-link @click.native="changeState('popupArtistSource',!popupArtistSource)" :value="artistSource.name"></Cell>
             <Selector :visible="popupArtistSource" :data="artistSourceArr" @change="changeArtistSource" />
@@ -366,9 +367,12 @@ export default {
             id?this.putArtist(params):this.postArtist(params)
         },
         handleValueChange: function (val) {
+            alert('更新')
             if(val) {
+                alert('测试')
                 document.getElementsByTagName('body')[0].addEventListener('touchmove', this.handler, { passive: false });
             } else {
+                
                 document.getElementsByTagName('body')[0].addEventListener('touchmove', this.handler, { passive: false });
             }
         }
