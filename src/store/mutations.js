@@ -72,6 +72,9 @@ export default {
   setNoticeDetail(state,data){
     state.noticeDetail = data
   },
+  setNoticeType(state,data){
+    state.noticeType = data
+  },
   //项目详情
   setProjectDetail(state,data){
     state.projectDetail = data.data

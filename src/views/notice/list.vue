@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <ul class="nav">
             <li @click="changeActive(item.value,item.params)" :class="isActive == item.value?'active':''" v-for="(item,index) in navList" :key="index">{{item.name}}</li>
             <div class="active-line" :style="{left:`${posLeft}%`,width:`${activeLineWidth}%`}"></div>
@@ -7,7 +7,9 @@
         <ul
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="loading"
-        infinite-scroll-distance="10" class="nav-ul">
+        infinite-scroll-distance="10" class="nav-ul"
+        
+        >
         <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive ">
             <router-link :to="`/notice/detail/${item.id}`">
                 <div class="nav-title">
@@ -15,9 +17,9 @@
                     <span class="title">{{item.title}}</span>
                 </div>
                 <div class="clearfix details">
-                    <img class="float-left picImg" :src="item.creator.data.icon_url" alt="">
-                    <span class="float-left name">{{item.creator.data.name}}</span>
-                    <span class="float-left type">{{classifyArr.find(classifyArr => classifyArr.value == item.classify).name}}</span>
+                    <img class="float-left picImg" v-if="item.creator" :src="item.creator.data.icon_url" alt="">
+                    <span class="float-left name" v-if="item.creator">{{item.creator.data.name}}</span>
+                    <span class="float-left type">{{noticeType.find(notice => notice.id == item.classify).name}}</span>
                     <span class="float-right time">{{item.created_at}}</span>
                 </div>
             </router-link>
@@ -36,7 +38,7 @@ export default {
     
     data(){
         return {
-            classifyArr:config.classifyArr,
+            // classifyArr:config.classifyArr,
             loading:false,
             noticeList:[],
             navList:[
@@ -55,7 +57,14 @@ export default {
             activeLineWidth:0,//选中状态的宽度
         }
     },
-    
+    computed:{
+        ...mapState([
+            'noticeType'
+        ])
+    },
+    created(){
+        this.getNoticeType()
+    },
     mounted(){
         this.isActive = this.navList[0].value
         this.posLeft = (100/this.navList.length/4)
@@ -64,7 +73,9 @@ export default {
     },
     
     methods:{
-    
+       ...mapActions([
+            'getNoticeType'
+        ]),
        loadMore:function(){
          this.loading = true
          this.getNoticeList()

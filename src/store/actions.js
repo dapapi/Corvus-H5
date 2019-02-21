@@ -135,6 +135,12 @@ export default {
       commit('setNoticeDetail', res.data)
     })
   },
+  //获取公告类型
+  getNoticeType({commit}){
+    fetch('get', `/announcements/Classify`).then(res => {
+      commit('setNoticeType', res.data)
+    })
+  },
   //获取项目详情
   getProjectDetail({commit},params){
     fetch('get', `/projects/${params.id}`,params.data).then(res => {

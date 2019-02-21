@@ -8,7 +8,7 @@
             <div class="clearfix details">
                 <img v-if="noticeDetail.creator" class="float-left" :src="noticeDetail.creator.data.icon_url" alt="">
                 <span v-if="noticeDetail.creator" class="float-left name">{{noticeDetail.creator.data.name}}</span>
-                <span v-if="noticeDetail.classify" class="float-left type">{{classifyArr.find(classifyArr => classifyArr.value == noticeDetail.classify).name}}</span>
+                <span v-if="noticeDetail.classify" class="float-left type">{{noticeType.find(notice => notice.id == noticeDetail.classify).name}}</span>
                 <span class="float-right time">{{noticeDetail.created_at}}</span>
             </div>
         </div>
@@ -21,21 +21,26 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
     data(){
         return {
-            classifyArr:config.classifyArr
+            // classifyArr:config.classifyArr
         }
     },
     created(){
+       
+       this.getNoticeType()
+    },
+    mounted(){
        this.getNoticeDetail({id:this.$route.params.id})
     },
-    
     computed:{
         ...mapState([
-            'noticeDetail'
+            'noticeDetail',
+            'noticeType'
         ])
     },
     methods:{
         ...mapActions([
-            'getNoticeDetail'
+            'getNoticeDetail',
+            'getNoticeType'
         ])
     }
 }

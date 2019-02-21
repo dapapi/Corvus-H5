@@ -18,6 +18,7 @@ export default {
   //公告
   noticeList:[],//公告列表
   noticeDetail:{},//公告详情
+  noticeType:[],//公告类型
   //项目
   projectDetail: {}, //项目详情
   projectDetailMeta:{},//项目详情type字段
