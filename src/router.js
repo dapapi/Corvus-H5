@@ -65,12 +65,18 @@ export default new Router({
     {
       path: '/artist/add',
       name: 'artistAdd',
-      component: () => import('./views/artist/add.vue')
+      component: () => import('./views/artist/add.vue'),
+      meta:{
+        title:'新增艺人'
+      }
     },
     {
       path: '/artist/edit/:id',
       name: 'artistEdit',
-      component: () => import('./views/artist/add.vue')
+      component: () => import('./views/artist/add.vue'),
+      meta:{
+        title:'编辑艺人'
+      }
     },
     {
       path: '/artist/basic/:id',
@@ -81,12 +87,18 @@ export default new Router({
     {
       path: '/blogger/add',
       name: 'bloggerAdd',
-      component: () => import('./views/blogger/add.vue')
+      component: () => import('./views/blogger/add.vue'),
+      meta: {
+        title: '新增博主'
+      }
     },
     {
       path: '/blogger/edit/:id',
       name: 'bloggerEdit',
-      component: () => import('./views/blogger/add.vue')
+      component: () => import('./views/blogger/add.vue'),
+      meta: {
+        title: '编辑博主'
+      }
     }, 
     {
       path: '/blogger/basic/:id',
@@ -103,12 +115,18 @@ export default new Router({
     {
       path: '/notice/list',
       name: 'noticeList',
-      component: () => import('./views/notice/list.vue')
+      component: () => import('./views/notice/list.vue'),
+      meta: {
+        title: '公告'
+      }
     },
     {
       path: '/notice/detail/:id',
       name: 'noticeDetail',
-      component: () => import('./views/notice/detail.vue')
+      component: () => import('./views/notice/detail.vue'),
+      meta: {
+        title: '公告详情'
+      }
     },
     // 客户
     {
