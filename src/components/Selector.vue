@@ -7,12 +7,13 @@
 </template>
 
 <script>
+import tool from '@/utils/tool.js'
 export default {
   name: 'Selector',
   props: ['visible', 'data'],
   data () {
     return {
-      show: true
+      show: true,
     }
   },
   mounted () {
@@ -23,6 +24,12 @@ export default {
   watch: {
     visible () {
       this.show = this.visible
+      if(this.visible) {
+            tool.ModalHelper.afterOpen()
+        } else {
+            tool.ModalHelper.beforeClose()
+        }
+
     }
   },
   methods: {

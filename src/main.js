@@ -18,7 +18,6 @@ import FileUpload from '@/components/FileUpload'
 import Selector from '@/components/Selector'
 import AddClient from '@/components/AddClient'
 import Regional from '@/components/Regional'
-import FastClick from 'fastclick'
 import VueWechatTitle from 'vue-wechat-title'
 
 Vue.config.productionTip = false
@@ -33,7 +32,6 @@ Vue.component('DatetimePicker', DatetimePicker)
 Vue.component(Picker.name, Picker)
 Vue.component('Toast',Toast)
 Vue.use(VueWechatTitle)
-Vue.use(Toast)
 
 // 自定义组件
 Vue.component('CheckList', CheckList)
@@ -42,7 +40,7 @@ Vue.component('Selector', Selector)
 Vue.component('AddClient', AddClient)
 Vue.component('Regional', Regional)
 
-FastClick.attach(document.body);
+
 
 new Vue({
   router,

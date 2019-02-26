@@ -3,22 +3,11 @@
     <router-view v-wechat-title='$route.meta.title'/>
   </div>
 </template>
-<script>
-//点击手机端虚拟键盘弹出盖住input问题
-export default {
-  mounted(){
-    window.addEventListener("resize", function() {
-      if(document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
-        window.setTimeout(function() {
-          document.activeElement.scrollIntoViewIfNeeded();
-        }, 0);
-      }
-    })
-  }
-}
-</script>
-
 <style lang="scss">
+body.modal-open {
+    position: fixed;
+    width: 100%;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -105,5 +94,4 @@ a{
   }
 
 }
-
 </style>

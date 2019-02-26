@@ -66,13 +66,10 @@
 </template>
 <script>
 import config from '@/utils/config.js'
+import tool from '@/utils/tool.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
 import { Toast } from 'mint-ui'
-const handler = function(e) {
-    e.preventDefault();
-}
-
 export default {
     data(){
         return {
@@ -120,6 +117,9 @@ export default {
             company:'',//签约公司名称
             uploadUrl:'',//艺人头像
             remark:'',//备注
+            handler:function(e){
+                e.preventDefault()
+            }
         }
     },
     computed:{
@@ -209,7 +209,7 @@ export default {
             if (!this.bornTime) {
                this.bornTime = moment(this.defaultDate).format('YYYY-MM-DD')
             }
-           this.$refs.bornPicker.open()
+           this.$refs.bornPicker.open()            
         },
         bornConfirm (date) {
             this.bornTime = moment(date).format('YYYY-MM-DD')
@@ -365,12 +365,14 @@ export default {
             //id存在 编辑  否则添加
             id?this.putArtist(params):this.postArtist(params)
         },
+
+        //滚动穿透调用的方法
         handleValueChange: function (val) {
             if(val) {
-                document.getElementsByTagName('body')[0].addEventListener('touchmove', this.handler, { passive: false });
+                tool.ModalHelper.afterOpen()
             } else {
                 
-                document.getElementsByTagName('body')[0].addEventListener('touchmove', this.handler, { passive: false });
+                tool.ModalHelper.beforeClose()
             }
         }
     }
