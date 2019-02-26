@@ -24,12 +24,18 @@ export default new Router({
     {
       path: '/task/add',
       name: 'task/add',
-      component: () => import('./views/task/Task.vue')
+      component: () => import('./views/task/Task.vue'),
+      meta: {
+        title: '新增任务'
+      }
     },
     {
       path: '/task/add/:id',
       name: 'task/addSubTask',
-      component: () => import('./views/task/Task.vue')
+      component: () => import('./views/task/Task.vue'),
+      meta: {
+        title: '新增子任务'
+      }
     },
     {
       path: '/task/detail/:id',
@@ -39,12 +45,18 @@ export default new Router({
     {
       path: '/task/edit/:id',
       name: 'task/edit',
-      component: () => import('./views/task/Task.vue')
+      component: () => import('./views/task/Task.vue'),
+      meta: {
+        title: '编辑任务'
+      }
     },
     {
       path: '/trail/add',
       name: 'trail/add',
-      component: () => import('./views/trail/Trail.vue')
+      component: () => import('./views/trail/Trail.vue'),
+      meta: {
+        title: '新增线索'
+      }
     },
     {
       path: '/trail/detail/:id',
@@ -132,12 +144,18 @@ export default new Router({
     {
       path: '/client/add',
       name: 'client/add',
-      component: () => import('./views/client/Client.vue')
+      component: () => import('./views/client/Client.vue'),
+      meta: {
+        title: '新增客户'
+      }
     },
     {
       path: '/client/edit/:id',
       name: 'client/edit',
-      component: () => import('./views/client/Client.vue')
+      component: () => import('./views/client/Client.vue'),
+      meta: {
+        title: '编辑客户'
+      }
     },
     {
       path: '/client/detail/:id',
