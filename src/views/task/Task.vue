@@ -20,11 +20,13 @@
         ref="startPicker"
         type="datetime"
         @confirm="startConfirm"
+        @visible-change="handleValueChange"
       />
       <Cell title="截止时间" @click.native="showEndPicker" :value="endTime" is-link></Cell>
       <DatetimePicker
         ref="endPicker"
         type="datetime"
+        @visible-change="handleValueChange"
         @confirm="endConfirm"
       />
       <Field type="textarea" ref='textarea' rows="1" label="任务说明" v-model="desc" />
@@ -265,6 +267,14 @@ export default {
       }
       params.id = this.taskId
       this.getTasks(params)
+    },
+    //滚动穿透调用的方法
+    handleValueChange: function (val) {
+      if(val) {
+        tool.ModalHelper.afterOpen()
+      } else {
+        tool.ModalHelper.beforeClose()
+      }
     }
   }
 }
