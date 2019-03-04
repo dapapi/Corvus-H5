@@ -54,6 +54,7 @@
       <CheckList
         :selectorData="resourceData"
         :multiple="false"
+        :needSearch="true"
         @change="seletedData"
       />
     </div>

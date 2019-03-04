@@ -1,16 +1,22 @@
 <template>
   <div class="selector-wrap">
+    <Search 
+      v-model="serchValue"
+      v-if="needSearch"
+      cancel-text=""
+    >
+    </Search>
     <mt-checklist
       v-if="multiple"
       v-model="checkedArr"
-      :options="selectorData"
+      :options="selectorDataCopy"
       align="right"
     >
     </mt-checklist>
     <mt-radio
       v-else
       v-model="checkedData"
-      :options="selectorData"
+      :options="selectorDataCopy"
       align="right"
     >
     </mt-radio>
@@ -22,13 +28,14 @@
 
 <script>
 export default {
-  props: ['selectorData', 'multiple','selectedData'],
+  props: ['selectorData', 'multiple','selectedData', 'needSearch'],
   data () {
     return {
       checkedArr: [],
       checkedData: '',
       isHidden:false,
-      
+      serchValue: '',
+      selectorDataCopy: []
     }
   },
   
@@ -36,6 +43,9 @@ export default {
     checkedData () {
       const obj = this.selectorData.find(n => n.value === this.checkedData)
       this.$emit('change', obj)
+    },
+    selectorData () {
+      this.selectorDataCopy = [...this.selectorData]
     },
     selectedData(){
       //去重
@@ -52,8 +62,11 @@ export default {
         }else{
           this.checkedData = this.selectedData.value
         }
+    },
+    serchValue () {
+      const key = this.serchValue.trim().toLowerCase()
+      this.selectorDataCopy = this.selectorData.filter(n => n.label.substr(0, key.length).toLowerCase() === key)
     }
-    
   },
   methods:{
     changeShow(){
@@ -110,6 +123,21 @@ export default {
   }
   .mint-radiolist-label {
     padding: 0;
+  }
+  .mint-search {
+    height: 1rem;
+  }
+  .mint-searchbar {
+    background-color: #fff;
+  }
+  .mint-searchbar-inner {
+    border-radius: 1rem;
+  }
+  .mint-searchbar-inner, .mint-searchbar-core {
+    background-color: #f6f6f6;
+  }
+  .mint-searchbar-cancel {
+    margin: 0;
   }
 }
 

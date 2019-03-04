@@ -8,7 +8,8 @@ import {
   Field,
   DatetimePicker,
   Toast,
-  Picker
+  Picker,
+  Search
   } from 'mint-ui'
 import App from './App.vue'
 import router from './router'
@@ -32,6 +33,7 @@ Vue.component(Checklist.name, Checklist)
 Vue.component('DatetimePicker', DatetimePicker)
 Vue.component(Picker.name, Picker)
 Vue.component('Toast',Toast)
+Vue.component('Search', Search)
 Vue.use(VueWechatTitle)
 
 // 自定义组件
