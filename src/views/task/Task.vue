@@ -31,9 +31,23 @@
       />
       <Field type="textarea" ref='textarea' rows="1" label="任务说明" v-model="desc" />
       <div class="attachment">
-        <FileUpload>
-          <div class="upload">+</div>
-        </FileUpload>
+        <Cell title="附件">
+          <FileUpload @change="uploadFile"><i class="iconfont icon-wendang annex"></i></FileUpload>
+        </Cell>
+        <div class="annex-list" v-for="(item, index) in annexArr" :key="index">
+          <div class="left">
+            <div class="icon">
+              <img :src="item.url" />
+            </div>
+            <div class="info">
+              <div class="title">{{ item.name }}</div>
+              <div class="size">{{ item.size }}k</div>
+            </div>
+          </div>
+          <div class="right">
+            <i class="iconfont icon-shanchu" @click="delAnnex(index)"></i>
+          </div>
+        </div>
       </div>
     </template>
     <div v-else class="resource">
@@ -78,6 +92,7 @@ export default {
       endTime: '',
       desc: '', // 任务描述
       taskId: this.$route.params.id, // 任务id
+      annexArr: []
     }
   },
   computed: {
@@ -274,6 +289,20 @@ export default {
       } else {
         tool.ModalHelper.beforeClose()
       }
+    },
+    // 上传文件
+    uploadFile (fileUrl, fileName, fileSize) {
+      this.annexArr.push(
+        {
+          url: fileUrl,
+          name: fileName,
+          size: (fileSize / 1024).toFixed(1)
+        }
+      )
+    },
+    // 删除附件
+    delAnnex (index) {
+      this.annexArr.splice(index, 1)
     }
   }
 }
@@ -281,9 +310,66 @@ export default {
 
 <style lang="scss" scoped>
 .attachment {
-  margin-top: .2rem;
-  padding: .2rem;
-  background-color: #fff;
+  .annex  {
+    font-size: .4rem;
+    position: relative;
+    left: .1rem;
+  }
+  .annex-list {
+    background-color: #fff;
+    padding: .3rem .2rem;
+    height: 1rem;
+    position: relative;
+    &:after {
+      content: '';
+      border-top: 1px solid #D8D8D8;
+      width: calc(100% - .4rem);
+      position: absolute;
+      top: 0;
+      left: .2rem;
+    }
+    .left {
+      float: left;
+      .icon {
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        margin-right: .2rem;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .info {
+        display: inline-block;
+        vertical-align: top;
+        .title {
+          font-size: .28rem;
+          color: #333;
+          margin-top: .1rem;
+        }
+        .size {
+          font-size: .24rem;
+          margin-top: .1rem;
+          color: #a4a4a4;
+        }
+      }
+    }
+    .right {
+      float: right;
+      width: 1rem;
+      height: 1rem;
+      border-left: 1px solid #D8D8D8;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      i {
+        font-size: .4rem;
+        position: relative;
+        left: .1rem;
+      }
+    }
+  }
 }
 .resource {
   position: absolute;
@@ -291,14 +377,5 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-}
-.upload {
-  width: 1rem;
-  height: 1rem;
-  line-height: 1rem;
-  text-align: center;
-  border: 1px dashed #E0E0E0;
-  color: #E0E0E0;
-  font-size: .8rem;
 }
 </style>
