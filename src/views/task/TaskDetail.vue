@@ -71,7 +71,7 @@ export default {
   name: 'TaskDetail',
   data () {
     return {
-      taskLevelArr: config.taskLevelArr
+      taskLevelArr: config.priorityArr
     }
   },
   mounted () {

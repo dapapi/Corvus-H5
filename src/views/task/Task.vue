@@ -43,7 +43,6 @@
         @change="seletedData"
       />
     </div>
-    <Button @click="addNewTask">保存</Button>
   </div>
 </template>
 
@@ -57,7 +56,7 @@ export default {
   name: 'Task',
   data () {
     return {
-      taskLevelArr: config.taskLevelArr,
+      taskLevelArr: config.priorityArr,
       popupVisible: false,
       checkListVisible: false,
       typeVisible: false,

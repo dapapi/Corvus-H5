@@ -508,5 +508,20 @@ export default {
       color: '#3f51b5'
     },
   ],
+  // 任务优先级
+  priorityArr: [
+    {
+      name: '高',
+      value: 1
+    },
+    {
+      name: '中',
+      value: 2
+    },
+    {
+      name: '低',
+      value: 3
+    }
+  ],
 }
 
