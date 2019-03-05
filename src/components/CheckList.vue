@@ -35,7 +35,7 @@ export default {
       checkedData: '',
       isHidden:false,
       serchValue: '',
-      selectorDataCopy: []
+      selectorDataCopy: [...this.selectorData]
     }
   },
   

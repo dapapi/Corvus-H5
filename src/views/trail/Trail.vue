@@ -37,6 +37,7 @@
     <CheckList
       v-if="clientsVisible"
       :selectorData="clientsAll"
+      :needSearch="true"
       :multiple="false"
       @change="seletedClient"
     />
@@ -53,10 +54,12 @@
       v-if="expectationsVisible"
       :selectorData="starAndBlogger"
       :multiple="true"
+      :needSearch="true"
       @change="selectExpectations"
     />
     <CheckList
       v-if="recommendationsVisible"
+      :needSearch="true"
       :selectorData="starAndBlogger"
       :multiple="true"
       @change="selectRecommendations"
