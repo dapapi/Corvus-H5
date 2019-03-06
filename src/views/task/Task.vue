@@ -330,8 +330,7 @@ export default {
         type: 1,
         data: []
       }
-      alert(JSON.stringify(params))
-      window.selectOrganizational(JSON.stringify(params))
+      tool.nativeEvent('selectOrganizational', JSON.stringify(params))
     },
     setMemberData (data) {
       alert(data)
