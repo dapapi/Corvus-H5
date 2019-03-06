@@ -134,7 +134,8 @@ export default {
         if(this.$route.params.id){
             this.getBlog()
         }
-        window.addBlog = this.addBlog
+        window.rightClick = this.addBlog
+        window.leftClick = this.leftClick
     },
     watch:{
         popupPlatform:function(){
@@ -152,6 +153,14 @@ export default {
             'postBlogger',//添加艺人
             'putBlogger',//编辑艺人
         ]),
+        //返回
+        leftClick:function(){
+            if(this.popupPlatform){
+                this.popupPlatform = false
+            }else{
+                config.deviceWay('back',2)
+            }
+        },
         //获取博主详情
         getBlog () {
             const params = {}
