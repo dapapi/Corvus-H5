@@ -11,7 +11,7 @@
       <Cell title="任务类型" @click.native="changeState('typeVisible', !typeVisible)" :value="taskTypeName" is-link></Cell>
       <Selector :visible="typeVisible" :data="taskTypes" @change="checkTaskType" />
       <Field label="任务名称" v-model="title" />
-      <Cell title="负责人" is-link></Cell>
+      <Cell title="负责人" @click.native="checkKeyMan" is-link></Cell>
       <Cell title="参与人" is-link></Cell>
       <Cell title="任务优先级" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" is-link></Cell>
       <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
@@ -167,6 +167,7 @@ export default {
     }
     window.rightClick = this.rightClick
     window.leftClick = this.leftClick
+    window.setMemberData = this.setMemberData
   },
   methods: {
     ...mapMutations([
@@ -322,6 +323,17 @@ export default {
     // 删除附件
     delAnnex (index) {
       this.annexArr.splice(index, 1)
+    },
+    // 调用组织架构选择负责人
+    checkKeyMan () {
+      const params = {
+        type: 1,
+        data: []
+      }
+      window.selectOrganizational(1, JSON.stringify(params))
+    },
+    setMemberData (data) {
+      alert(data)
     }
   }
 }
