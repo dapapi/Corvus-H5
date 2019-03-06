@@ -60,6 +60,7 @@
       :needSearch="true"
       newTitle="目标艺人"
       :originTitle="pageTitle"
+      :rightClick="rightClick"
       @change="selectExpectations"
     />
     <CheckList
@@ -69,6 +70,7 @@
       :multiple="true"
       :originTitle="pageTitle"
       newTitle="推荐艺人"
+      :rightClick="rightClick"
       @change="selectRecommendations"
     />
   </div>
@@ -129,6 +131,7 @@ export default {
       type: -1, // 1为影视项目，2为综艺项目，3为商务项目 4为papi项目
       trailStatus: '', // 销售线索状态
       pageTitle: '', // 当前页面标题
+      rightClick: null,
     }
   },
   computed: {
@@ -200,11 +203,12 @@ export default {
     if (this.$route.name === 'trail/edit') {
       this.getTrailDetailInfo()
       this.pageTitle = '编辑线索'
-      window.rightClick = this.editTrail
+      this.rightClick = this.editTrail
     } else {
       this.pageTitle = '新增线索'
-      window.rightClick = this.addNewTrail
+      this.rightClick = this.addNewTrail
     }
+    window.rightClick = this.rightClick
   },
   methods: {
     ...mapActions([

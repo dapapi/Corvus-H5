@@ -56,6 +56,8 @@
         :multiple="false"
         :needSearch="true"
         :originTitle="pageTitle"
+        :rightClick="rightClick"
+        :leftClick="rightClick"
         newTitle="关联资源"
         @change="seletedData"
       />
@@ -98,6 +100,8 @@ export default {
       taskId: this.$route.params.id, // 任务id
       annexArr: [], // 附件列表
       pageTitle: '', // 当前页面的标题
+      rightClick: null , // 右侧按钮触发的事件
+      leftClick: null , // 左侧按钮触发的事件
     }
   },
   computed: {
@@ -151,15 +155,16 @@ export default {
     if (this.$route.name === 'task/edit') {
       this.getTaskDetail()
       this.pageTitle = '编辑任务'
-      window.rightClick = this.addNewTask
+      this.rightClick = this.addNewTask
     } else {
-      window.rightClick = this.editTask
+      this.rightClick = this.editTask
       if (this.$route.name === 'task/addSubTask') {
         this.pageTitle = '新增子任务'
       } else {
         this.pageTitle = '新增任务'
       }
     }
+    window.rightClick = this.rightClick
   },
   methods: {
     ...mapMutations([
