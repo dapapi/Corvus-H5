@@ -31,6 +31,18 @@ export default {
           window.webView.back(status)
       }
   },
+  setTitle: function (title) {
+    let u = navigator.userAgent
+    let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
+    let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    if (isIOS) {
+      window.webkit.messageHandlers.searchTxt.setTitle(title)
+    }
+    if (isAndroid) {
+      alert(title)
+      window.webView.setTitle(title)
+    }
+  },
   taskLevelArr: [
     {
       name: 'S',

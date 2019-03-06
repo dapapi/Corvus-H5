@@ -61,6 +61,7 @@
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addArtist()">提交</button>
             </div> -->
         </div>
+        <!--选择平台-->
         <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" @change="seletedData"/>
     </div>
 </template>
@@ -180,6 +181,13 @@ export default {
     },
     mounted () {
         
+    },
+    watch:{
+        popupPlatform(){
+            if(this.popupPlatform){
+                config.setTitle('艺人平台')
+            }
+        }
     },
     methods:{
         ...mapActions([
