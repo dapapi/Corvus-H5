@@ -43,7 +43,7 @@
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
             </div> -->
         </div>
-        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
+        <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
     </div>
 </template>
 <script>
