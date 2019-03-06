@@ -186,6 +186,8 @@ export default {
         popupPlatform(){
             if(this.popupPlatform){
                 config.setTitle('艺人平台')
+            }else{
+                config.setTitle('新增艺人')
             }
         }
     },
