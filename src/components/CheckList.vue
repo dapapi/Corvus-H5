@@ -30,7 +30,7 @@
 import tool from '@/utils/tool'
 
 export default {
-  props: ['selectorData', 'multiple','selectedData', 'needSearch', 'originTitle', 'newTitle'],
+  props: ['selectorData', 'multiple','selectedData', 'needSearch', 'originTitle', 'newTitle', 'rightClick'],
   data () {
     return {
       checkedArr: [],
@@ -39,9 +39,6 @@ export default {
       serchValue: '',
       selectorDataCopy: [...this.selectorData]
     }
-  },
-  created(){
-    window.rightClick = this.changeShow
   },
   watch: {
     checkedData () {
@@ -73,9 +70,13 @@ export default {
     }
   },
   mounted () {
+    window.rightClick = this.changeShow
     tool.nativeEvent('setTitle', this.newTitle)
   },
   beforeDestroy () {
+    if (this.rightClick) {
+      window.rightClick = this.rightClick
+    }
     tool.nativeEvent('setTitle', this.originTitle)
   },
   methods:{

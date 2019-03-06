@@ -62,9 +62,10 @@ export default {
     if (this.$route.name === 'client/edit') {
       this.getClientInfo()
       this.getClientContactInfo()
+      window.rightClick = this.editClient
+    } else {
+      window.rightClick = this.addClient
     }
-    window.save = this.addClient
-    window.edit = this.editClient
   },
 
   watch: {
