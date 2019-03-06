@@ -23,7 +23,6 @@
                 type:String,
             }
         },
-        // props: ['mulId','isImg'],
         name: "FileUpload",
         data() {
             return {
@@ -31,7 +30,6 @@
                 progressShow: false,
                 fileName: '',
                 device:'',
-                uploadImg:this.isImg
             }
         },
         created(){
