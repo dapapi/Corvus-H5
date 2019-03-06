@@ -17,6 +17,26 @@ export default {
     }
     return headers
   },
+  whichDevice:function(){
+      let u = navigator.userAgent
+      let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
+      let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+      if (isIOS) {
+        return 'ios'
+      }
+      if (isAndroid) {
+        return 'android'
+      }
+  },
+  deviceWay:function(name,params){
+    
+    if (this.whichDevice == 'ios'){
+       window.webkit.messageHandlers[name].postMessage(params)
+    }
+    if (this.whichDevice() == 'android'){
+      window.webView[name](params)
+    }
+  },
   //判断设备
   deviceBack:function(status){
       let u = navigator.userAgent
@@ -31,17 +51,17 @@ export default {
           window.webView.back(status)
       }
   },
-  setTitle: function (title) {
-    let u = navigator.userAgent
-    let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
-    let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-    if (isIOS) {
-      window.webkit.messageHandlers.searchTxt.setTitle(title)
-    }
-    if (isAndroid) {
-      window.webView.setTitle(title)
-    }
-  },
+  // setTitle: function (title) {
+  //   let u = navigator.userAgent
+  //   let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
+  //   let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+  //   if (isIOS) {
+  //     window.webkit.messageHandlers.searchTxt.setTitle(title)
+  //   }
+  //   if (isAndroid) {
+  //     window.webView.setTitle(title)
+  //   }
+  // },
   taskLevelArr: [
     {
       name: 'S',

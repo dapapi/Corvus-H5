@@ -185,9 +185,9 @@ export default {
     watch:{
         popupPlatform(){
             if(this.popupPlatform){
-                config.setTitle('艺人平台')
+                config.deviceWay('setTitle','艺人平台')
             }else{
-                config.setTitle('新增艺人')
+                config.deviceWay('setTitle','新增艺人')
             }
         }
     },
