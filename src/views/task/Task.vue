@@ -57,7 +57,7 @@
         :needSearch="true"
         :originTitle="pageTitle"
         :rightClick="rightClick"
-        :leftClick="rightClick"
+        :leftClick="leftClick"
         newTitle="关联资源"
         @change="seletedData"
       />
@@ -152,6 +152,7 @@ export default {
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
+    this.leftClick = tool.nativeEvent('back', 2)
     if (this.$route.name === 'task/edit') {
       this.getTaskDetail()
       this.pageTitle = '编辑任务'
@@ -165,6 +166,7 @@ export default {
       }
     }
     window.rightClick = this.rightClick
+    window.leftClick = this.leftClick
   },
   methods: {
     ...mapMutations([

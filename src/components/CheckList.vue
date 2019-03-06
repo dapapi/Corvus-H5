@@ -30,7 +30,7 @@
 import tool from '@/utils/tool'
 
 export default {
-  props: ['selectorData', 'multiple','selectedData', 'needSearch', 'originTitle', 'newTitle', 'rightClick'],
+  props: ['selectorData', 'multiple','selectedData', 'needSearch', 'originTitle', 'newTitle', 'leftClick', 'rightClick'],
   data () {
     return {
       checkedArr: [],
@@ -72,20 +72,24 @@ export default {
   mounted () {
     window.rightClick = this.changeShow
     tool.nativeEvent('setTitle', this.newTitle)
+    window.leftClick = this.changeShow(true)
   },
   beforeDestroy () {
     if (this.rightClick) {
       window.rightClick = this.rightClick
     }
+    if (this.leftClick) {
+      window.leftClick = this.leftClick
+    }
     tool.nativeEvent('setTitle', this.originTitle)
   },
   methods:{
-    changeShow(){
+    changeShow(isLeft){
       this.isHidden = true
       const data = this.selectorData.filter(n =>
         this.checkedArr.indexOf(n.value) > -1
       )
-      this.$emit('change', data, this.isHidden)
+      this.$emit('change', isLeft ? '' : data, this.isHidden)
     }
   }
 }
