@@ -59,6 +59,7 @@ export default {
     },
     created(){
         this.getNoticeType()
+        window.leftClick = this.leftClick
     },
     mounted(){
         this.isActive = this.navList[0].value
@@ -71,7 +72,10 @@ export default {
        ...mapActions([
             'getNoticeType'
         ]),
-       loadMore:function(){
+        leftClick:function(){
+            config.deviceWay('back',2)
+        },
+        loadMore:function(){
          this.loading = true
          this.getNoticeList()
          

@@ -27,6 +27,7 @@ export default {
     created(){
        
        this.getNoticeType()
+       window.leftClick = this.leftClick
     },
     mounted(){
        this.getNoticeDetail({id:this.$route.params.id})
@@ -41,7 +42,12 @@ export default {
         ...mapActions([
             'getNoticeDetail',
             'getNoticeType'
-        ])
+        ]),
+        leftClick:function(){
+            this.$router.push({
+                path: `/notice/list`,
+            })
+        }
     }
 }
 </script>
