@@ -3,9 +3,8 @@
         <label :for="`fileUploader${mulId}`">
             <slot></slot>
         </label>
-        <input v-if="isImg == false" type="file"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
-        <input v-if="device == 'ios'&&isImg" type="file" accept="image/*"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
-        <input v-if="device == 'android'&&isImg" type="file" accept="image/*" capture="camera" multiple  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
+        <input v-if="device == 'ios'" type="file" :accept="accept"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
+        <input v-if="device == 'android'" type="file" :accept="accept" capture="camera" multiple  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
     </div>
 </template>
 
@@ -16,26 +15,30 @@
 
     export default {
         props:{
+            //多个上传组件区分id
             mulId:{
                 type:String,
             },
-            isImg:{
-                type:Boolean,
-                default:true
+            accept:{
+                type:String,
             }
         },
-        props: ['mulId','isImg'],
+        // props: ['mulId','isImg'],
         name: "FileUpload",
         data() {
             return {
                 uploadProgress: 0,
                 progressShow: false,
                 fileName: '',
-                device:''
+                device:'',
+                uploadImg:this.isImg
             }
         },
         created(){
            this.device = this.whichDevice()
+        },
+        mounted(){
+           console.log(this.device,this.isImg)
         },
         methods: {
             uploadFile(e) {

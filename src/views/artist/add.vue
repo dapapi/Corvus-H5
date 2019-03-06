@@ -50,7 +50,7 @@
 
             <Cell title="艺人头像">
                 <template>
-                    <FileUpload @change="upload">
+                    <FileUpload @change="upload" :accept="'image/*'">
                         <span class="avatar" v-if="uploadUrl" :style="{ backgroundImage: 'url('+uploadUrl+')'}"></span>
                         <i v-else class="iconfont icon-tianjiatupian" style="font-size:0.8rem;border-radius:50%"></i>
                     </FileUpload>
