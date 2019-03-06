@@ -330,7 +330,7 @@ export default {
         type: 1,
         data: []
       }
-      window.selectOrganizational(1, JSON.stringify(params))
+      window.selectOrganizational(JSON.stringify(params))
     },
     setMemberData (data) {
       alert(data)
