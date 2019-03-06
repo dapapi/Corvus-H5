@@ -32,7 +32,7 @@
       <Field type="textarea" ref='textarea' rows="1" label="任务说明" v-model="desc" />
       <div class="attachment">
         <Cell title="附件">
-          <FileUpload @change="uploadFile"><i class="iconfont icon-fujian annex"></i></FileUpload>
+          <FileUpload @change="uploadFile"><i class="iconfont icon-biaoti annex"></i></FileUpload>
         </Cell>
         <div class="annex-list" v-for="(item, index) in annexArr" :key="index">
           <div class="left">
@@ -148,12 +148,12 @@ export default {
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
-    window.save = this.addNewTask // 保存
-    window.edit = this.editTask // 编辑
     if (this.$route.name === 'task/edit') {
       this.getTaskDetail()
       this.pageTitle = '编辑任务'
+      window.rightClick = this.addNewTask
     } else {
+      window.rightClick = this.editTask
       if (this.$route.name === 'task/addSubTask') {
         this.pageTitle = '新增子任务'
       } else {

@@ -197,13 +197,13 @@ export default {
     this.getStarAndBlogger()
     this.type = this.$route.query.type
     // 提交按钮
-    window.save = this.addNewTrail
-    window.edit = this.editTrail
     if (this.$route.name === 'trail/edit') {
       this.getTrailDetailInfo()
       this.pageTitle = '编辑线索'
+      window.rightClick = this.editTrail
     } else {
       this.pageTitle = '新增线索'
+      window.rightClick = this.addNewTrail
     }
   },
   methods: {
