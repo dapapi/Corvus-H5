@@ -167,7 +167,7 @@ export default {
                     aPlatformName.push(this.artistPlatformList[i].label)
                 }
             }
-            console.log(this.selectedPlatform)
+            // console.log(this.selectedPlatform)
             this.platformName = aPlatformName.join(',')
        }
     },
@@ -176,7 +176,8 @@ export default {
         if(this.$route.params.id){
             this.getArtist()
         }
-        window.addArtist = this.addArtist
+        window.rightClick = this.addArtist
+        window.leftClick = this.leftClick
         // window.goback = this.goback  //返回
     },
     mounted () {
@@ -197,6 +198,14 @@ export default {
             'postArtist',//添加艺人
             'putArtist',//编辑艺人
         ]),
+        //返回
+        leftClick:function(){
+            if(this.popupPlatform){
+                this.popupPlatform = false
+            }else{
+                config.deviceWay('back',2)
+            }
+        },
         //获取艺人详情
         getArtist () {
             const params = {}

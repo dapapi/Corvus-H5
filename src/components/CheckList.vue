@@ -41,7 +41,7 @@ export default {
     }
   },
   created(){
-    window.changeShow = this.changeShow
+    window.rightClick = this.changeShow
   },
   watch: {
     checkedData () {
