@@ -72,7 +72,7 @@ export default {
   mounted () {
     window.rightClick = this.changeShow
     tool.nativeEvent('setTitle', this.newTitle)
-    window.leftClick = this.changeShow(true)
+    window.leftClick = this.changeHidden
   },
   beforeDestroy () {
     if (this.rightClick) {
@@ -84,14 +84,20 @@ export default {
     tool.nativeEvent('setTitle', this.originTitle)
   },
   methods:{
-    changeShow(isLeft){
-      alert(this.isHidden)
+    changeShow(){
       this.isHidden = true
       const data = this.selectorData.filter(n =>
         this.checkedArr.indexOf(n.value) > -1
       )
-      this.$emit('change', isLeft ? '' : data, this.isHidden)
-    }
+      this.$emit('change', data, this.isHidden)
+    },
+    changeHidden(){
+      this.isHidden = true
+      const data = this.selectorData.filter(n =>
+        this.checkedArr.indexOf(n.value) > -1
+      )
+      this.$emit('change', '', this.isHidden)
+    },
   }
 }
 </script>
