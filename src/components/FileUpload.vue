@@ -3,8 +3,9 @@
         <label :for="`fileUploader${mulId}`">
             <slot></slot>
         </label>
-        <input v-if="device == 'ios'" type="file" accept="image/*"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
-        <input v-if="device == 'android'" type="file" accept="image/*" capture="camera" multiple  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
+        <input v-if="isImg == false" type="file"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
+        <input v-if="device == 'ios'&&isImg" type="file" accept="image/*"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
+        <input v-if="device == 'android'&&isImg" type="file" accept="image/*" capture="camera" multiple  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
     </div>
 </template>
 
@@ -14,7 +15,16 @@
     import * as qiniu from 'qiniu-js'
 
     export default {
-        props: ['id', 'givenfilename','mulId','isImg'],
+        props:{
+            mulId:{
+                type:String,
+            },
+            isImg:{
+                type:Boolean,
+                default:true
+            }
+        },
+        props: ['mulId','isImg'],
         name: "FileUpload",
         data() {
             return {
