@@ -22,7 +22,7 @@ export default{
       let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
       if (isIOS) {
           // alert('调用ios方法')
-          window.webkit.messageHandlers.back.postMessage(status)
+          window.webkit.messageHandlers[name].postMessage(params)
       }
       if (isAndroid) {
           // alert('调用安卓方法')

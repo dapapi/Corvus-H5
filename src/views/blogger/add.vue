@@ -43,7 +43,7 @@
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
             </div> -->
         </div>
-        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" @change="seletedData"/>
+        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
     </div>
 </template>
 <script>
@@ -137,15 +137,6 @@ export default {
         window.rightClick = this.addBlog
         window.leftClick = this.leftClick
     },
-    watch:{
-        popupPlatform:function(){
-            if(this.popupPlatform){
-                config.deviceWay('setTitle','博主平台')
-            }else{
-                config.deviceWay('setTitle','新增博主')
-            }
-        }
-    },
     methods:{
         ...mapActions([
             'getBlogDetail',
@@ -155,11 +146,9 @@ export default {
         ]),
         //返回
         leftClick:function(){
-            if(this.popupPlatform){
-                this.popupPlatform = false
-            }else{
-                config.deviceWay('back',2)
-            }
+            
+            config.deviceWay('back',2)
+            
         },
         //获取博主详情
         getBlog () {

@@ -62,7 +62,7 @@
             </div> -->
         </div>
         <!--选择平台-->
-        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" @change="seletedData"/>
+        <CheckList v-show='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" :originTitle="'新增艺人'" :newTitle="'艺人平台'" :rightClick="addArtist" :leftClick ="leftClick" @change="seletedData"/>
     </div>
 </template>
 <script>
@@ -183,15 +183,6 @@ export default {
     mounted () {
         
     },
-    watch:{
-        popupPlatform(){
-            if(this.popupPlatform){
-                config.deviceWay('setTitle','艺人平台')
-            }else{
-                config.deviceWay('setTitle','新增艺人')
-            }
-        }
-    },
     methods:{
         ...mapActions([
             'getArtistDetail',//获取艺人详情
@@ -200,11 +191,9 @@ export default {
         ]),
         //返回
         leftClick:function(){
-            if(this.popupPlatform){
-                this.popupPlatform = false
-            }else{
-                config.deviceWay('back',2)
-            }
+            
+            config.deviceWay('back',2)
+            
         },
         //获取艺人详情
         getArtist () {
