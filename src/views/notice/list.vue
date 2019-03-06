@@ -4,12 +4,7 @@
             <li @click="changeActive(item.value,item.params)" :class="isActive == item.value?'active':''" v-for="(item,index) in navList" :key="index">{{item.name}}</li>
             <div class="active-line" :style="{left:`${posLeft}%`,width:`${activeLineWidth}%`}"></div>
         </ul>
-        <ul
-        v-infinite-scroll="loadMore"
-        infinite-scroll-disabled="loading"
-        infinite-scroll-distance="10" class="nav-ul"
-        
-        >
+        <ul class="nav-ul">
         <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive ">
             <router-link :to="`/notice/detail/${item.id}`">
                 <div class="nav-title">

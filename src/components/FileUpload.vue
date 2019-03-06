@@ -3,7 +3,9 @@
         <label :for="`fileUploader${mulId}`">
             <slot></slot>
         </label>
-        <input type="file" accept="image/*"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false">
+        <input v-if="isImg == false" type="file"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
+        <input v-if="device == 'ios'&&isImg" type="file" accept="image/*"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
+        <input v-if="device == 'android'&&isImg" type="file" accept="image/*" capture="camera" multiple  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
     </div>
 </template>
 
@@ -13,14 +15,27 @@
     import * as qiniu from 'qiniu-js'
 
     export default {
-        props: ['id', 'givenfilename','mulId','isImg'],
+        props:{
+            mulId:{
+                type:String,
+            },
+            isImg:{
+                type:Boolean,
+                default:true
+            }
+        },
+        props: ['mulId','isImg'],
         name: "FileUpload",
         data() {
             return {
                 uploadProgress: 0,
                 progressShow: false,
                 fileName: '',
+                device:''
             }
+        },
+        created(){
+           this.device = this.whichDevice()
         },
         methods: {
             uploadFile(e) {
@@ -90,6 +105,17 @@
                 }
 
                 return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+            },
+             whichDevice:function(){
+                let u = navigator.userAgent
+                let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
+                let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+                if (isIOS) {
+                return 'ios'
+                }
+                if (isAndroid) {
+                return 'android'
+                }
             },
         }
     }
