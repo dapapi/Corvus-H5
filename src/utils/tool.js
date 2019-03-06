@@ -14,5 +14,19 @@ export default{
           document.scrollingElement.scrollTop = scrollTop;
         },
       };
-    })('modal-open')
+    })('modal-open'),
+    // 调用原生的方法
+    nativeEvent (name, params) {
+      let u = navigator.userAgent
+      let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
+      let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+      if (isIOS) {
+          // alert('调用ios方法')
+          window.webkit.messageHandlers.back.postMessage(status)
+      }
+      if (isAndroid) {
+          // alert('调用安卓方法')
+          window.webView[name](params)
+      }
+    }
 }

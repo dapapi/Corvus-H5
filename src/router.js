@@ -66,7 +66,10 @@ export default new Router({
     {
       path: '/trail/edit/:id',
       name: 'trail/edit',
-      component: () => import('./views/trail/Trail.vue')
+      component: () => import('./views/trail/Trail.vue'),
+      meta: {
+        title: '编辑线索'
+      }
     },
     {
       path: '/selector',

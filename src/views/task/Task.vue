@@ -55,6 +55,8 @@
         :selectorData="resourceData"
         :multiple="false"
         :needSearch="true"
+        :originTitle="pageTitle"
+        newTitle="关联资源"
         @change="seletedData"
       />
     </div>
@@ -66,6 +68,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import config from '@/utils/config'
 import moment from 'moment'
 import fetch from '@/utils/fetch'
+import tool from '@/utils/tool'
 
 export default {
   name: 'Task',
@@ -93,7 +96,8 @@ export default {
       endTime: '',
       desc: '', // 任务描述
       taskId: this.$route.params.id, // 任务id
-      annexArr: []
+      annexArr: [], // 附件列表
+      pageTitle: '', // 当前页面的标题
     }
   },
   computed: {
@@ -138,7 +142,7 @@ export default {
     desc () {
       const el = this.$refs.textarea.$el.querySelector('textarea')
       el.style.height = el.scrollHeight - 4 + 'px'
-    }
+    },
   },
   mounted () {
     this.getResourceList()
@@ -148,6 +152,13 @@ export default {
     window.edit = this.editTask // 编辑
     if (this.$route.name === 'task/edit') {
       this.getTaskDetail()
+      this.pageTitle = '编辑任务'
+    } else {
+      if (this.$route.name === 'task/addSubTask') {
+        this.pageTitle = '新增子任务'
+      } else {
+        this.pageTitle = '新增任务'
+      }
     }
   },
   methods: {

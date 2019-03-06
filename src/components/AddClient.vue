@@ -30,6 +30,8 @@ export default {
     ]),
     checkClientLevel (item) {
       this.popupVisible = !this.popupVisible
+      this.gradeName = item.name
+      this.grade = item.value
     },
     changeState (name, value) {
       this[name] = value

@@ -32,6 +32,7 @@
       </template>
       <Field label="备注" v-model="desc"></Field>
       <Button @click="addNewTrail">add</Button>
+      <Button @click="addCompany">新增公司</Button>
     </template>
     <!-- 选择客户 -->
     <CheckList
@@ -39,6 +40,8 @@
       :selectorData="clientsAll"
       :needSearch="true"
       :multiple="false"
+      :originTitle="pageTitle"
+      newTitle="公司名称"
       @change="seletedClient"
     />
     <AddClient
@@ -55,6 +58,8 @@
       :selectorData="starAndBlogger"
       :multiple="true"
       :needSearch="true"
+      newTitle="目标艺人"
+      :originTitle="pageTitle"
       @change="selectExpectations"
     />
     <CheckList
@@ -62,6 +67,8 @@
       :needSearch="true"
       :selectorData="starAndBlogger"
       :multiple="true"
+      :originTitle="pageTitle"
+      newTitle="推荐艺人"
       @change="selectRecommendations"
     />
   </div>
@@ -121,6 +128,7 @@ export default {
       lockName: '', // 是否锁价
       type: -1, // 1为影视项目，2为综艺项目，3为商务项目 4为papi项目
       trailStatus: '', // 销售线索状态
+      pageTitle: '', // 当前页面标题
     }
   },
   computed: {
@@ -193,6 +201,9 @@ export default {
     window.edit = this.editTrail
     if (this.$route.name === 'trail/edit') {
       this.getTrailDetailInfo()
+      this.pageTitle = '编辑线索'
+    } else {
+      this.pageTitle = '新增线索'
     }
   },
   methods: {
@@ -338,6 +349,10 @@ export default {
         id: this.$route.params.id
       }
       this.getTrailDetail(params)
+    },
+    // 新增公司
+    addCompany () {
+      this.isAddClients = true
     }
   }
 }

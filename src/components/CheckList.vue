@@ -27,8 +27,10 @@
 </template>
 
 <script>
+import tool from '@/utils/tool'
+
 export default {
-  props: ['selectorData', 'multiple','selectedData', 'needSearch'],
+  props: ['selectorData', 'multiple','selectedData', 'needSearch', 'originTitle', 'newTitle'],
   data () {
     return {
       checkedArr: [],
@@ -67,6 +69,12 @@ export default {
       const key = this.serchValue.trim().toLowerCase()
       this.selectorDataCopy = this.selectorData.filter(n => n.label.substr(0, key.length).toLowerCase() === key)
     }
+  },
+  mounted () {
+    tool.nativeEvent('setTitle', this.newTitle)
+  },
+  beforeDestroy () {
+    tool.nativeEvent('setTitle', this.originTitle)
   },
   methods:{
     changeShow(){
