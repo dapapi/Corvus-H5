@@ -136,6 +136,15 @@ export default {
         }
         window.addBlog = this.addBlog
     },
+    watch:{
+        popupPlatform:function(){
+            if(this.popupPlatform){
+                config.deviceWay('setTitle','博主平台')
+            }else{
+                config.deviceWay('setTitle','新增博主')
+            }
+        }
+    },
     methods:{
         ...mapActions([
             'getBlogDetail',
