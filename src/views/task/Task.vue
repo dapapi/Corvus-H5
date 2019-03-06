@@ -152,7 +152,7 @@ export default {
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
-    this.leftClick = tool.nativeEvent('back', 2)
+    // this.leftClick = tool.nativeEvent('back', 2)
     if (this.$route.name === 'task/edit') {
       this.getTaskDetail()
       this.pageTitle = '编辑任务'
@@ -330,7 +330,8 @@ export default {
         type: 1,
         data: []
       }
-      window.selectOrganizational(1, JSON.stringify(params))
+      alert(JSON.stringify(params))
+      window.selectOrganizational(JSON.stringify(params))
     },
     setMemberData (data) {
       alert(data)
