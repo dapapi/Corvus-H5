@@ -39,7 +39,6 @@ export default {
       window.webkit.messageHandlers.searchTxt.setTitle(title)
     }
     if (isAndroid) {
-      alert(title)
       window.webView.setTitle(title)
     }
   },
