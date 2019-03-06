@@ -85,6 +85,7 @@ export default {
   },
   methods:{
     changeShow(isLeft){
+      alert(this.isHidden)
       this.isHidden = true
       const data = this.selectorData.filter(n =>
         this.checkedArr.indexOf(n.value) > -1
