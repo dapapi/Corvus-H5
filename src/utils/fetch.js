@@ -42,7 +42,6 @@ axios.interceptors.request.use((config) => {
 
 // 返回状态判断
 axios.interceptors.response.use(res => {
-  const { response } = error
   if (res.status < 200 && res.status > 300) {
     return Promise.reject(res)
   }
