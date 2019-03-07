@@ -13,7 +13,7 @@ axios.defaults.headers.common['Access-Control-Expose-Headers'] = 'Location'
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Authorization'
 const token = config.token
 alert(token)
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+axios.defaults.headers.common['Authorization'] = token
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 axios.defaults.baseURL = config.apiUrl
 
