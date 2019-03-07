@@ -121,7 +121,6 @@ export default {
             handler:function(e){
                 e.preventDefault()
             },
-            leftClick:null
         }
     },
     computed:{
@@ -181,7 +180,6 @@ export default {
        
     },
     mounted () {
-        this.leftClick = this.leftClickTemp
         window.leftClick = this.leftClick
         
         
@@ -193,8 +191,7 @@ export default {
             'putArtist',//编辑艺人
         ]),
         //返回
-        leftClickTemp:function(){
-            alert('原生返回')
+        leftClick:function(){
             config.deviceWay('back',2)
             
         },
