@@ -121,7 +121,6 @@ export default {
   },
   watch: {
     taskDetail () {
-      console.log(this.taskDetail)
       const taskDetail = this.taskDetail
       if (taskDetail.resource) {
         this.resourceId = taskDetail.resource.data.resource.data.id
@@ -152,7 +151,7 @@ export default {
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
-    // this.leftClick = tool.nativeEvent('back', 2)
+    this.leftClick = this.leftClickTemp
     if (this.$route.name === 'task/edit') {
       this.getTaskDetail()
       this.pageTitle = '编辑任务'
@@ -323,6 +322,9 @@ export default {
     // 删除附件
     delAnnex (index) {
       this.annexArr.splice(index, 1)
+    },
+    leftClickTemp () {
+      tool.nativeEvent('back', 2)
     },
     // 调用组织架构选择负责人
     checkKeyMan () {
