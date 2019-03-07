@@ -62,7 +62,6 @@
       :multiple="true"
       :needSearch="true"
       newTitle="目标艺人"
-      :selectedData=""
       :originTitle="pageTitle"
       :rightClick="rightClick"
       :leftClick="leftClick"
