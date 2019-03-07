@@ -156,9 +156,6 @@ export default {
   mounted () {
     this.getResourceList()
     this.getTaskTypes()
-    setInterval(() => {
-      this.getTaskTypes()
-    }, 3000)
     // 赋值给浏览器
     this.leftClick = this.leftClickTemp
     if (this.$route.name === 'task/edit') {

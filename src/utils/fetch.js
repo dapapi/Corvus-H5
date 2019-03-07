@@ -46,6 +46,11 @@ axios.interceptors.request.use((config) => {
 
 // 返回状态判断
 axios.interceptors.response.use(res => {
+  console.log('error:')
+  console.log(error)
+  const { response } = error
+  console.log("response:")
+  console.log(response)
   if (res.status < 200 && res.status > 300) {
     return Promise.reject(res)
   }
@@ -53,6 +58,11 @@ axios.interceptors.response.use(res => {
 }, (error) => {
   const { response: { status } } = error
   const { response } = error
+  console.log('error:')
+  console.log(error)
+  const { response } = error
+  console.log("response:")
+  console.log(response)
   if (status === 401) {
     // config.getStatusCode()[401]()
   } else if (status === 422) {
