@@ -42,6 +42,7 @@
       :multiple="false"
       :originTitle="pageTitle"
       newTitle="公司名称"
+      :leftClick="leftClick"
       @change="seletedClient"
     />
     <AddClient
@@ -61,6 +62,7 @@
       newTitle="目标艺人"
       :originTitle="pageTitle"
       :rightClick="rightClick"
+      :leftClick="leftClick"
       @change="selectExpectations"
     />
     <CheckList
@@ -71,6 +73,7 @@
       :originTitle="pageTitle"
       newTitle="推荐艺人"
       :rightClick="rightClick"
+      :leftClick="leftClick"
       @change="selectRecommendations"
     />
   </div>
@@ -132,6 +135,7 @@ export default {
       trailStatus: '', // 销售线索状态
       pageTitle: '', // 当前页面标题
       rightClick: null,
+      leftClick: null , // 左侧按钮触发的事件
     }
   },
   computed: {
@@ -199,6 +203,7 @@ export default {
     this.getIndustries()
     this.getStarAndBlogger()
     this.type = this.$route.query.type
+    this.leftClick = this.leftClickTemp
     // 提交按钮
     if (this.$route.name === 'trail/edit') {
       this.getTrailDetailInfo()
@@ -209,6 +214,7 @@ export default {
       this.rightClick = this.addNewTrail
     }
     window.rightClick = this.rightClick
+    window.leftClick = this.leftClick
   },
   methods: {
     ...mapActions([
@@ -357,7 +363,10 @@ export default {
     // 新增公司
     addCompany () {
       this.isAddClients = true
-    }
+    },
+    leftClickTemp () {
+      tool.nativeEvent('back', 2)
+    },
   }
 }
 </script>

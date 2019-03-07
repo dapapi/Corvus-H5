@@ -121,7 +121,6 @@ export default {
   },
   watch: {
     taskDetail () {
-      console.log(this.taskDetail)
       const taskDetail = this.taskDetail
       if (taskDetail.resource) {
         this.resourceId = taskDetail.resource.data.resource.data.id
