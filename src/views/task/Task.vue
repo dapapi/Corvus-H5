@@ -36,7 +36,7 @@
       <Field type="textarea" ref='textarea' rows="1" label="任务说明" v-model="desc" />
       <div class="attachment">
         <Cell title="附件">
-          <FileUpload @change="uploadFile"><i class="iconfont icon-biaoti annex"></i></FileUpload>
+          <FileUpload @change="uploadFile"><i class="iconfont icon-fujian annex"></i></FileUpload>
         </Cell>
         <div class="annex-list" v-for="(item, index) in annexArr" :key="index">
           <div class="left">
