@@ -350,7 +350,6 @@ export default {
     },
     // 设置负责人数据
     setPrincipalData (data) {
-      alert(data)
       this.principalIconArr = JSON.parse(data)
       this.principalId = this.principalIconArr[0].id || ''
     },
