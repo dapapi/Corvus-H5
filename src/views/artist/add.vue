@@ -176,7 +176,7 @@ export default {
         if(this.$route.params.id){
             this.getArtist()
         }
-        this.leftClick = this.leftClickTemp
+        // this.leftClick = this.leftClickTemp
         window.rightClick = this.addArtist
         window.leftClick = this.leftClick
         // window.goback = this.goback  //返回
@@ -191,7 +191,7 @@ export default {
             'putArtist',//编辑艺人
         ]),
         //返回
-        leftClickTemp:function(){
+        leftClick:function(){
             alert('原生返回')
             config.deviceWay('back',2)
             
