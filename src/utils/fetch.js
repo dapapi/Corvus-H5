@@ -34,7 +34,11 @@ axios.interceptors.request.use((config) => {
   }
   return config
 }, (error) => {
+  console.log('error:')
+  console.log(error)
   const { response } = error
+  console.log("response:")
+  console.log(response)
   Toast(response.data.message)
   return Promise.reject(error)
 })
