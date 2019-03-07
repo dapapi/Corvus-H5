@@ -121,7 +121,6 @@ export default {
             handler:function(e){
                 e.preventDefault()
             },
-            leftClick: null
         }
     },
     computed:{
@@ -177,10 +176,8 @@ export default {
         if(this.$route.params.id){
             this.getArtist()
         }
-        // this.leftClick = this.leftClickTemp
         window.rightClick = this.addArtist
         window.leftClick = this.leftClick
-        // window.goback = this.goback  //返回
     },
     mounted () {
         
