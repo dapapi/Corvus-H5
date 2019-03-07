@@ -94,4 +94,10 @@ a{
   }
 
 }
+.avatar {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  margin-left: .1rem;
+}
 </style>

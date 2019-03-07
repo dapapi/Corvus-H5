@@ -11,8 +11,12 @@
       <Cell title="任务类型" @click.native="changeState('typeVisible', !typeVisible)" :value="taskTypeName" is-link></Cell>
       <Selector :visible="typeVisible" :data="taskTypes" @change="checkTaskType" />
       <Field label="任务名称" v-model="title" />
-      <Cell title="负责人" @click.native="checkKeyMan" is-link></Cell>
-      <Cell title="参与人" is-link></Cell>
+      <Cell title="负责人" @click.native="checkKeyMan" is-link>
+        <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
+      </Cell>
+      <Cell title="参与人"  @click.native="checkParticipant" is-link>
+        <img class="avatar" v-for="(item, index) in participantIconArr" :src="item.icon_url" :key="index">
+      </Cell>
       <Cell title="任务优先级" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" is-link></Cell>
       <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
       <Cell title="开始时间" @click.native="showStartPicker" :value="startTime" is-link></Cell>
@@ -91,7 +95,9 @@ export default {
       taskType: '', // 任务类型
       taskTypeName: '',
       principalId: '', // 负责人
+      principalIconArr: '', // 负责人头像
       participantIds: [], // 参与人
+      participantIconArr: [], // 参与人头像
       priority: '', // 任务优先级
       priorityName: '',
       startTime: '',
@@ -166,7 +172,6 @@ export default {
     }
     window.rightClick = this.rightClick
     window.leftClick = this.leftClick
-    window.setMemberData = this.setMemberData
   },
   methods: {
     ...mapMutations([
@@ -326,16 +331,31 @@ export default {
     leftClickTemp () {
       tool.nativeEvent('back', 2)
     },
-    // 调用组织架构选择负责人
+    // 选择负责人
     checkKeyMan () {
+      window.setMemberData = this.setPrincipalData
       const params = {
         type: 1,
-        data: []
+        data: this.principalIconArr
       }
       tool.nativeEvent('selectOrganizational', JSON.stringify(params))
     },
-    setMemberData (data) {
-      alert(data)
+    checkParticipant () {
+      window.setMemberData = this.setParticipantData
+      const params = {
+        type: 2,
+        data: this.participantIconArr
+      }
+      tool.nativeEvent('selectOrganizational', JSON.stringify(params))
+    },
+    // 设置负责人数据
+    setPrincipalData (data) {
+      this.principalIconArr = JSON.parse(data)
+      this.principalId = this.principalIconArr[0].id || ''
+    },
+    setParticipantData (data) {
+      this.participantIconArr = JSON.parse(data)
+      this.participantIds = this.participantIconArr.map(n => n.id)
     }
   }
 }
