@@ -10,6 +10,7 @@ const tempToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImNjYTRlNzc3MTljN
 axios.defaults.timeout = 10000
 axios.defaults.headers.common['Accept'] = 'application/vnd.Corvus.v1+json'
 axios.defaults.headers.common['Access-Control-Expose-Headers'] = 'Location'
+axios.defaults.headers.common['Cache-Control'] = 'no-cache'
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Authorization'
 const token = config.token
 axios.defaults.headers.common['Authorization'] = token
@@ -76,9 +77,13 @@ export default function fetch (method = 'post', url, params) {
       .then(response => {
         resolve(response.data)
       }, err => {
+        console.log('err:::')
+        console.log(error)
         reject(err)
       })
       .catch((error) => {
+        console.log('error:::')
+        console.log(error)
         reject(error)
       })
   })
