@@ -3,7 +3,7 @@ export default {
   tokenString: 'CORVUS-ACCESS-TOKEN',
   apiUrl: 'https://sandbox-api-crm.papitube.com',
   imgUrl: 'https://res-crm.papitube.com/',
-  token: 'Bearer ' + Cookies.get('Authorization'),
+  token: Cookies.get('Authorization'),
   whichDevice:function(){
       let u = navigator.userAgent
       let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
