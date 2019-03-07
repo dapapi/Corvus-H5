@@ -92,7 +92,7 @@ export default {
       this.$emit('change', data, this.isHidden)
     },
     changeHidden(){
-      // alert(111)
+      alert('html5返回')
       this.isHidden = true
       const data = this.selectorData.filter(n =>
         this.checkedArr.indexOf(n.value) > -1

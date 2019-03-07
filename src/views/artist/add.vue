@@ -192,7 +192,7 @@ export default {
         ]),
         //返回
         leftClickTemp:function(){
-            
+            alert('原生返回')
             config.deviceWay('back',2)
             
         },
