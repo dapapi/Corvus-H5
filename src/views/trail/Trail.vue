@@ -62,6 +62,7 @@
       :multiple="true"
       :needSearch="true"
       newTitle="目标艺人"
+      :selectedData=""
       :originTitle="pageTitle"
       :rightClick="rightClick"
       :leftClick="leftClick"
@@ -103,6 +104,7 @@ export default {
       cooperationTypeArr: config.cooperationTypeArr,
       levelVisible: false,
       expectationsVisible: false,
+      // selectExpectations
       recommendationsVisible: false,
       trailVisible: false,
       lockVisible: false,
