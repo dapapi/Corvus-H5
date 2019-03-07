@@ -98,7 +98,7 @@ export default {
     },
     changeHidden(){
       this.isHidden = true
-      this.$emit('change', '', this.isHidden)
+      this.$emit('change', ' ', this.isHidden)
     },
   }
 }

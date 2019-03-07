@@ -121,6 +121,7 @@ export default {
             handler:function(e){
                 e.preventDefault()
             },
+            leftClick:null
         }
     },
     computed:{
@@ -180,7 +181,10 @@ export default {
        
     },
     mounted () {
+        this.leftClick = this.leftClickTemp
         window.leftClick = this.leftClick
+        
+        
     },
     methods:{
         ...mapActions([
@@ -189,7 +193,7 @@ export default {
             'putArtist',//编辑艺人
         ]),
         //返回
-        leftClick:function(){
+        leftClickTemp:function(){
             alert('原生返回')
             config.deviceWay('back',2)
             
@@ -251,9 +255,7 @@ export default {
         },
         // 平台
         seletedData:function(data,isHidden){
-            alert(isHidden)
             this.popupPlatform = !this.popupPlatform
-            alert(this.popupPlatform)
        
            let platformName =[]
            this.selectedPlatform = data
