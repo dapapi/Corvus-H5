@@ -25,7 +25,7 @@
             <Field label="星探姓名" v-model="scout"></Field>
             <Field label="地区" v-model="region"></Field>
             <!--平台-->
-            <Cell title="平台" is-link @click.native="checkResource()" :value="platformName"></Cell>
+            <Cell title="平台" is-link @click.native="changeState('popupPlatform',!popupPlatform)" :value="platformName"></Cell>
             
             <Field class="text-left" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboUrl"></Field>
             <Field class="text-left" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboFansNum"></Field>
@@ -250,13 +250,11 @@ export default {
             }
         },
         // 平台
-        seletedData:function(data){
-            
+        seletedData:function(data,isHidden){
+            alert(isHidden)
             this.popupPlatform = !this.popupPlatform
             alert(this.popupPlatform)
-        //    if(isHidden){
-        //        this.popupPlatform = false
-        //    }
+       
            let platformName =[]
            this.selectedPlatform = data
            data.map(n => {
@@ -265,12 +263,8 @@ export default {
            this.platformName = platformName.join(',')
            
         },
-        checkResource:function(){
-           this.popupPlatform = !this.popupPlatform           
-        },
         //上传头像
         upload:function(url){
-            // console.log('上唇'+url)
            this.uploadUrl = url
         },
         //添加--编辑艺人
