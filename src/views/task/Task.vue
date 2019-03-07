@@ -95,7 +95,7 @@ export default {
       taskType: '', // 任务类型
       taskTypeName: '',
       principalId: '', // 负责人
-      principalIconArr: '', // 负责人头像
+      principalIconArr: [], // 负责人头像
       participantIds: [], // 参与人
       participantIconArr: [], // 参与人头像
       priority: '', // 任务优先级
