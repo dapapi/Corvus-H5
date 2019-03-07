@@ -22,6 +22,7 @@
 import config from '@/utils/config'
 import fetch from '@/utils/fetch'
 import { mapState, mapActions } from 'vuex'
+import tool from '@/utils/tool'
 
 export default {
   data () {
@@ -49,6 +50,7 @@ export default {
       principalName: '', // 负责人
       clientId: this.$route.params.id,
       type: this.$route.query.type,
+      leftClick: null , // 左侧按钮触发的事件
     }
   },
 
@@ -66,6 +68,8 @@ export default {
     } else {
       window.rightClick = this.addClient
     }
+    this.leftClick = this.leftClickTemp
+    window.leftClick = this.leftClick
   },
 
   watch: {
@@ -189,7 +193,10 @@ export default {
         id: this.clientId
       }
       this.getClientContact(params)
-    }
+    },
+    leftClickTemp () {
+      tool.nativeEvent('back', 2)
+    },
   }
 }
 </script>
