@@ -87,7 +87,7 @@ export default function fetch (method = 'post', url, params) {
         resolve(response.data)
       }, err => {
         console.log('err:::')
-        console.log(error)
+        console.log(err)
         reject(err)
       })
       .catch((error) => {
