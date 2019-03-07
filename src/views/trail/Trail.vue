@@ -12,7 +12,7 @@
       <Selector :visible="trailVisible" :data="trailOriginArr" @change="checkTrailOrigin" />
       <Field v-if="resourceTypeNum < 6 && resourceTypeNum > 0" v-model="resourceTypeDetail"></Field>
       <Cell title="行业" @click.native="changeState('industryVisible', !industryVisible)" :value="industryName" isLink></Cell>
-      <Cell title="负责人">
+      <Cell title="负责人" @click.native="checkKeyMan" isLink>
         <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
       </Cell>
       <Cell title="目标艺人" :value="expectationsName" @click.native="changeState('expectationsVisible', !expectationsVisible)" isLink></Cell>

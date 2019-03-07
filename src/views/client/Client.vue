@@ -6,7 +6,9 @@
     <Cell title="地区" @click.native="changeState('regionVisible', !regionVisible)" :value="region" isLink></Cell>
     <Regional :visible="regionVisible" @change="checkRegional" />
     <Field label="详细地址" v-model="detailAddress" />
-    <Cell title="负责人" :value="principalName" isLink></Cell>
+    <Cell title="负责人" @click.native="checkKeyMan" isLink>
+        <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
+      </Cell>
     <Field label="联系人" v-model="contactName" />
     <Cell title="关键决策人" @click.native="changeState('keyVisible', !keyVisible)" :value="isKey" isLink></Cell>
     <Selector :visible="keyVisible" :data="yesOrNoArr" @change="checkKey" />
@@ -47,7 +49,8 @@ export default {
       area: '',
       region: '', // 地区
       scale: '', // 规模
-      principalName: '', // 负责人
+      principalId: '', // 负责人
+      principalIconArr: [],
       clientId: this.$route.params.id,
       type: this.$route.query.type,
       leftClick: null , // 左侧按钮触发的事件
@@ -131,7 +134,7 @@ export default {
         province: this.province,
         city: this.city,
         district: this.area,
-        principalId: '',
+        principalId: this.principalId,
         address: this.detailAddress,
         contact: {
             name: this.contactName,
@@ -196,6 +199,20 @@ export default {
     },
     leftClickTemp () {
       tool.nativeEvent('back', 2)
+    },
+      // 选择负责人
+    checkKeyMan () {
+      window.setMemberData = this.setPrincipalData
+      const params = {
+        type: 1,
+        data: this.principalIconArr
+      }
+      tool.nativeEvent('selectOrganizational', JSON.stringify(params))
+    },
+    // 设置负责人数据
+    setPrincipalData (data) {
+      this.principalIconArr = JSON.parse(data)
+      this.principalId = this.principalIconArr[0].id || ''
     },
   }
 }
