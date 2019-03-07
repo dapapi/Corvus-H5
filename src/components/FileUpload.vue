@@ -35,9 +35,6 @@
         created(){
            this.device = this.whichDevice()
         },
-        mounted(){
-           console.log(this.device,this.isImg)
-        },
         methods: {
             uploadFile(e) {
                 this.progressShow = true
