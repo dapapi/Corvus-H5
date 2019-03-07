@@ -134,7 +134,7 @@ export default {
         if(this.$route.params.id){
             this.getBlog()
         }
-        this.leftClick = this.leftClickTemp
+        
         window.rightClick = this.addBlog
         window.leftClick = this.leftClick
     },
@@ -146,7 +146,7 @@ export default {
             'putBlogger',//编辑艺人
         ]),
         //返回
-        leftClickTemp:function(){
+        leftClick:function(){
             
             config.deviceWay('back',2)
             
