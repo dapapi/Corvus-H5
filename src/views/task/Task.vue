@@ -170,8 +170,8 @@ export default {
         this.pageTitle = '新增任务'
       }
     }
-    window.rightClick = this.rightClick
-    window.leftClick = this.leftClick
+    //window.rightClick = this.rightClick
+    //window.leftClick = this.leftClick
   },
   methods: {
     ...mapMutations([
