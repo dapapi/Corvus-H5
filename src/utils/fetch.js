@@ -12,7 +12,10 @@ axios.defaults.headers.common['Accept'] = 'application/vnd.Corvus.v1+json'
 axios.defaults.headers.common['Access-Control-Expose-Headers'] = 'Location'
 // axios.defaults.headers.common['Cache-Control'] = 'no-cache'
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Authorization'
-const token = 'Bearer '+config.token
+let token = config.token
+if (token.substr(0, 7) !== 'Bearer ') {
+  token = 'Bearer ' + token
+}
 axios.defaults.headers.common['Authorization'] = token
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 axios.defaults.baseURL = config.apiUrl
