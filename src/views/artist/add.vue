@@ -120,7 +120,8 @@ export default {
             remark:'',//备注
             handler:function(e){
                 e.preventDefault()
-            }
+            },
+            leftClick: null
         }
     },
     computed:{
