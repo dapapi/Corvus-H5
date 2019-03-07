@@ -71,8 +71,12 @@ export default {
   },
   mounted () {
     window.rightClick = this.changeShow
-    tool.nativeEvent('setTitle', this.newTitle)
+    console.log('checklist')
+    console.log(this.leftClick)
+    console.log(window.leftClick)
+    console.log(this.changeHidden)
     window.leftClick = this.changeHidden
+    tool.nativeEvent('setTitle', this.newTitle)
   },
   beforeDestroy () {
     if (this.rightClick) {
@@ -95,9 +99,6 @@ export default {
     changeHidden(){
       alert('html5返回')
       this.isHidden = true
-      const data = this.selectorData.filter(n =>
-        this.checkedArr.indexOf(n.value) > -1
-      )
       this.$emit('change', '', this.isHidden)
     },
   }
