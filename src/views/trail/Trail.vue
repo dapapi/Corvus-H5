@@ -12,7 +12,9 @@
       <Selector :visible="trailVisible" :data="trailOriginArr" @change="checkTrailOrigin" />
       <Field v-if="resourceTypeNum < 6 && resourceTypeNum > 0" v-model="resourceTypeDetail"></Field>
       <Cell title="行业" @click.native="changeState('industryVisible', !industryVisible)" :value="industryName" isLink></Cell>
-      <Cell title="负责人" :value="principalName"></Cell>
+      <Cell title="负责人" @click.native="checkKeyMan" isLink>
+        <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
+      </Cell>
       <Cell title="目标艺人" :value="expectationsName" @click.native="changeState('expectationsVisible', !expectationsVisible)" isLink></Cell>
       <Cell title="推荐艺人" :value="recommendationsName" @click.native="changeState('recommendationsVisible', !recommendationsVisible)" isLink></Cell>
       <Cell title="优先级" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" isLink></Cell>
@@ -127,7 +129,8 @@ export default {
       industryId: '', // 行业id
       type: '', // 销售线索
       principalId: '', // 负责人
-      principalName: '', // 负责人
+      // principalName: '', // 负责人
+      principalIconArr: [], // 负责人头像
       priority: '', // 优先级
       priorityName: '', // 优先级
       salesProgressText: '未确定合作', // 销售进展，新增为未确定合作
@@ -190,7 +193,7 @@ export default {
       // industryId: '', // 行业id
       // type: '', // 销售线索
       // principalId: '', // 负责人
-      this.principalName = trailDetail.principal.data.name
+      this.principalIconArr = trailDetail.principal.data.icon_url
       this.priority = trailDetail.priority
       this.priorityName = this.taskLevelArr.find(n => n.value === trailDetail.priority).name
       // salesProgressText: '未确定合作', // 销售进展，新增为未确定合作
@@ -367,6 +370,20 @@ export default {
     },
     leftClickTemp () {
       tool.nativeEvent('back', 2)
+    },
+    // 选择负责人
+    checkKeyMan () {
+      window.setMemberData = this.setPrincipalData
+      const params = {
+        type: 1,
+        data: this.principalIconArr
+      }
+      tool.nativeEvent('selectOrganizational', JSON.stringify(params))
+    },
+    // 设置负责人数据
+    setPrincipalData (data) {
+      this.principalIconArr = JSON.parse(data)
+      this.principalId = this.principalIconArr[0].id || ''
     },
   }
 }
