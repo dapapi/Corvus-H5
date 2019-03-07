@@ -1,12 +1,12 @@
 <template>
     <div >
         <ul class="nav">
-            <li @click="changeActive(item.value,item.params)" :class="isActive == item.value?'active':''" v-for="(item,index) in navList" :key="index">{{item.name}}</li>
+            <li @click="changeActive(item.value)" :class="isActive == item.value?'active':''" v-for="(item,index) in navList" :key="index">{{item.name}}</li>
             <div class="active-line" :style="{left:`${posLeft}%`,width:`${activeLineWidth}%`}"></div>
         </ul>
         <ul class="nav-ul">
-        <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive ">
-            <router-link :to="`/notice/detail/${item.id}`">
+        <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive " @click="changeState">
+            <!-- <router-link :to="`/notice/detail/${item.id}`"> -->
                 <div class="nav-title">
                     <i class="iconfont icon-biaoti"></i>
                     <span class="title">{{item.title}}</span>
@@ -17,7 +17,7 @@
                     <span class="float-left type">{{noticeType.find(notice => notice.id == item.classify).name}}</span>
                     <span class="float-right time">{{item.created_at}}</span>
                 </div>
-            </router-link>
+            <!-- </router-link> -->
         </li>
         </ul>
     </div>
@@ -65,7 +65,7 @@ export default {
         this.isActive = this.navList[0].value
         this.posLeft = (100/this.navList.length/4)
         this.activeLineWidth =(100/this.navList.length/2)
-        this.getNoticeList()
+        this.getNoticeList(0)
     },
     
     methods:{
@@ -80,18 +80,31 @@ export default {
          this.getNoticeList()
          
        },
-       changeActive:function(value,params){
+       changeActive:function(value){
            this.isActive = value
            this.posLeft = (100/this.navList.length/4)+(100/this.navList.length*(value))
-           this.getNoticeList(value,params)
+           this.getNoticeList(value)
        },
-       getNoticeList(value,params){
+       //readflag 0 未读 1 已读
+       getNoticeList(value){
            let data ={
-  
+               readflag:value
            }
            fetch('get', `/announcements?include=creator`,data).then(res => {
                this.noticeList = res.data
            })
+       },
+       changeState(id){
+            let data = {
+
+            }
+            fetch('post', ``,data).then(res => {
+               if(res){
+                   this.$router.push({
+                       path:`/notice/detail/${id}`
+                   })
+               }
+            })
        }
 
     }
