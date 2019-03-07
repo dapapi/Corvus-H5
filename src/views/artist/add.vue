@@ -177,10 +177,10 @@ export default {
             this.getArtist()
         }
         window.rightClick = this.addArtist
-        window.leftClick = this.leftClick
+       
     },
     mounted () {
-        
+        window.leftClick = this.leftClick
     },
     methods:{
         ...mapActions([

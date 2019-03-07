@@ -5,7 +5,7 @@
             <div class="active-line" :style="{left:`${posLeft}%`,width:`${activeLineWidth}%`}"></div>
         </ul>
         <ul class="nav-ul">
-        <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive " @click="changeState">
+        <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive " @click="changeState(item.id)">
             <!-- <router-link :to="`/notice/detail/${item.id}`"> -->
                 <div class="nav-title">
                     <i class="iconfont icon-biaoti"></i>
@@ -96,15 +96,20 @@ export default {
        },
        changeState(id){
             let data = {
-
+                readflag:1
             }
-            fetch('post', ``,data).then(res => {
-               if(res){
-                   this.$router.push({
-                       path:`/notice/detail/${id}`
-                   })
-               }
-            })
+            if(this.isActive == 0){
+                fetch('put', `/announcements/${id}/readflag`,data).then(res => {
+                    this.$router.push({
+                        path:`/notice/detail/${id}`
+                    })
+                })
+            }else{
+                this.$router.push({
+                    path:`/notice/detail/${id}`
+                })
+            }
+            
        }
 
     }
