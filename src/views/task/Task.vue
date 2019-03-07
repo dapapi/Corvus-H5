@@ -36,7 +36,7 @@
       <Field type="textarea" ref='textarea' rows="1" label="任务说明" v-model="desc" />
       <div class="attachment">
         <Cell title="附件">
-          <FileUpload @change="uploadFile"><i class="iconfont icon-biaoti annex"></i></FileUpload>
+          <FileUpload @change="uploadFile"><i class="iconfont icon-fujian annex"></i></FileUpload>
         </Cell>
         <div class="annex-list" v-for="(item, index) in annexArr" :key="index">
           <div class="left">
@@ -95,7 +95,7 @@ export default {
       taskType: '', // 任务类型
       taskTypeName: '',
       principalId: '', // 负责人
-      principalIconArr: '', // 负责人头像
+      principalIconArr: [], // 负责人头像
       participantIds: [], // 参与人
       participantIconArr: [], // 参与人头像
       priority: '', // 任务优先级
@@ -350,7 +350,6 @@ export default {
     },
     // 设置负责人数据
     setPrincipalData (data) {
-      alert(data)
       this.principalIconArr = JSON.parse(data)
       this.principalId = this.principalIconArr[0].id || ''
     },
