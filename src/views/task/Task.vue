@@ -161,9 +161,9 @@ export default {
     if (this.$route.name === 'task/edit') {
       this.getTaskDetail()
       this.pageTitle = '编辑任务'
-      this.rightClick = this.addNewTask
-    } else {
       this.rightClick = this.editTask
+    } else {
+      this.rightClick = this.addNewTask
       if (this.$route.name === 'task/addSubTask') {
         this.pageTitle = '新增子任务'
       } else {

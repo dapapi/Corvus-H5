@@ -103,6 +103,7 @@ export default {
       cooperationTypeArr: config.cooperationTypeArr,
       levelVisible: false,
       expectationsVisible: false,
+      // selectExpectations
       recommendationsVisible: false,
       trailVisible: false,
       lockVisible: false,

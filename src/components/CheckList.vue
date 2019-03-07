@@ -73,11 +73,7 @@ export default {
     window.rightClick = this.changeShow
     window.leftClick = this.changeHidden
     tool.nativeEvent('setTitle', this.newTitle)
-    console.log('checklist')
-    console.log(this.leftClick)
-    console.log(window.leftClick)
-    console.log(this.changeHidden)
-    console.log(window.leftClick)
+    console.log(this.checkedArr)
   },
   beforeDestroy () {
     if (this.rightClick) {
@@ -98,7 +94,7 @@ export default {
     },
     changeHidden(){
       this.isHidden = true
-      this.$emit('change', ' ', this.isHidden)
+      this.$emit('change', [], this.isHidden)
     },
   }
 }
