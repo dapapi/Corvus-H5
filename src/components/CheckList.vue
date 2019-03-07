@@ -92,11 +92,12 @@ export default {
       this.$emit('change', data, this.isHidden)
     },
     changeHidden(){
+      // alert(111)
       this.isHidden = true
       const data = this.selectorData.filter(n =>
         this.checkedArr.indexOf(n.value) > -1
       )
-      this.$emit('change', '', this.isHidden)
+      this.$emit('change', ' ', this.isHidden)
     },
   }
 }
