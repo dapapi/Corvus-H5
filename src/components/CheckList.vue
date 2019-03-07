@@ -76,6 +76,7 @@ export default {
     console.log(window.leftClick)
     console.log(this.changeHidden)
     window.leftClick = this.changeHidden
+    console.log(window.leftClick)
     tool.nativeEvent('setTitle', this.newTitle)
   },
   beforeDestroy () {
