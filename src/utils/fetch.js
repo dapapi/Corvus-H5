@@ -11,7 +11,8 @@ axios.defaults.timeout = 10000
 axios.defaults.headers.common['Accept'] = 'application/vnd.Corvus.v1+json'
 axios.defaults.headers.common['Access-Control-Expose-Headers'] = 'Location'
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Authorization'
-const token = window[config.tokenString] ? window[config.tokenString] : tempToken
+const token = config.token?config.token : tempToken
+alert(token)
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 axios.defaults.baseURL = config.apiUrl
