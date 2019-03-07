@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 export default {
   tokenString: 'CORVUS-ACCESS-TOKEN',
-  apiUrl: 'https://sandbox-api-crm.papitube.com',
+  apiUrl: 'http://sandbox-api-crm.papitube.com',
   imgUrl: 'https://res-crm.papitube.com/',
   getHeaders: function () {
       let headers = {
