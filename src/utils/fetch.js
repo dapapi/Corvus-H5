@@ -35,22 +35,14 @@ axios.interceptors.request.use((config) => {
   }
   return config
 }, (error) => {
-  console.log('error:')
-  console.log(error)
   const { response } = error
-  console.log("response:")
-  console.log(response)
   Toast(response.data.message)
   return Promise.reject(error)
 })
 
 // 返回状态判断
 axios.interceptors.response.use(res => {
-  console.log('error:')
-  console.log(error)
   const { response } = error
-  console.log("response:")
-  console.log(response)
   if (res.status < 200 && res.status > 300) {
     return Promise.reject(res)
   }
@@ -58,10 +50,6 @@ axios.interceptors.response.use(res => {
 }, (error) => {
   const { response: { status } } = error
   const { response } = error
-  console.log('error:')
-  console.log(error)
-  console.log("response:")
-  console.log(response)
   if (status === 401) {
     // config.getStatusCode()[401]()
   } else if (status === 422) {
@@ -86,13 +74,9 @@ export default function fetch (method = 'post', url, params) {
       .then(response => {
         resolve(response.data)
       }, err => {
-        console.log('err:::')
-        console.log(err)
         reject(err)
       })
       .catch((error) => {
-        console.log('error:::')
-        console.log(error)
         reject(error)
       })
   })
