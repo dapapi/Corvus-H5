@@ -177,10 +177,10 @@ export default {
             this.getArtist()
         }
         window.rightClick = this.addArtist
-        window.leftClick = this.leftClick
+       
     },
     mounted () {
-        
+        window.leftClick = this.leftClick
     },
     methods:{
         ...mapActions([
@@ -250,10 +250,13 @@ export default {
             }
         },
         // 平台
-        seletedData:function(data,isHidden){
-           if(isHidden){
-               this.popupPlatform = false
-           }
+        seletedData:function(data){
+            
+            this.popupPlatform = !this.popupPlatform
+            alert(this.popupPlatform)
+        //    if(isHidden){
+        //        this.popupPlatform = false
+        //    }
            let platformName =[]
            this.selectedPlatform = data
            data.map(n => {

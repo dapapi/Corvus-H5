@@ -71,13 +71,13 @@ export default {
   },
   mounted () {
     window.rightClick = this.changeShow
+    window.leftClick = this.changeHidden
+    tool.nativeEvent('setTitle', this.newTitle)
     console.log('checklist')
     console.log(this.leftClick)
     console.log(window.leftClick)
     console.log(this.changeHidden)
-    window.leftClick = this.changeHidden
     console.log(window.leftClick)
-    tool.nativeEvent('setTitle', this.newTitle)
   },
   beforeDestroy () {
     if (this.rightClick) {
@@ -90,7 +90,6 @@ export default {
   },
   methods:{
     changeShow(){
-      alert('rightClick html5返回')
       this.isHidden = true
       const data = this.selectorData.filter(n =>
         this.checkedArr.indexOf(n.value) > -1
@@ -98,7 +97,6 @@ export default {
       this.$emit('change', data, this.isHidden)
     },
     changeHidden(){
-      alert('html5返回')
       this.isHidden = true
       this.$emit('change', '', this.isHidden)
     },
