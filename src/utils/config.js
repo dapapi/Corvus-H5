@@ -1,7 +1,11 @@
 import Cookies from 'js-cookie'
+// 临时修改
+const u = navigator.userAgent
+const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+
 export default {
   tokenString: 'CORVUS-ACCESS-TOKEN',
-  apiUrl: 'http://sandbox-api-crm.papitube.com',
+  apiUrl: `http${isIOS?'s':''}://sandbox-api-crm.papitube.com`,
   imgUrl: 'https://res-crm.papitube.com/',
   getHeaders: function () {
       let headers = {
