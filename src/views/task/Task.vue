@@ -8,25 +8,25 @@
           <span class="mint-cell-mask"></span>
         </Cell>
       </Popup>
-      <Cell title="任务类型" @click.native="changeState('typeVisible', !typeVisible)" :value="taskTypeName" is-link></Cell>
+      <Cell class="require" title="任务类型" @click.native="changeState('typeVisible', !typeVisible)" :value="taskTypeName" is-link></Cell>
       <Selector :visible="typeVisible" :data="taskTypes" @change="checkTaskType" />
-      <Field label="任务名称" v-model="title" />
-      <Cell title="负责人" @click.native="checkKeyMan" is-link>
+      <Field class="require" label="任务名称" v-model="title" />
+      <Cell class="require" title="负责人" @click.native="checkKeyMan" is-link>
         <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
       </Cell>
       <Cell title="参与人"  @click.native="checkParticipant" is-link>
         <img class="avatar" v-for="(item, index) in participantIconArr" :src="item.icon_url" :key="index">
       </Cell>
-      <Cell title="任务优先级" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" is-link></Cell>
+      <Cell class="require" title="任务优先级" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" is-link></Cell>
       <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
-      <Cell title="开始时间" @click.native="showStartPicker" :value="startTime" is-link></Cell>
+      <Cell class="require" title="开始时间" @click.native="showStartPicker" :value="startTime" is-link></Cell>
       <DatetimePicker
         ref="startPicker"
         type="datetime"
         @confirm="startConfirm"
         @visible-change="handleValueChange"
       />
-      <Cell title="截止时间" @click.native="showEndPicker" :value="endTime" is-link></Cell>
+      <Cell title="截止时间" class="require" @click.native="showEndPicker" :value="endTime" is-link></Cell>
       <DatetimePicker
         ref="endPicker"
         type="datetime"
@@ -298,13 +298,17 @@ export default {
         // 执行添加子任务
         fetch('post', '/tasks/' + this.taskId + '/subtask', data).then(function (response) {
           toast('添加成功！')
-          this.leftClick()
+          setTimeout(() => {
+            this.leftClick()
+          }, 700)
         })
       } else {
         // 执行添加任务
         fetch('post', '/tasks', params).then(res => {
           toast('添加成功！')
-          this.leftClick()
+          setTimeout(() => {
+            this.leftClick()
+          }, 700)
         })
       }
     },
