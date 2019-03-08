@@ -44,7 +44,7 @@
               <img :src="item.url" />
             </div>
             <div class="info">
-              <div class="title">{{ item.name }}</div>
+              <div class="title">{{ item.title }}</div>
               <div class="size">{{ (item.size  / 1024).toFixed(1) }}k</div>
             </div>
           </div>
@@ -351,7 +351,7 @@ export default {
       this.annexArr.push(
         {
           url: fileUrl,
-          name: fileName,
+          title: fileName,
           size: fileSize
         }
       )
