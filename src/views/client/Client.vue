@@ -198,8 +198,10 @@ export default {
       }
       console.log(data)
       fetch('post', '/clients', data).then(res => {
-        console.log(res)
-        // 回调
+        toast('添加成功!')
+          setTimeout(() => {
+            this.leftClick()
+          }, 900)
       })
     },
     // 编辑客户
@@ -211,7 +213,7 @@ export default {
         province: this.province,
         city: this.city,
         district: this.area,
-        principalId: '',
+        principal_id: this.principalId,
         address: this.detailAddress,
         contact: {
             name: this.contactName,
@@ -221,7 +223,8 @@ export default {
         },
         // keyman: this.clientDecision,
         size: this.scale,
-        desc: this.desc
+        desc: this.desc,
+        client_rating: this.rating
       }
       fetch('put', '/clients/' + this.clientId, data).then(res => {
         // 回调
