@@ -32,7 +32,7 @@ Vue.component(Radio.name, Radio)
 Vue.component(Checklist.name, Checklist)
 Vue.component('DatetimePicker', DatetimePicker)
 Vue.component(Picker.name, Picker)
-Vue.component('Toast',Toast)
+// Vue.component('Toast',Toast)
 Vue.component('Search', Search)
 Vue.use(VueWechatTitle)
 
@@ -43,7 +43,8 @@ Vue.component('Selector', Selector)
 Vue.component('AddClient', AddClient)
 Vue.component('Regional', Regional)
 
-
+// 全局方法
+window.toast = Toast
 
 new Vue({
   router,

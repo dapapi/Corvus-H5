@@ -75,7 +75,6 @@ import config from '@/utils/config'
 import moment from 'moment'
 import fetch from '@/utils/fetch'
 import tool from '@/utils/tool'
-import { Toast } from 'mint-ui'
 
 export default {
   name: 'Task',
@@ -155,7 +154,6 @@ export default {
     },
   },
   mounted () {
-    // Toast(11111)
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
@@ -270,12 +268,14 @@ export default {
       if (this.$route.name === 'task/addSubTask') {
         // 执行添加子任务
         fetch('post', '/tasks/' + this.taskId + '/subtask', data).then(function (response) {
+          toast('添加成功')
           // 回调app原生方法
         })
       } else {
         // 执行添加任务
         fetch('post', '/tasks', params).then(res => {
-          console.log(res)
+          toast('添加成功')
+          // console.log(res)
           // 回调app原生方法
         })
       }
@@ -298,6 +298,7 @@ export default {
       }
       fetch('put', '/tasks/' + this.taskId, params).then(res => {
         // 回调app原生方法
+        toast('修改成功')
       })
     },
     getTaskDetail () {
