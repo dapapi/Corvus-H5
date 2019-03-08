@@ -1,10 +1,10 @@
 <template>
     <div>
         <div v-show="!popupPlatform">
-            <Field label="昵称" v-model="username"></Field>
+            <Field class="require" label="昵称" v-model="username"></Field>
             
             <!--平台-->
-            <Cell title="平台" is-link @click.native="checkResource()" :value="platformName"></Cell>
+            <Cell class="require" title="平台" is-link @click.native="checkResource()" :value="platformName"></Cell>
             
             <Field class="text-left" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboUrl"></Field>
             <Field class="text-left" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboFansNum"></Field>
@@ -14,17 +14,17 @@
             <Field class="text-left" placeholder="小红书粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsFansNum"></Field>
             
             <!--类型-->
-            <Cell title="类型" is-link  @click.native="changeState('popupBlogType',!popupBlogType)" :value="blogTypeSelect.name"></Cell>
+            <Cell class="require" title="类型" is-link  @click.native="changeState('popupBlogType',!popupBlogType)" :value="blogTypeSelect.name"></Cell>
             <Selector :visible="popupBlogType" :data="blogType" @change="changeBlogType" />
             <!--沟通状态-->
-            <Cell title="沟通状态" is-link  @click.native="changeState('popupArtistStatus',!popupArtistStatus)" :value="artistStatus.name"></Cell>
+            <Cell class="require" title="沟通状态" is-link  @click.native="changeState('popupArtistStatus',!popupArtistStatus)" :value="artistStatus.name"></Cell>
             <Selector :visible="popupArtistStatus" :data="artistStatusArr" @change="changeArtistStatus" />
             <!--与我司签约意向-->
-            <Cell title="与我司签约意向" is-link @click.native="changeState('popupIntention',!popupIntention)" :value="intention.name"></Cell>
+            <Cell class="require" title="与我司签约意向" is-link @click.native="changeState('popupIntention',!popupIntention)" :value="intention.name"></Cell>
             <Selector :visible="popupIntention" :data="yesOrNo" @change="changeIntention" />
             <Field class="text-left" v-show="intention.value == '0'" v-model="intentionTxt" placeholder="请填写不签约理由"></Field>
             <!--是否签约其他公司-->
-            <Cell title="是否签约其他公司" is-link  @click.native="changeState('popupSign',!popupSign)" :value="sign.name"></Cell>
+            <Cell class="require" title="是否签约其他公司" is-link  @click.native="changeState('popupSign',!popupSign)" :value="sign.name"></Cell>
             <Selector :visible="popupSign" :data="yesOrNo" @change="changeSign" />
             <Field class="text-left" v-show="sign.value == 1" v-model="company" placeholder="请输入已签约公司名称"></Field>
 
