@@ -36,7 +36,22 @@
            this.device = this.whichDevice()
         },
         methods: {
+            zip:function(e){
+                lrz( e.target.file[0], {
+                    width : 300
+                    //quality: 0.8    //自定义使用压缩方式
+                })  
+                .then(function(rst) {
+                    console.log(rst)
+                    //成功时执行
+                }).catch(function(error) {
+                    //失败时执行
+                }).always(function() {
+                    //不管成功或失败，都会执行
+                })
+            },
             uploadFile(e) {
+                
                 this.progressShow = true
                 this.uploadProgress = 0
                 let _this = this

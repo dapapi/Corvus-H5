@@ -21,11 +21,9 @@ export default{
       let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
       let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
       if (isIOS) {
-          // alert('调用ios方法')
           window.webkit.messageHandlers[name].postMessage(params)
       }
       if (isAndroid) {
-          // alert('调用安卓方法')
           window.webView[name](params)
       }
     }

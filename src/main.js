@@ -21,6 +21,7 @@ import AddClient from '@/components/AddClient'
 import Regional from '@/components/Regional'
 import VueWechatTitle from 'vue-wechat-title'
 import 'scrolling-element'
+// import lrz from 'lrz'
 
 Vue.config.productionTip = false
 // mint组件

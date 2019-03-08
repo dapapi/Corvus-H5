@@ -31,10 +31,8 @@ export default {
   },
   deviceWay:function(name,params){
     
-    if (this.whichDevice == 'ios'){
-      alert('ios')
+    if (this.whichDevice() == 'ios'){
       window.webkit.messageHandlers[name].postMessage(params)
-      
     }
     if (this.whichDevice() == 'android'){
       window.webView[name](params)
