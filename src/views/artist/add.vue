@@ -3,10 +3,10 @@
         <div v-show="!popupPlatform">
             <Field class="require" label="姓名" v-model="username"></Field>
             <!--性别-->
-            <Cell title="性别" is-link @click.native="changeState('popupGender',!popupGender)" :value="gender.name"></Cell>
+            <Cell class="require"  title="性别" is-link @click.native="changeState('popupGender',!popupGender)" :value="gender.name"></Cell>
             <Selector :visible="popupGender" :data="genderArr" @change="changeGender" />
            <!--出生日期-->
-            <Cell title="出生日期" is-link @click.native="changeBornTime" :value="bornTime"></Cell>
+            <Cell class="require" title="出生日期" is-link @click.native="changeBornTime" :value="bornTime"></Cell>
             <DatetimePicker
                 ref="bornPicker"
                 type="date"
@@ -16,16 +16,16 @@
                 @visible-change="handleValueChange"
             />
             <!--艺人来源-->
-            <Cell title="艺人来源" is-link @click.native="changeState('popupArtistSource',!popupArtistSource)" :value="artistSource.name"></Cell>
+            <Cell class="require" title="艺人来源" is-link @click.native="changeState('popupArtistSource',!popupArtistSource)" :value="artistSource.name"></Cell>
             <Selector :visible="popupArtistSource" :data="artistSourceArr" @change="changeArtistSource" />
             
-            <Field label="邮箱" v-model="email"></Field>
-            <Field label="手机号" v-model="phone"></Field>
+            <Field class="require" label="邮箱" v-model="email"></Field>
+            <Field class="require" label="手机号" v-model="phone"></Field>
             <Field label="微信" v-model="wechat"></Field>
             <Field label="星探姓名" v-model="scout"></Field>
             <Field label="地区" v-model="region"></Field>
             <!--平台-->
-            <Cell title="平台" is-link @click.native="changeState('popupPlatform',!popupPlatform)" :value="platformName"></Cell>
+            <Cell class="require" title="平台" is-link @click.native="changeState('popupPlatform',!popupPlatform)" :value="platformName"></Cell>
             
             <Field class="text-left" placeholder="微博主页地址" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboUrl"></Field>
             <Field class="text-left" placeholder="微博粉丝数" v-if="selectedPlatform.find(item => item.value ==1)" v-model="weiboFansNum"></Field>
@@ -37,14 +37,14 @@
             <Field class="text-left" placeholder="其他地址粉丝数" v-if="selectedPlatform.find(item => item.value ==4)" v-model="qitaFansNum"></Field>
             
             <!--沟通状态-->
-            <Cell title="沟通状态" is-link  @click.native="changeState('popupArtistStatus',!popupArtistStatus)" :value="artistStatus.name"></Cell>
+            <Cell class="require" title="沟通状态" is-link  @click.native="changeState('popupArtistStatus',!popupArtistStatus)" :value="artistStatus.name"></Cell>
             <Selector :visible="popupArtistStatus" :data="artistStatusArr" @change="changeArtistStatus" />
             <!--与我司签约意向-->
-            <Cell title="与我司签约意向" is-link @click.native="changeState('popupIntention',!popupIntention)" :value="intention.name"></Cell>
+            <Cell class="require" title="与我司签约意向" is-link @click.native="changeState('popupIntention',!popupIntention)" :value="intention.name"></Cell>
             <Selector :visible="popupIntention" :data="yesOrNo" @change="changeIntention" />
             <Field class="text-left" v-show="intention.value == 2" v-model="intentionTxt" placeholder="请填写不签约理由"></Field>
             <!--是否签约其他公司-->
-            <Cell title="是否签约其他公司" is-link  @click.native="changeState('popupSign',!popupSign)" :value="sign.name"></Cell>
+            <Cell class="require" title="是否签约其他公司" is-link  @click.native="changeState('popupSign',!popupSign)" :value="sign.name"></Cell>
             <Selector :visible="popupSign" :data="yesOrNo" @change="changeSign" />
             <Field class="text-left" v-show="sign.value == 1" v-model="company" placeholder="请输入已签约公司名称"></Field>
 
