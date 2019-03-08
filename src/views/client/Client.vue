@@ -19,7 +19,7 @@
     <Cell class="require" title="客户评级" @click.native="changeState('ratingVisible', !ratingVisible)" :value="ratingName" isLink></Cell>
     <Selector :visible="ratingVisible" :data="ratingArr" @change="checkRating" />
     <Field label="备注" v-model="desc" />
-    <Button @click.native="addClient">新增</Button>
+    <!-- <Button @click.native="addClient">新增</Button> -->
   </div>
 </template>
 
@@ -183,7 +183,7 @@ export default {
         province: this.province,
         city: this.city,
         district: this.area,
-        principalId: this.principalId,
+        principal_Id: this.principalId,
         address: this.detailAddress,
         contact: {
             name: this.contactName,
