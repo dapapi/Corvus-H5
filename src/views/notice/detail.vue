@@ -44,11 +44,10 @@ export default {
             'getNoticeType'
         ]),
         leftClick:function(){
-
+            window.leftClick = this.reLeftClick
             this.$router.push({
                 path: `/notice/list`,
             })
-            window.leftClick = reLeftClick
         },
         reLeftClick:function(){
             config.deviceWay('back',2)
