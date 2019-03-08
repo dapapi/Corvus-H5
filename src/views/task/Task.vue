@@ -75,6 +75,7 @@ import config from '@/utils/config'
 import moment from 'moment'
 import fetch from '@/utils/fetch'
 import tool from '@/utils/tool'
+import { Toast } from 'mint-ui'
 
 export default {
   name: 'Task',
@@ -154,6 +155,7 @@ export default {
     },
   },
   mounted () {
+    // Toast(11111)
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
