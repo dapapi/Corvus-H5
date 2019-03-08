@@ -287,26 +287,24 @@ export default {
         priority: this.priority,
         start_at: this.startTime,
         end_at: this.endTime,
-        desc: this.desc
+        desc: this.desc,
+        affix: this.annexArr
       }
       if (this.resourceName && this.resourceableName) {
         params.resource_type = this.resourceId
         params.resourceable_id = this.resourceableId
       }
-      console.log(params)
-      // this.addTask(params)
       if (this.$route.name === 'task/addSubTask') {
         // 执行添加子任务
         fetch('post', '/tasks/' + this.taskId + '/subtask', data).then(function (response) {
-          toast('添加成功')
-          // 回调app原生方法
+          toast('添加成功！')
+          this.leftClick()
         })
       } else {
         // 执行添加任务
         fetch('post', '/tasks', params).then(res => {
-          toast('添加成功')
-          // console.log(res)
-          // 回调app原生方法
+          toast('添加成功！')
+          this.leftClick()
         })
       }
     },
@@ -320,7 +318,8 @@ export default {
         priority: this.priority,
         start_at: this.startTime,
         end_at: this.endTime,
-        desc: this.desc
+        desc: this.desc,
+        affix: this.annexArr
       }
       if (this.resourceName && this.resourceableName) {
         params.resource_type = this.resourceId
