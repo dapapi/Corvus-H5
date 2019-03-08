@@ -242,13 +242,43 @@ export default {
       this.$refs.endPicker.open()
     },
     startConfirm (date) {
-      this.startTime = moment(date).format('YYYY-MM-DD HH-SS')
+      const time = moment(date).format('YYYY-MM-DD HH-SS')
+      this.startTime = time.substr(0,13) + ':' + time.substr(-2)
     },
     endConfirm (date) {
-      this.endTime = moment(date).format('YYYY-MM-DD HH-SS')
+      const time = moment(date).format('YYYY-MM-DD HH-SS')
+      this.endTime = time.substr(0,13) + ':' + time.substr(-2)
     },
     // 新建任务，子任务
     addNewTask () {
+      if (!this.taskType) {
+        toast('任务类型不能为空！')
+        return
+      }
+      if (!this.title) {
+        toast('任务名称不能为空！')
+        return
+      }
+      if (!this.principalId) {
+        toast('负责人不能为空！')
+        return
+      }
+      if (!this.priority) {
+        toast('任务优先级不能为空！')
+        return
+      }
+      if (!this.startTime) {
+        toast('开始时间不能为空！')
+        return
+      }
+      if (!this.startTime) {
+        toast('结束时间不能为空！')
+        return
+      }
+      if (this.endTime <= this.startTime) {
+        toast('截止时间不能小于开始时间！')
+        return
+      }
       const params = {
         type: this.taskType,
         title: this.title,
