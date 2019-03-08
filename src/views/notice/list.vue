@@ -62,10 +62,11 @@ export default {
         window.leftClick = this.leftClick
     },
     mounted(){
+        this.getNoticeList(0)
         this.isActive = this.navList[0].value
         this.posLeft = (100/this.navList.length/4)
         this.activeLineWidth =(100/this.navList.length/2)
-        this.getNoticeList(0)
+        
     },
     
     methods:{
