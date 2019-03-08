@@ -1,22 +1,25 @@
 <template>
   <div>
-    <Field label="公司名称" v-model="companyName" />
-    <Cell title="级别" @click.native="changeState('levelVisible', !levelVisible)" :value="clientLevel" isLink></Cell>
+    <Field class="require" label="公司名称" v-model="companyName" />
+    <Cell class="require" title="级别" @click.native="changeState('levelVisible', !levelVisible)" :value="clientLevelName" isLink></Cell>
     <Selector :visible="levelVisible" :data="clientLevelArr" @change="checkLevel" />
     <Cell title="地区" @click.native="changeState('regionVisible', !regionVisible)" :value="region" isLink></Cell>
     <Regional :visible="regionVisible" @change="checkRegional" />
     <Field label="详细地址" v-model="detailAddress" />
-    <Cell title="负责人" @click.native="checkKeyMan" isLink>
+    <Cell title="负责人" class="require" @click.native="checkKeyMan" isLink>
         <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
       </Cell>
-    <Field label="联系人" v-model="contactName" />
-    <Cell title="关键决策人" @click.native="changeState('keyVisible', !keyVisible)" :value="isKey" isLink></Cell>
+    <Field label="联系人" class="require" v-model="contactName" />
+    <Cell title="关键决策人" class="require" @click.native="changeState('keyVisible', !keyVisible)" :value="isKeyName" isLink></Cell>
     <Selector :visible="keyVisible" :data="yesOrNoArr" @change="checkKey" />
-    <Field label="联系人电话" v-model="contactPhone" />
-    <Field label="职位" v-model="position" />
-    <Cell title="规模" @click.native="changeState('scaleVisible', !scaleVisible)" :value="scale" isLink></Cell>
+    <Field label="联系人电话" class="require" v-model="contactPhone" />
+    <Field label="职位" class="require" v-model="position" />
+    <Cell title="规模" @click.native="changeState('scaleVisible', !scaleVisible)" :value="scaleName" isLink></Cell>
     <Selector :visible="scaleVisible" :data="clientScaleArr" @change="checkScale" />
+    <Cell class="require" title="客户评级" @click.native="changeState('ratingVisible', !ratingVisible)" :value="ratingName" isLink></Cell>
+    <Selector :visible="ratingVisible" :data="ratingArr" @change="checkRating" />
     <Field label="备注" v-model="desc" />
+    <Button @click.native="addClient">新增</Button>
   </div>
 </template>
 
@@ -34,14 +37,18 @@ export default {
       scaleVisible: false,
       regionVisible: false,
       clientLevelArr: config.clientLevelArr,
+      ratingArr: config.taskLevelArr,
       yesOrNoArr: config.yesOrNo,
       clientScaleArr: config.clientScaleArr,
+      ratingVisible: false,
       companyName: '',
-      clientLevel: '',
+      clientLevel: '', // 级别
+      clientLevelName: '', // 级别
       detailAddress: '',
       contactName: '',
       contactPhone: '',
       isKey: '', // 是否是关键人
+      isKeyName: '', // 是否是关键人
       position: '',
       desc: '',
       province: '',
@@ -49,8 +56,11 @@ export default {
       area: '',
       region: '', // 地区
       scale: '', // 规模
+      scaleName: '', // 规模
       principalId: '', // 负责人
       principalIconArr: [],
+      ratingName: '', // 客户评级
+      rating: '', // 客户评级
       clientId: this.$route.params.id,
       type: this.$route.query.type,
       leftClick: null , // 左侧按钮触发的事件
@@ -87,7 +97,8 @@ export default {
       this.detailAddress = clientDetail.address
       // this.contactName = clientDetail.
       // this.contactPhone = 
-      this.scale = this.clientScaleArr.find(n => n.value === clientDetail.size).name
+      this.scaleName = this.clientScaleArr.find(n => n.value === clientDetail.size).name
+      this.scale = this.clientScaleArr.find(n => n.value === clientDetail.size).value
       this.desc = clientDetail.desc
       this.type = clientDetail.type
       this.principalName = clientDetail.principal && clientDetail.principal.data.name
@@ -97,7 +108,8 @@ export default {
       if (this.clientContact.length > 0) {
         this.contactName = this.clientContact[0].name
         this.contactPhone = this.clientContact[0].phone
-        this.isKey = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).name
+        this.isKeyName = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).name
+        this.isKey = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).value
       }
     }
   },
@@ -112,21 +124,58 @@ export default {
     },
     // 选择级别
     checkLevel (data) {
+      console.log(data)
       this.levelVisible = !this.levelVisible
-      this.clientLevel = data.name
+      this.clientLevel = data.value
+      this.clientLevelName = data.name
     },
     // 选择决策关键人
     checkKey (data) {
       this.keyVisible = !this.keyVisible
-      this.isKey = data.name
+      this.isKey = data.value
+      this.isKeyName = data.name
     },
     // 选择规模
     checkScale (data) {
       this.scaleVisible = !this.scaleVisible
-      this.scale = data.name
+      this.scaleName = data.name
+      this.scale = data.value
     },
     // 新增客户
     addClient () {
+      // this.checkField()
+      if (!this.companyName) {
+        toast('公司名称不能为空！')
+        return
+      }
+      if (!this.clientLevel) {
+        toast('级别不能为空！')
+        return
+      }
+      if (!this.principalId) {
+        toast('负责人不能为空！')
+        return
+      }
+      if (!this.contactName) {
+        toast('联系人不能为空！')
+        return
+      }
+      if (!this.contactPhone) {
+        toast('联系人电话不能为空！')
+        return
+      }
+      if (!this.isKey) {
+        toast('关键决策人不能为空！')
+        return
+      }
+      if (!this.position) {
+        toast('职位不能为空！')
+        return
+      }
+      if (!this.rating) {
+        toast('客户评级不能为空！')
+        return
+      }
       let data = {
         type: this.type, // 需要移动端传入，新增客户的类型
         company: this.companyName,
@@ -144,8 +193,10 @@ export default {
         },
         // keyman: this.clientDecision,
         size: this.scale,
-        desc: this.desc
+        desc: this.desc,
+        client_rating: this.rating
       }
+      console.log(data)
       fetch('post', '/clients', data).then(res => {
         console.log(res)
         // 回调
@@ -179,8 +230,12 @@ export default {
     // 选择地区
     checkRegional (data) {
       this.regionVisible = !this.regionVisible
+      console.log(data)
       if (data) {
         this.region = data.join('-')
+        this.province = data[0]
+        this.city = data[1]
+        this.area = data[2]
       }
     },
     // 获取客户信息
@@ -214,6 +269,47 @@ export default {
       this.principalIconArr = JSON.parse(data)
       this.principalId = this.principalIconArr[0].id || ''
     },
+    // 客户评级
+    checkRating (data) {
+      this.ratingVisible = !this.ratingVisible
+      this.rating = data.value
+      this.ratingName = data.name
+    },
+    // 必填字段校验
+    checkField () {
+      if (!this.companyName) {
+        toast('公司名称不能为空！')
+        return
+      }
+      if (!this.clientLevel) {
+        toast('级别不能为空！')
+        return
+      }
+      if (!this.principalId) {
+        toast('负责人不能为空！')
+        return
+      }
+      if (!this.contactName) {
+        toast('联系人不能为空！')
+        return
+      }
+      if (!this.contactPhone) {
+        toast('联系人电话不能为空！')
+        return
+      }
+      if (!this.isKey) {
+        toast('关键决策人不能为空！')
+        return
+      }
+      if (!this.position) {
+        toast('职位不能为空！')
+        return
+      }
+      if (!this.rating) {
+        toast('客户评级不能为空！')
+        return
+      }
+    }
   }
 }
 </script>
