@@ -66,6 +66,7 @@
         @change="seletedData"
       />
     </div>
+    <Button @click.native="editTask">编辑</Button>
   </div>
 </template>
 
@@ -108,6 +109,7 @@ export default {
       pageTitle: '', // 当前页面的标题
       rightClick: null , // 右侧按钮触发的事件
       leftClick: null , // 左侧按钮触发的事件
+      code: '', // 修改关联资源需要传
     }
   },
   computed: {
@@ -132,7 +134,11 @@ export default {
         this.resourceId = taskDetail.resource.data.resource.data.type
         this.resourceName = taskDetail.resource.data.resource.data.title
         this.resourceableName = taskDetail.resource.data.resourceable.data.name
+                                || taskDetail.resource.data.resourceable.data.company
+                                || taskDetail.resource.data.resourceable.data.nickname
+                                || taskDetail.resource.data.resourceable.data.title
         this.resourceableId = taskDetail.resource.data.resourceable.data.id
+        this.code = taskDetail.resource.data.resource.data.code
       }
       this.title = taskDetail.title
       this.taskType = taskDetail.type.data.id
@@ -141,7 +147,7 @@ export default {
       if (taskDetail.priority) {
         this.priorityName = this.taskLevelArr.find(n => taskDetail.priority === n.value).name
       }
-      this.principalId = taskDetail.principal.data.icon_url
+      this.principalId = taskDetail.principal.data.id
       this.principalIconArr.push({
         id: taskDetail.principal.data.id,
         name: taskDetail.principal.data.name,
@@ -217,6 +223,7 @@ export default {
       this.checkListVisible = true
       this.resourceName = data.title
       this.resourceId = data.type
+      this.code = data.code
 
       const code = data.code
       let params = {
@@ -309,6 +316,7 @@ export default {
       if (this.resourceName && this.resourceableName) {
         params.resource_type = this.resourceId
         params.resourceable_id = this.resourceableId
+        params.code = this.code
       }
       fetch('put', '/tasks/' + this.taskId, params).then(res => {
         // 回调app原生方法
