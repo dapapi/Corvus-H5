@@ -88,11 +88,13 @@ export default {
        },
        //readflag 0 未读 1 已读
        getNoticeList(value){
+           Indicator.open();
            let data ={
                readflag:value
            }
            fetch('get', `/announcements?include=creator`,data).then(res => {
                this.noticeList = res.data
+               Indicator.close();
            })
        },
        changeState(id){

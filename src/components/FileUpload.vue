@@ -3,8 +3,9 @@
         <label :for="`fileUploader${mulId}`">
             <slot></slot>
         </label>
-        <input v-if="device == 'ios'" type="file" :accept="accept"  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
-        <input v-if="device == 'android'" type="file" :accept="accept" capture="camera" multiple  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" >
+        
+        <input type="file" :accept="accept"  @change="zip" :id="`fileUploader${mulId}`" v-show="false" >
+        <!-- <input v-if="device == 'android'" type="file" :accept="accept" multiple  @change="uploadFile" :id="`fileUploader${mulId}`" v-show="false" > -->
     </div>
 </template>
 
@@ -12,7 +13,7 @@
     import axios from 'axios'
     import config from '@/utils/config.js'
     import * as qiniu from 'qiniu-js'
-
+    import lrz from 'lrz'
     export default {
         props:{
             //多个上传组件区分id
@@ -20,7 +21,13 @@
                 type:String,
             },
             accept:{
+                //上传文件类型
                 type:String,
+            },
+            isZip:{
+                //是否压缩
+                type:Boolean,
+                default:false
             }
         },
         name: "FileUpload",
@@ -36,22 +43,28 @@
            this.device = this.whichDevice()
         },
         methods: {
+            //压缩图片
             zip:function(e){
-                lrz( e.target.file[0], {
-                    width : 300
-                    //quality: 0.8    //自定义使用压缩方式
-                })  
-                .then(function(rst) {
-                    console.log(rst)
-                    //成功时执行
-                }).catch(function(error) {
-                    //失败时执行
-                }).always(function() {
-                    //不管成功或失败，都会执行
-                })
+                let _this = this
+                Indicator.open()
+                if(e.target.files[0].type.indexOf('image')>-1){
+                    lrz( e.target.files[0], {
+                        width : 80,
+                        quality: 0.9   //自定义使用压缩方式
+                    })  
+                    .then(function(rst) {
+                        _this.uploadFile(rst,true)
+                        
+                    }).catch(function(error) {
+                        //失败时执行
+                    }).always(function() {
+                        //不管成功或失败，都会执行
+                    })
+                }else{
+                    _this.uploadFile(e,false)
+                }
             },
-            uploadFile(e) {
-                
+            uploadFile(e,isZip) {
                 this.progressShow = true
                 this.uploadProgress = 0
                 let _this = this
@@ -61,7 +74,7 @@
                         clearInterval('uploadGo')
                     }
                 }, 500)
-                let file = e.target.files[0];
+                let file = isZip? e.file : e.target.files[0];
                 let putExtra = null;
                 let type = file.type.split('/');
                 if (type[type.length - 1] === 'vnd.ms-powerpoint') {
@@ -77,22 +90,21 @@
                 let conf = null;
                 let fileSize = file.size;
                 this.getQiniuAccessToken((token) => {
-                //   console.log(token)
                     let observable = qiniu.upload(file, key, token, putExtra, conf);
                     let subscription = observable.subscribe(function (res) {
                     }, function (error) {
-                        console.log(error)
+                        
                     }, function (res) {
                         let fileUrl = config.imgUrl + res.key;
-                        let fileName = file.name;
+                        let fileName = isZip?e.origin.name:file.name;
                         _this.uploadProgress = 100;
                         setTimeout(() => {
                             _this.progressShow = false
                         }, 1000)
-                        // console.log(fileUrl,fileName)
                         _this.$emit('change', fileUrl, fileName, fileSize, _this.id);
                         _this.$emit('changePlus', {fileUrl, fileName, fileSize})
                         _this.fileName = fileName
+                        Indicator.close();
                     })
                 });
             },
