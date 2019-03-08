@@ -100,4 +100,19 @@ a{
   border-radius: 50%;
   margin-left: .1rem;
 }
+.require{
+  &::before{
+    content:'*';
+    display: inline-block;
+    position: absolute;
+    top:0.24rem;
+    left:.1rem;
+    min-height: .96rem;
+    color:red;
+    font-size: .44rem;
+  }
+}
+.mint-cell{
+  padding-left:0.14rem;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-show="!popupPlatform">
-            <Field label="姓名" v-model="username"></Field>
+            <Field class="require" label="姓名" v-model="username"></Field>
             <!--性别-->
             <Cell title="性别" is-link @click.native="changeState('popupGender',!popupGender)" :value="gender.name"></Cell>
             <Selector :visible="popupGender" :data="genderArr" @change="changeGender" />
