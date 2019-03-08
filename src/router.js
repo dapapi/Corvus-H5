@@ -138,7 +138,8 @@ export default new Router({
           name: 'noticeList',
           component: () => import('./views/notice/list.vue'),
           meta: {
-            title: '公告'
+            title: '公告',
+            keepAlive: true
           }
         }, {
           path: '/notice/detail/:id',

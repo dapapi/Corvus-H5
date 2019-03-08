@@ -21,6 +21,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
     data(){
         return {
+            id:this.$route.params.id
             // classifyArr:config.classifyArr
         }
     },
@@ -31,6 +32,13 @@ export default {
     },
     mounted(){
        this.getNoticeDetail({id:this.$route.params.id})
+    },
+    watch:{
+       '$route' (to,from) {
+           if(this.$route.params.id){
+               this.getNoticeDetail({id:this.$route.params.id})
+           }
+       }
     },
     computed:{
         ...mapState([
