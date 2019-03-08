@@ -19,7 +19,7 @@
     <Cell class="require" title="客户评级" @click.native="changeState('ratingVisible', !ratingVisible)" :value="ratingName" isLink></Cell>
     <Selector :visible="ratingVisible" :data="ratingArr" @change="checkRating" />
     <Field label="备注" v-model="desc" />
-    <Button @click.native="addClient">新增</Button>
+    <!-- <Button @click.native="addClient">新增</Button> -->
   </div>
 </template>
 
@@ -183,7 +183,7 @@ export default {
         province: this.province,
         city: this.city,
         district: this.area,
-        principalId: this.principalId,
+        principal_id: this.principalId,
         address: this.detailAddress,
         contact: {
             name: this.contactName,
@@ -198,8 +198,10 @@ export default {
       }
       console.log(data)
       fetch('post', '/clients', data).then(res => {
-        console.log(res)
-        // 回调
+        toast('添加成功!')
+          setTimeout(() => {
+            this.leftClick()
+          }, 900)
       })
     },
     // 编辑客户
@@ -211,7 +213,7 @@ export default {
         province: this.province,
         city: this.city,
         district: this.area,
-        principalId: '',
+        principal_id: this.principalId,
         address: this.detailAddress,
         contact: {
             name: this.contactName,
@@ -221,7 +223,8 @@ export default {
         },
         // keyman: this.clientDecision,
         size: this.scale,
-        desc: this.desc
+        desc: this.desc,
+        client_rating: this.rating
       }
       fetch('put', '/clients/' + this.clientId, data).then(res => {
         // 回调
