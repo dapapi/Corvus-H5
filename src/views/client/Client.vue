@@ -183,7 +183,7 @@ export default {
         province: this.province,
         city: this.city,
         district: this.area,
-        principal_Id: this.principalId,
+        principal_id: this.principalId,
         address: this.detailAddress,
         contact: {
             name: this.contactName,
