@@ -87,24 +87,31 @@ export default {
 
   watch: {
     clientDetail () {
-      console.log(this.clientDetail)
       const clientDetail = this.clientDetail
       this.companyName = clientDetail.company
-      this.clientLevel = this.clientLevelArr.find(n => n.value === clientDetail.grade).name
+      this.clientLevel = this.clientDetail.grade
+      this.clientLevelName = this.clientLevelArr.find(n => n.value === clientDetail.grade).name
+      this.province = clientDetail.province
+      this.city = clientDetail.city
+      this.district = clientDetail.district
       if (clientDetail.province) {
         this.region = clientDetail.province + '-' + clientDetail.city + '-' + clientDetail.district
       }
+      this.principalId = clientDetail.principal.data.id
+      this.principalIconArr.push({
+        id: clientDetail.principal.data.id,
+        name: clientDetail.principal.data.name,
+        icon_url: clientDetail.principal.data.icon_url
+      })
       this.detailAddress = clientDetail.address
-      // this.contactName = clientDetail.
-      // this.contactPhone = 
       this.scaleName = this.clientScaleArr.find(n => n.value === clientDetail.size).name
       this.scale = this.clientScaleArr.find(n => n.value === clientDetail.size).value
       this.desc = clientDetail.desc
       this.type = clientDetail.type
-      this.principalName = clientDetail.principal && clientDetail.principal.data.name
+      this.rating = clientDetail.client_rating
+      this.ratingName = this.ratingArr.find(n => n.value === clientDetail.client_rating).name
     },
     clientContact () {
-      console.log(this.clientContact)
       if (this.clientContact.length > 0) {
         this.contactName = this.clientContact[0].name
         this.contactPhone = this.clientContact[0].phone
@@ -199,9 +206,9 @@ export default {
       console.log(data)
       fetch('post', '/clients', data).then(res => {
         toast('添加成功!')
-          setTimeout(() => {
-            this.leftClick()
-          }, 900)
+        setTimeout(() => {
+          this.leftClick()
+        }, 900)
       })
     },
     // 编辑客户
@@ -228,6 +235,10 @@ export default {
       }
       fetch('put', '/clients/' + this.clientId, data).then(res => {
         // 回调
+        toast('修改成功!')
+        setTimeout(() => {
+          this.leftClick()
+        }, 900)
       })
     },
     // 选择地区
