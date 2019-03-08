@@ -172,5 +172,18 @@ export default new Router({
       name: 'client/detail',
       component: () => import('./views/client/ClientDetail.vue')
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop
+      }
+      return {
+        x: 0,
+        y: to.meta.savedPosition || 0
+      }
+    }
+  }
 })
