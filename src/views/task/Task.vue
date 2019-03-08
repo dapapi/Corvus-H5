@@ -45,7 +45,7 @@
             </div>
             <div class="info">
               <div class="title">{{ item.name }}</div>
-              <div class="size">{{ item.size }}k</div>
+              <div class="size">{{ (item.size  / 1024).toFixed(1) }}k</div>
             </div>
           </div>
           <div class="right">
@@ -352,7 +352,7 @@ export default {
         {
           url: fileUrl,
           name: fileName,
-          size: (fileSize / 1024).toFixed(1)
+          size: fileSize
         }
       )
     },
