@@ -66,7 +66,7 @@
         @change="seletedData"
       />
     </div>
-    <Button @click.native="editTask">编辑</Button>
+    <!-- <Button @click.native="editTask">编辑</Button> -->
   </div>
 </template>
 
