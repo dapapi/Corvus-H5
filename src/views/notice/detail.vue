@@ -37,6 +37,7 @@ export default {
        '$route' (to,from) {
            if(this.$route.params.id){
                this.getNoticeDetail({id:this.$route.params.id})
+               window.leftClick = this.leftClick
            }
        }
     },
