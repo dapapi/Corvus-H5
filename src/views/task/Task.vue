@@ -66,6 +66,7 @@
         @change="seletedData"
       />
     </div>
+    <Button @click.native="editTask">编辑</Button>
   </div>
 </template>
 
@@ -108,6 +109,7 @@ export default {
       pageTitle: '', // 当前页面的标题
       rightClick: null , // 右侧按钮触发的事件
       leftClick: null , // 左侧按钮触发的事件
+      code: '', // 修改关联资源需要传
     }
   },
   computed: {
@@ -129,23 +131,34 @@ export default {
     taskDetail () {
       const taskDetail = this.taskDetail
       if (taskDetail.resource) {
-        this.resourceId = taskDetail.resource.data.resource.data.id
+        this.resourceId = taskDetail.resource.data.resource.data.type
         this.resourceName = taskDetail.resource.data.resource.data.title
         this.resourceableName = taskDetail.resource.data.resourceable.data.name
+                                || taskDetail.resource.data.resourceable.data.company
+                                || taskDetail.resource.data.resourceable.data.nickname
+                                || taskDetail.resource.data.resourceable.data.title
         this.resourceableId = taskDetail.resource.data.resourceable.data.id
+        this.code = taskDetail.resource.data.resource.data.code
       }
       this.title = taskDetail.title
       this.taskType = taskDetail.type.data.id
       this.taskTypeName = taskDetail.type.data.title
-      // principalId: '', // 负责人
-      // participantIds: [], // 参与人
       this.priority = taskDetail.priority
       if (taskDetail.priority) {
         this.priorityName = this.taskLevelArr.find(n => taskDetail.priority === n.value).name
       }
+      this.principalId = taskDetail.principal.data.id
+      this.principalIconArr.push({
+        id: taskDetail.principal.data.id,
+        name: taskDetail.principal.data.name,
+        icon_url: taskDetail.principal.data.icon_url
+      })
+      this.participantIds = taskDetail.participants.data.map(n => n.id)
+      this.participantIconArr = taskDetail.participants.data
       this.startTime = taskDetail.start_at
-      this.endTime = taskDetail.stop_at
+      this.endTime = taskDetail.end_at
       this.desc = taskDetail.desc
+      this.annexArr = taskDetail.affixes.data
     },
     // 监听textara的变化,自动改变textarea的高度
     desc () {
@@ -209,7 +222,8 @@ export default {
       this.noneResource = ''
       this.checkListVisible = true
       this.resourceName = data.title
-      this.resourceId = data.id
+      this.resourceId = data.type
+      this.code = data.code
 
       const code = data.code
       let params = {
@@ -251,34 +265,7 @@ export default {
     },
     // 新建任务，子任务
     addNewTask () {
-      if (!this.taskType) {
-        toast('任务类型不能为空！')
-        return
-      }
-      if (!this.title) {
-        toast('任务名称不能为空！')
-        return
-      }
-      if (!this.principalId) {
-        toast('负责人不能为空！')
-        return
-      }
-      if (!this.priority) {
-        toast('任务优先级不能为空！')
-        return
-      }
-      if (!this.startTime) {
-        toast('开始时间不能为空！')
-        return
-      }
-      if (!this.startTime) {
-        toast('结束时间不能为空！')
-        return
-      }
-      if (this.endTime <= this.startTime) {
-        toast('截止时间不能小于开始时间！')
-        return
-      }
+      this.checkField()
       const params = {
         type: this.taskType,
         title: this.title,
@@ -300,7 +287,7 @@ export default {
           toast('添加成功！')
           setTimeout(() => {
             this.leftClick()
-          }, 700)
+          }, 900)
         })
       } else {
         // 执行添加任务
@@ -308,12 +295,13 @@ export default {
           toast('添加成功！')
           setTimeout(() => {
             this.leftClick()
-          }, 700)
+          }, 900)
         })
       }
     },
     // 编辑任务，子任务
     editTask () {
+      this.checkField()
       const params = {
         type: this.taskType,
         title: this.title,
@@ -328,10 +316,14 @@ export default {
       if (this.resourceName && this.resourceableName) {
         params.resource_type = this.resourceId
         params.resourceable_id = this.resourceableId
+        params.code = this.code
       }
       fetch('put', '/tasks/' + this.taskId, params).then(res => {
         // 回调app原生方法
         toast('修改成功')
+          setTimeout(() => {
+            this.leftClick()
+          }, 900)
       })
     },
     getTaskDetail () {
@@ -392,6 +384,37 @@ export default {
     setParticipantData (data) {
       this.participantIconArr = JSON.parse(data)
       this.participantIds = this.participantIconArr.map(n => n.id)
+    },
+    // 必填字段校验
+    checkField () {
+      if (!this.taskType) {
+        toast('任务类型不能为空！')
+        return
+      }
+      if (!this.title) {
+        toast('任务名称不能为空！')
+        return
+      }
+      if (!this.principalId) {
+        toast('负责人不能为空！')
+        return
+      }
+      if (!this.priority) {
+        toast('任务优先级不能为空！')
+        return
+      }
+      if (!this.startTime) {
+        toast('开始时间不能为空！')
+        return
+      }
+      if (!this.startTime) {
+        toast('结束时间不能为空！')
+        return
+      }
+      if (this.endTime <= this.startTime) {
+        toast('截止时间不能小于开始时间！')
+        return
+      }
     }
   }
 }
