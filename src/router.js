@@ -128,20 +128,27 @@ export default new Router({
     },
     //公告
     {
-      path: '/notice/list',
-      name: 'noticeList',
-      component: () => import('./views/notice/list.vue'),
-      meta: {
-        title: '公告'
-      }
-    },
-    {
-      path: '/notice/detail/:id',
-      name: 'noticeDetail',
-      component: () => import('./views/notice/detail.vue'),
-      meta: {
-        title: '公告详情'
-      }
+      path: '/notice',
+      name: 'notice',
+      redirect: '/notice/list',
+      component: () => import('./views/notice/index.vue'),
+      children:[
+        {
+          path: '/notice/list',
+          name: 'noticeList',
+          component: () => import('./views/notice/list.vue'),
+          meta: {
+            title: '公告'
+          }
+        }, {
+          path: '/notice/detail/:id',
+          name: 'noticeDetail',
+          component: () => import('./views/notice/detail.vue'),
+          meta: {
+            title: '公告详情'
+          }
+        },
+      ]
     },
     // 客户
     {

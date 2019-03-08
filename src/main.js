@@ -9,7 +9,8 @@ import {
   DatetimePicker,
   Toast,
   Picker,
-  Search
+  Search,
+  Indicator
   } from 'mint-ui'
 import App from './App.vue'
 import router from './router'
@@ -21,7 +22,7 @@ import AddClient from '@/components/AddClient'
 import Regional from '@/components/Regional'
 import VueWechatTitle from 'vue-wechat-title'
 import 'scrolling-element'
-// import lrz from 'lrz'
+
 
 Vue.config.productionTip = false
 // mint组件
@@ -35,6 +36,7 @@ Vue.component('DatetimePicker', DatetimePicker)
 Vue.component(Picker.name, Picker)
 // Vue.component('Toast',Toast)
 Vue.component('Search', Search)
+// Vue.component('Indicator',Indicator)
 Vue.use(VueWechatTitle)
 
 // 自定义组件
@@ -46,6 +48,7 @@ Vue.component('Regional', Regional)
 
 // 全局方法
 window.toast = Toast
+window.Indicator = Indicator
 
 new Vue({
   router,
