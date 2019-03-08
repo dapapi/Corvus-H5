@@ -242,13 +242,43 @@ export default {
       this.$refs.endPicker.open()
     },
     startConfirm (date) {
-      this.startTime = moment(date).format('YYYY-MM-DD HH-SS')
+      const time = moment(date).format('YYYY-MM-DD HH-SS')
+      this.startTime = time.substr(0,13) + ':' + time.substr(-2)
     },
     endConfirm (date) {
-      this.endTime = moment(date).format('YYYY-MM-DD HH-SS')
+      const time = moment(date).format('YYYY-MM-DD HH-SS')
+      this.endTime = time.substr(0,13) + ':' + time.substr(-2)
     },
     // 新建任务，子任务
     addNewTask () {
+      if (!this.taskType) {
+        toast('任务类型不能为空！')
+        return
+      }
+      if (!this.title) {
+        toast('任务名称不能为空！')
+        return
+      }
+      if (!this.principalId) {
+        toast('负责人不能为空！')
+        return
+      }
+      if (!this.priority) {
+        toast('任务优先级不能为空！')
+        return
+      }
+      if (!this.startTime) {
+        toast('开始时间不能为空！')
+        return
+      }
+      if (!this.startTime) {
+        toast('结束时间不能为空！')
+        return
+      }
+      if (this.endTime <= this.startTime) {
+        toast('截止时间不能小于开始时间！')
+        return
+      }
       const params = {
         type: this.taskType,
         title: this.title,
@@ -268,12 +298,14 @@ export default {
       if (this.$route.name === 'task/addSubTask') {
         // 执行添加子任务
         fetch('post', '/tasks/' + this.taskId + '/subtask', data).then(function (response) {
+          toast('添加成功')
           // 回调app原生方法
         })
       } else {
         // 执行添加任务
         fetch('post', '/tasks', params).then(res => {
-          console.log(res)
+          toast('添加成功')
+          // console.log(res)
           // 回调app原生方法
         })
       }
@@ -296,6 +328,7 @@ export default {
       }
       fetch('put', '/tasks/' + this.taskId, params).then(res => {
         // 回调app原生方法
+        toast('修改成功')
       })
     },
     getTaskDetail () {
