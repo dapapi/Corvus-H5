@@ -10,7 +10,7 @@
       <Field label="线索名称" class="require" v-model="title"></Field>
       <Cell title="线索来源" class="require" @click.native="changeState('trailVisible', !trailVisible)" :value="resourceTypeName" isLink></Cell>
       <Selector :visible="trailVisible" :data="trailOriginArr" @change="checkTrailOrigin" />
-      <Field v-if="resourceTypeNum < 6 && resourceTypeNum > 0" v-model="resourceTypeDetail"></Field>
+      <Field v-if="resourceType < 6 && resourceType > 0" v-model="resourceTypeDetail"></Field>
       <Cell title="行业" class="require" @click.native="changeState('industryVisible', !industryVisible)" :value="industryName" isLink></Cell>
       <Cell title="负责人" class="require" @click.native="checkKeyMan" isLink>
         <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
@@ -114,8 +114,8 @@ export default {
       clientName: '', // 公司名称
       resourceType: '', // 线索来源, 不同来源对应不同来源人员
       resourceTypeName: '', // 线索来源
-      resourceTypeDetail: '',
-      resourceTypeNum: 0,
+      resourceTypeDetail: '', // 线索来源详情
+      resourceType: 0,
       recommendations: [], // 推荐艺人
       recommendationsName: '', // 推荐艺人
       expectations: [], // 目标艺人
@@ -171,7 +171,7 @@ export default {
       this.resourceType = trailDetail.resource_type
       this.resourceTypeName = this.trailOriginArr.find( n => n.value === trailDetail.resource_type).name
       // resourceTypeDetail: '',
-      // resourceTypeNum: 0,
+      // resourceType: 0,
       // recommendations: [], // 推荐艺人
       this.recommendationsName = [
         ...trailDetail.bloggerrecommendations.data.map(n => n.nickname),
@@ -245,7 +245,11 @@ export default {
         toast('线索名称不能为空！')
         return
       }
-      if (!this.resourceTypeNum) {
+      if (!this.resourceType) {
+        toast('线索来源不能为空！')
+        return
+      }
+      if (this.resourceType > 0 && this.resourceType < 6 && !this.resourceTypeDetail) {
         toast('线索来源不能为空！')
         return
       }
@@ -278,6 +282,7 @@ export default {
         brand: this.brand, // 品牌名称
         client: this.client, // 公司id
         resource_type: this.resourceType, // 线索来源, 不同来源对应不同来源人员
+        resource: this.resourceTypeDetail,
         recommendations: this.recommendations, // 推荐艺人
         expectations: this.expectations, // 目标艺人
         contact: {
@@ -381,7 +386,7 @@ export default {
       console.log(data)
       this.trailVisible = !this.trailVisible
       this.resourceTypeName = data.name
-      this.resourceTypeNum = data.value
+      this.resourceType = data.value
     },
     // 选择锁价
     checkLock (data) {

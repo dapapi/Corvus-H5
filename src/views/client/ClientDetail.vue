@@ -23,7 +23,7 @@
     </div>
     <div class="item">
       <span class="left">规模：</span>
-      <span class="right">{{ clientDetail.size ? clientLevelArr.find( n => clientDetail.size === n.value ).name : '' }}</span>
+      <span class="right">{{ clientDetail.size ? clientScaleArr.find( n => clientDetail.size === n.value ).name : '' }}</span>
     </div>
     <div class="item">
       <span class="left">备注：</span>
