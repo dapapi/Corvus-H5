@@ -93,7 +93,7 @@ export default {
       this.clientLevelName = this.clientLevelArr.find(n => n.value === clientDetail.grade).name
       this.province = clientDetail.province
       this.city = clientDetail.city
-      this.district = clientDetail.district
+      this.area = clientDetail.district
       if (clientDetail.province) {
         this.region = clientDetail.province + '-' + clientDetail.city + '-' + clientDetail.district
       }
@@ -109,12 +109,13 @@ export default {
       this.desc = clientDetail.desc
       this.type = clientDetail.type
       this.rating = clientDetail.client_rating
-      this.ratingName = this.ratingArr.find(n => n.value === clientDetail.client_rating).name
+      this.ratingName = this.ratingArr.find(n => n.value == clientDetail.client_rating).name
     },
     clientContact () {
       if (this.clientContact.length > 0) {
         this.contactName = this.clientContact[0].name
         this.contactPhone = this.clientContact[0].phone
+        this.position = this.clientContact[0].position
         this.isKeyName = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).name
         this.isKey = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).value
       }
