@@ -293,7 +293,7 @@ export default {
         priorityName: '', // 优先级
         status: this.trailStatus // 线索状态
       }
-      console.log(data)
+      console.log(params)
 
       fetch('post', '/trails', params).then(res => {
         console.log(res)
