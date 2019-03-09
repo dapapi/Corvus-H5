@@ -91,7 +91,7 @@ export default {
     }
     if (this.rightBtnText) {
       setTimeout(() => {
-        tool.nativeEvent('setRightText', this.rightBtnText)
+        tool.nativeEvent('setRightText', '提交')
       }, 100)
     }
   },

@@ -263,7 +263,7 @@ export default {
         window.leftClick = this.leftClickTemp
         // tool.nativeEvent('setRightText', '提交')
       } else {
-        tool.nativeEvent('setRightText', '提交')
+        // tool.nativeEvent('setRightText', '提交')
       }
     }
   },
