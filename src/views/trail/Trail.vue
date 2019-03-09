@@ -262,7 +262,7 @@ export default {
         window.leftClick = this.leftClickTemp
         tool.nativeEvent('setRightText', '提交')
       } else {
-        tool.nativeEvent('setRightText', '+')
+        tool.nativeEvent('setRightText', '')
       }
     }
   },
@@ -301,7 +301,7 @@ export default {
         toast('品牌名称不能为空！')
         return
       }
-      if (!this.client.id) {
+      if (!this.clientName) {
         toast('公司名称不能为空！')
         return
       }
