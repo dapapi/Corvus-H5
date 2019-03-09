@@ -37,8 +37,8 @@
         <Selector :visible="lockVisible" :data="lockArr" @change="checkLock" />
       </template>
       <Field label="备注" v-model="desc"></Field>
-      <Button @click="addNewTrail">add</Button>
-      <Button @click="addCompany">新增公司</Button>
+      <!-- <Button @click="addNewTrail">add</Button>
+      <Button @click="addCompany">新增公司</Button> -->
     </template>
     <!-- 选择客户 -->
     <CheckList
