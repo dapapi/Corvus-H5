@@ -1,4 +1,7 @@
 export default {
+  //全局参数
+  isLoading:false,
+
   resourceList: [], // 关联资源列表
   resourceData: [], // 某一关联资源数据
   clientsAll: [], // 所有客户

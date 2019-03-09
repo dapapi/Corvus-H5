@@ -38,7 +38,7 @@
                 </template>
             
             </Cell>
-            <Field label="备注" v-model="remark"></Field>
+            <Field type="textarea" ref="textarea" label="备注" v-model="remark"></Field>
             <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
             </div> -->

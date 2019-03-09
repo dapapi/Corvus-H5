@@ -1,10 +1,10 @@
 <template>
-  <Popup position="bottom" v-model="show" popup-transition="popup-fade" style="width: 100%">
-    <div class="con">
+  <Popup position="bottom" v-model="show" popup-transition="popup-fade">
+    <!-- <div class="con"> -->
        <Cell v-for="(item, index) in data" :title="item.name" :key="index" @click.native="handleClick(item)">
           <span class="mint-cell-mask"></span>
       </Cell>
-    </div>
+    <!-- </div> -->
   </Popup>
 </template>
 
@@ -43,8 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-   .con{
-     overflow: scroll;
-     height: 100vh;
-   }
+  
+   
+
 </style>

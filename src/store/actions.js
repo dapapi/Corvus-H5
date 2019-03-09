@@ -2,6 +2,11 @@ import fetch from '@/utils/fetch'
 import config from '@/utils/config'
 import { Toast } from 'mint-ui'
 export default {
+   //全局参数
+  getLoading({commit},data){
+    commit('setLoading',data)
+  },
+
   // 关联资源
   getResourceList ({ commit }) {
     fetch('get', '/resources').then(res => {

@@ -127,7 +127,8 @@ export default {
     },
     computed:{
         ...mapState([
-            'artistDetail'
+            'artistDetail',
+            'isLoading'
         ])
     },
     watch:{
@@ -175,6 +176,15 @@ export default {
            const el = this.$refs.textarea.$el.querySelector('textarea')
            el.style.height = el.scrollHeight - 4 + 'px'
 
+       },
+       isLoading:function(){
+           if(this.isLoading == true){
+            //    alert(111)
+               Indicator.open();
+           }else{
+            //    alert(222)
+               Indicator.close();
+           }
        }
     },
 
@@ -345,6 +355,7 @@ export default {
                 Toast('请选择平台')
                 return false
             }
+            this.$store.commit('setLoading',true)
             params.data = {
                 name: this.username,//名字
                 gender: this.gender.value,//性别
