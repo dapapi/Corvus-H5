@@ -63,7 +63,6 @@
         </div>
         <!--选择平台-->
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" :originTitle="'新增艺人'" :newTitle="'艺人平台'" :rightClick="addArtist" :leftClick ="leftClick" @change="seletedData"/>
-        <!-- <button @click="addArtist">保存</button> -->
     </div>
 </template>
 <script>
@@ -170,7 +169,6 @@ export default {
                     aPlatformName.push(this.artistPlatformList[i].label)
                 }
             }
-            // console.log(this.selectedPlatform)
             this.platformName = aPlatformName.join(',')
        },
        remark:function(){
