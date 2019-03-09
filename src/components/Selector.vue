@@ -1,5 +1,5 @@
 <template>
-  <Popup class="isScroll" position="bottom" v-model="show" popup-transition="popup-fade">
+  <Popup position="bottom" v-model="show" popup-transition="popup-fade">
     <!-- <div class="con"> -->
        <Cell v-for="(item, index) in data" :title="item.name" :key="index" @click.native="handleClick(item)">
           <span class="mint-cell-mask"></span>
@@ -43,9 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-   .isScroll{
-     overflow:scroll;
-     width:100%;
-     max-height:100vh
-   }
+  
+   
+
 </style>
