@@ -1,4 +1,8 @@
 export default {
+  //全局参数
+  setLoading(state,data){
+    state.isLoading = data
+  },
   // 设置关联资源数据
   setResourceList (state, data) {
     state.resourceList = data
