@@ -283,7 +283,7 @@ export default {
       }
       if (this.$route.name === 'task/addSubTask') {
         // 执行添加子任务
-        fetch('post', '/tasks/' + this.taskId + '/subtask', params).then(function (response) {
+        fetch('post', '/tasks/' + this.taskId + '/subtask', params).then( res => {
           toast('添加成功！')
           setTimeout(() => {
             this.leftClick()
