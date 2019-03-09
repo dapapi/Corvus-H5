@@ -1,10 +1,10 @@
 <template>
-  <Popup style="overflow:scroll;width:100%;max-height:100vh" position="bottom" v-model="show" popup-transition="popup-fade">
-    <div class="con">
+  <Popup class="isScroll" position="bottom" v-model="show" popup-transition="popup-fade">
+    <!-- <div class="con"> -->
        <Cell v-for="(item, index) in data" :title="item.name" :key="index" @click.native="handleClick(item)">
           <span class="mint-cell-mask"></span>
       </Cell>
-    </div>
+    <!-- </div> -->
   </Popup>
 </template>
 
@@ -43,8 +43,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  //  .con{
-  //    overflow: scroll;
-  //    height: 100vh;
-  //  }
+   .isScroll{
+     overflow:scroll;
+     width:100%;
+     max-height:100vh
+   }
 </style>
