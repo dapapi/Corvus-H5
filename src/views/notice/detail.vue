@@ -37,8 +37,9 @@ export default {
        '$route' (to,from) {
            if(this.$route.params.id){
                this.getNoticeDetail({id:this.$route.params.id})
-               window.leftClick = this.leftClick
+               
            }
+           window.leftClick = this.leftClick
        }
     },
     computed:{
@@ -54,9 +55,7 @@ export default {
         ]),
         leftClick:function(){
             window.leftClick = this.reLeftClick
-            this.$router.push({
-                path: `/notice/list`,
-            })
+            history.back()
         },
         reLeftClick:function(){
             config.deviceWay('back',2)
