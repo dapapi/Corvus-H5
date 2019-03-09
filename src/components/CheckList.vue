@@ -70,7 +70,9 @@ export default {
     }
   },
   mounted () {
-    window.rightClick = this.changeShow
+    if (this.rightClick) {
+      window.rightClick = this.changeShow
+    }
     window.leftClick = this.changeHidden
     tool.nativeEvent('setTitle', this.newTitle)
   },
@@ -81,7 +83,9 @@ export default {
     if (this.leftClick) {
       window.leftClick = this.leftClick
     }
-    tool.nativeEvent('setTitle', this.originTitle)
+    if (this.rightClick) {
+      tool.nativeEvent('setTitle', this.originTitle)
+    }
   },
   methods:{
     changeShow(){

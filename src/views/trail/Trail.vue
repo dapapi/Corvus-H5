@@ -54,6 +54,7 @@
     <AddClient
       v-if="isAddClients"
       @change="addNewCompany"
+      ref="addClient"
     />
     <Popup position="bottom" v-model="industryVisible" popup-transition="popup-fade" style="width: 100%">
       <Cell v-for="(item, index) in industriesArr" :title="item.label" @click.native="checkIndustry(item)" :key="index">
@@ -86,7 +87,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import _default,{ mapState,mapActions,mapMutations } from 'vuex'
 import config from '@/utils/config'
 import fetch from '@/utils/fetch'
 import tool from '@/utils/tool'
@@ -159,16 +160,19 @@ export default {
     ]),
   },
   watch: {
-    newClient () {
-      if (this.newClient.company && this.newClient.grade) {
-        this.client = {}
-        this.client.company = this.newClient.company
-        this.client.grade = this.newClient.grade
-      }
-    },
+    // newClient () {
+    //   if (this.newClient.company && this.newClient.grade) {
+    //     this.client = {}
+    //     this.client.company = this.newClient.company
+    //     this.client.grade = this.newClient.grade
+    //     this.isAddClients = false
+    //   }
+    // },
     trailDetail () {
       const trailDetail = this.trailDetail
-      this.cooperationType = this.cooperationTypeArr.find(n => n.value === trailDetail.cooperation_type).name
+      if (trailDetail.cooperation_type) {
+        this.cooperationType = this.cooperationTypeArr.find(n => n.value === trailDetail.cooperation_type).name
+      }
       this.title = trailDetail.title
       this.brand = trailDetail.brand
       this.client.id = trailDetail.client.data.id
@@ -236,6 +240,30 @@ export default {
       this.type = trailDetail.type
       this.trailStatus = this.trailStatusArr.find(n => n.value === trailDetail.status).value
       this.trailStatusName = this.trailStatusArr.find(n => n.value === trailDetail.status).name
+    },
+    // 监听客户(公司)是否显示 
+    clientsVisible () {
+      if (this.clientsVisible) {
+        //  setTimeout(() => {
+        //   try {
+        //     tool.nativeEvent('setRightText', '哈哈')
+        //   } catch (err) {
+        //     console.log(err)
+        //   }
+        // }, 3000)
+        window.rightClick = this.addCompany
+      } else {
+        // tool.nativeEvent('setRightText', this.pageTitle)
+        // window.rightClick = null
+      }
+    },
+    isAddClients () {
+      if (!this.isAddClients) {
+        window.leftClick = this.leftClickTemp
+        tool.nativeEvent('setRightText', '提交')
+      } else {
+        tool.nativeEvent('setRightText', '+')
+      }
     }
   },
   mounted () {
@@ -347,7 +375,7 @@ export default {
         toast('品牌名称不能为空！')
         return
       }
-      if (!this.client.id) {
+      if (!this.clientName) {
         toast('公司名称不能为空！')
         return
       }
@@ -426,10 +454,18 @@ export default {
     },
     // 新增客户(公司)
     addNewCompany (data) {
+       if (this.$route.name === 'trail/edit') {
+        this.rightClick = this.editTrail
+      } else {
+        this.rightClick = this.addNewTrail
+      }
+      window.rightClick = this.rightClick
       this.isAddClients = !this.isAddClients
       this.client = {}
-      this.client.company = data
-      this.client.grade = ''
+      this.client.company = data.companyName
+      this.client.grade = data.grade
+      this.clientName = data.companyName
+      tool.nativeEvent('setTitle', this.pageTitle)
     },
     // 选择行业
     checkIndustry (data) {
@@ -504,7 +540,17 @@ export default {
     },
     // 新增公司
     addCompany () {
+       // 隐藏公司列表
+      this.clientsVisible = false
+      // 显示新增公司
       this.isAddClients = true
+      window.leftClick = null
+      setTimeout(() => {
+        window.leftClick = this.closeAddNewClient
+      }, 500)
+      tool.nativeEvent('setTitle', '公司名称')
+      window.rightClick = this.addNewCompanyClient
+      console.log(window.leftClick)
     },
     leftClickTemp () {
       tool.nativeEvent('back', 2)
@@ -541,8 +587,15 @@ export default {
     getUserInfo (id) {
       fetch('get', `/users/${id}`).then(res => {
         this.resourceTypeDetailArr.push(res.data)
-        console.log(this.resourceTypeDetailArr)
       })
+    },
+    // 新增公司(客户)
+    addNewCompanyClient () {
+      this.$refs.addClient.submit()
+    },
+    // 关闭新增客户的小页面
+    closeAddNewClient () {
+      this.isAddClients = false
     }
   }
 }

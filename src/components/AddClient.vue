@@ -42,7 +42,16 @@ export default {
         grade: this.grade,
         gradeName: this.gradeName
       }
-      this.setNewClient(data)
+      if (!this.name) {
+        toast('公司名称不能为空！')
+        return
+      }
+      if (!this.grade) {
+        toast('级别不能为空！')
+        return
+      }
+      // this.setNewClient(data)
+      this.$emit('change', data)
     }
   }
 }

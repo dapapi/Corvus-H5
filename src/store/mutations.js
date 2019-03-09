@@ -28,9 +28,9 @@ export default {
   },
   // 设置新客户
   setNewClient (state, data) {
-    state.client.company = data.company
-    state.client.grade = data.grade
-    state.client.gradeName = data.gradeName
+    state.newClient.company = data.company
+    state.newClient.grade = data.grade
+    state.newClient.gradeName = data.gradeName
   },
   // 设置行业
   setIndustriesArr (state, data) {
