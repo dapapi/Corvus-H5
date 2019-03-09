@@ -93,7 +93,7 @@ export default {
       this.clientLevelName = this.clientLevelArr.find(n => n.value === clientDetail.grade).name
       this.province = clientDetail.province
       this.city = clientDetail.city
-      this.district = clientDetail.district
+      this.area = clientDetail.district
       if (clientDetail.province) {
         this.region = clientDetail.province + '-' + clientDetail.city + '-' + clientDetail.district
       }
