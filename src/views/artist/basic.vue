@@ -78,7 +78,7 @@
             <span class="listright">{{artistDetail.desc}}</span>
         </div>
         <div class="section" v-if="artistDetail.affixes.data">
-            <Cell class="text-left" ><span class="listleft">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</span></Cell>
+            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index"><span class="listleft">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</span></Cell>
         </div>
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>更新信息</h4>
         <div class="list">
