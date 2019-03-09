@@ -49,6 +49,7 @@
       :originTitle="pageTitle"
       newTitle="公司名称"
       :leftClick="leftClick"
+      :rightBtnText="'新增'"
       @change="seletedClient"
     />
     <AddClient
@@ -260,9 +261,9 @@ export default {
     isAddClients () {
       if (!this.isAddClients) {
         window.leftClick = this.leftClickTemp
-        tool.nativeEvent('setRightText', '提交')
+        // tool.nativeEvent('setRightText', '提交')
       } else {
-        tool.nativeEvent('setRightText', '')
+        // tool.nativeEvent('setRightText', '')
       }
     }
   },
