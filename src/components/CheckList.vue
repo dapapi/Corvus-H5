@@ -90,7 +90,9 @@ export default {
       tool.nativeEvent('setTitle', this.originTitle)
     }
     if (this.rightBtnText) {
-      tool.nativeEvent('setRightText', this.rightBtnText)
+      setTimeout(() => {
+        tool.nativeEvent('setRightText', this.rightBtnText)
+      }, 100)
     }
   },
   methods:{
