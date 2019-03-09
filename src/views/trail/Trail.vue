@@ -10,7 +10,11 @@
       <Field label="线索名称" class="require" v-model="title"></Field>
       <Cell title="线索来源" class="require" @click.native="changeState('trailVisible', !trailVisible)" :value="resourceTypeName" isLink></Cell>
       <Selector :visible="trailVisible" :data="trailOriginArr" @change="checkTrailOrigin" />
-      <Field v-if="resourceType < 6 && resourceType > 0" v-model="resourceTypeDetail"></Field>
+      <Cell v-if="resourceType == 4 || resourceType == 5" title="" @click.native="checkTrailMan" isLink>
+        <img class="avatar" v-for="(item, index) in resourceTypeDetailArr" :src="item.icon_url" :key="index">
+      </Cell>
+      <Field v-if="resourceType < 4 && resourceType > 0" v-model="resourceTypeDetail">
+      </Field>
       <Cell title="行业" class="require" @click.native="changeState('industryVisible', !industryVisible)" :value="industryName" isLink></Cell>
       <Cell title="负责人" class="require" @click.native="checkKeyMan" isLink>
         <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
@@ -22,7 +26,7 @@
       <Field label="联系人" class="require" v-model="contact.name"></Field>
       <Field label="联系人电话" class="require" v-model="contact.phone"></Field>
       <template v-if="type !== 4">
-        <Cell title="线索状态" @click.native="changeState('statusVisible', !statusVisible)" :value="trailStatus" isLink></Cell>
+        <Cell title="线索状态" @click.native="changeState('statusVisible', !statusVisible)" :value="trailStatusName" isLink></Cell>
         <Selector :visible="statusVisible" :data="trailStatusArr" @change="checkStatus" />
       </template>
       <Field label="销售进展" disabled v-model="salesProgressText"></Field>
@@ -115,6 +119,7 @@ export default {
       resourceType: '', // 线索来源, 不同来源对应不同来源人员
       resourceTypeName: '', // 线索来源
       resourceTypeDetail: '', // 线索来源详情
+      resourceTypeDetailArr: [], // 线索来源详情
       resourceType: 0,
       recommendations: [], // 推荐艺人
       recommendationsName: '', // 推荐艺人
@@ -130,7 +135,6 @@ export default {
       industryId: '', // 行业id
       type: '', // 销售线索
       principalId: '', // 负责人
-      // principalName: '', // 负责人
       principalIconArr: [], // 负责人头像
       priority: '', // 优先级
       priorityName: '', // 优先级
@@ -138,9 +142,11 @@ export default {
       lockName: '', // 是否锁价
       type: -1, // 1为影视项目，2为综艺项目，3为商务项目 4为papi项目
       trailStatus: '', // 销售线索状态
+      trailStatusName: '', // 销售线索状态
       pageTitle: '', // 当前页面标题
       rightClick: null,
       leftClick: null , // 左侧按钮触发的事件
+      trailId: this.$route.params.id,
     }
   },
   computed: {
@@ -161,26 +167,55 @@ export default {
       }
     },
     trailDetail () {
-      console.log(this.trailDetail)
       const trailDetail = this.trailDetail
       this.cooperationType = this.cooperationTypeArr.find(n => n.value === trailDetail.cooperation_type).name
       this.title = trailDetail.title
       this.brand = trailDetail.brand
-      // client: {}, // 公司
+      this.client.id = trailDetail.client.data.id
+      this.client.name = trailDetail.client.data.company
       this.clientName = trailDetail.client.data.company
       this.resourceType = trailDetail.resource_type
       this.resourceTypeName = this.trailOriginArr.find( n => n.value === trailDetail.resource_type).name
-      // resourceTypeDetail: '',
-      // resourceType: 0,
-      // recommendations: [], // 推荐艺人
-      this.recommendationsName = [
-        ...trailDetail.bloggerrecommendations.data.map(n => n.nickname),
-        ...trailDetail.starrecommendations.data.map(n => n.name)].join('、')
+      this.resourceTypeDetail = trailDetail.resource
+      if (this.resourceType == 4 || this.resourceType == 5) {
+        if (this.resourceTypeDetail) {
+          this.getUserInfo(this.resourceTypeDetail)
+        }
+      }
+      if (trailDetail.bloggerrecommendations || trailDetail.starrecommendations) {
+        this.recommendationsName = [
+          ...trailDetail.bloggerrecommendations.data.map(n => n.nickname),
+          ...trailDetail.starrecommendations.data.map(n => n.name)].join('、')
+        this.recommendations = [
+          ...trailDetail.bloggerrecommendations.data.map(n => {
+            return {
+              id: n.id,
+              flag: n.flag
+            }}),
+          ...trailDetail.starrecommendations.data.map(n => {
+            return {
+              id: n.id,
+              flag: n.flag
+            }})
+        ]
+      }
 
       if (trailDetail.bloggerexpectations || trailDetail.starexpectations) {
         this.expectationsName = [
           ...trailDetail.bloggerexpectations.data.map(n => n.nickname),
           ...trailDetail.starexpectations.data.map(n => n.name)].join('、')
+        this.expectations = [
+          ...trailDetail.bloggerexpectations.data.map(n => {
+            return {
+              id: n.id,
+              flag: n.flag
+            }}),
+          ...trailDetail.starexpectations.data.map(n => {
+            return {
+              id: n.id,
+              flag: n.flag
+            }})
+        ]
       }
       // expectations: [], // 目标艺人
       // expectationsName: '', // 目标艺人数组
@@ -191,21 +226,22 @@ export default {
       this.fee = trailDetail.fee
       this.desc = trailDetail.desc
       this.industryName = trailDetail.industry
-      // industryId: '', // 行业id
-      // type: '', // 销售线索
-      // principalId: '', // 负责人
-      this.principalIconArr = trailDetail.principal.data.icon_url
+      this.industryId = trailDetail.industry_id
+      this.principalIconArr.push(trailDetail.principal.data)
+      this.principalId = trailDetail.principal.data.id
       this.priority = trailDetail.priority
       this.priorityName = this.taskLevelArr.find(n => n.value === trailDetail.priority).name
       // salesProgressText: '未确定合作', // 销售进展，新增为未确定合作
       // lockName: '', // 是否锁价
       this.type = trailDetail.type
-      this.trailStatus = this.trailStatusArr.find(n => n.value === trailDetail.status).name
+      this.trailStatus = this.trailStatusArr.find(n => n.value === trailDetail.status).value
+      this.trailStatusName = this.trailStatusArr.find(n => n.value === trailDetail.status).name
     }
   },
   mounted () {
     this.getClients()
     this.getIndustries()
+    this.traildId= 
     this.getStarAndBlogger()
     this.type = this.$route.query.type
     this.leftClick = this.leftClickTemp
@@ -295,21 +331,68 @@ export default {
         type: this.type, // 销售线索
         principal_id: this.principalId, // 负责人
         priority: this.priority, // 优先级
-        priorityName: '', // 优先级
+        // priorityName: '', // 优先级
         status: this.trailStatus // 线索状态
       }
-      console.log(params)
 
       fetch('post', '/trails', params).then(res => {
-        console.log(res)
+        toast('添加成功！')
+          setTimeout(() => {
+            this.leftClick()
+          }, 900)
       })
     },
     editTrail () {
-      const params = {
+      if (!this.brand) {
+        toast('品牌名称不能为空！')
+        return
+      }
+      if (!this.client.id) {
+        toast('公司名称不能为空！')
+        return
+      }
+      if (!this.title) {
+        toast('线索名称不能为空！')
+        return
+      }
+      if (!this.resourceType) {
+        toast('线索来源不能为空！')
+        return
+      }
+      if (this.resourceType > 0 && this.resourceType < 6 && !this.resourceTypeDetail) {
+        toast('线索来源不能为空！')
+        return
+      }
+      if (!this.industryId) {
+        toast('行业不能为空！')
+        return
+      }
+      if (!this.principalId) {
+        toast('负责人不能为空！')
+        return
+      }
+      if (this.expectations.length <= 0) {
+        toast('目标艺人不能为空！')
+        return
+      }
+      if (!this.contact.name) {
+        toast('联系人不能为空！')
+        return
+      }
+      if (!this.contact.phone) {
+        toast('联系人电话不能为空！')
+        return
+      }
+      if (!this.fee) {
+        toast('预计订单收入不能为空！')
+        return
+      }
+   const params = {
         title: this.title, // 线索名称
         brand: this.brand, // 品牌名称
         client: this.client, // 公司id
         resource_type: this.resourceType, // 线索来源, 不同来源对应不同来源人员
+        resource: this.resourceTypeDetail,
         recommendations: this.recommendations, // 推荐艺人
         expectations: this.expectations, // 目标艺人
         contact: {
@@ -322,11 +405,14 @@ export default {
         type: this.type, // 销售线索
         principal_id: this.principalId, // 负责人
         priority: this.priority, // 优先级
-        priorityName: '', // 优先级
+        // priorityName: '', // 优先级
         status: this.trailStatus // 线索状态
       }
       fetch('put', '/trails/' + this.trailId, params).then(() => {
-        // 回调
+        toast('修改成功！')
+        setTimeout(() => {
+          this.leftClick()
+        }, 900)
       })
     },
     // 选择客户
@@ -347,7 +433,6 @@ export default {
     },
     // 选择行业
     checkIndustry (data) {
-      console.log(this.industriesArr)
       this.industryVisible = !this.industryVisible
       this.industryId = data.value
       this.industryName = data.label
@@ -360,11 +445,15 @@ export default {
     },
     // 选择目标艺人
     selectExpectations (data) {
+      console.log(data)
       this.expectationsVisible = false
       const expectations = []
       const expectationsName = []
       data.map(n => {
-        expectations.push(n.value)
+        expectations.push({
+          id: n.value.split('_')[0],
+          flag: n.flag
+        })
         expectationsName.push(n.label)
       })
       this.expectationsName = expectationsName.join('、')
@@ -375,7 +464,10 @@ export default {
       const recommendations = []
       const recommendationsName = []
       data.map(n => {
-        recommendations.push(n.value)
+        recommendations.push({
+          id: n.value.split('_')[0],
+          flag: n.flag
+        })
         recommendationsName.push(n.label)
       })
       this.recommendationsName = recommendationsName.join('、')
@@ -383,7 +475,6 @@ export default {
     },
     // 选择线索来源
     checkTrailOrigin (data) {
-      console.log(data)
       this.trailVisible = !this.trailVisible
       this.resourceTypeName = data.name
       this.resourceType = data.value
@@ -391,7 +482,6 @@ export default {
     // 选择锁价
     checkLock (data) {
       this.lockVisible = false
-      console.log(data)
       this.lockName = data.name
     },
     // 合作类型
@@ -402,7 +492,8 @@ export default {
     // 线索状态
     checkStatus (data) {
       this.statusVisible = !this.statusVisible
-      this.trailStatus = data.name
+      this.trailStatus = data.value
+      this.trailStatusName = data.name
     },
     // 获取线索详情
     getTrailDetailInfo () {
@@ -432,6 +523,27 @@ export default {
       this.principalIconArr = JSON.parse(data)
       this.principalId = this.principalIconArr[0].id || ''
     },
+    // 选择线索来源人员
+    checkTrailMan () {
+      window.setMemberData = this.setTrailData
+      const params = {
+        type: 1,
+        data: this.resourceTypeDetailArr
+      }
+      tool.nativeEvent('selectOrganizational', JSON.stringify(params))
+    },
+    // 设置线索来源人员
+    setTrailData (data) {
+      this.resourceTypeDetailArr = JSON.parse(data)
+      this.resourceTypeDetail = this.resourceTypeDetailArr[0].id || ''
+    },
+    // 获取员工信息
+    getUserInfo (id) {
+      fetch('get', `/users/${id}`).then(res => {
+        this.resourceTypeDetailArr.push(res.data)
+        console.log(this.resourceTypeDetailArr)
+      })
+    }
   }
 }
 </script>
