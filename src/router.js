@@ -138,7 +138,8 @@ export default new Router({
           name: 'noticeList',
           component: () => import('./views/notice/list.vue'),
           meta: {
-            title: '公告'
+            title: '公告',
+            keepAlive: true
           }
         }, {
           path: '/notice/detail/:id',
@@ -174,16 +175,13 @@ export default new Router({
     }
   ],
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      if (from.meta.keepAlive) {
-        from.meta.savedPosition = document.body.scrollTop
-      }
-      return {
-        x: 0,
-        y: to.meta.savedPosition || 0
+      if (savedPosition) {
+        return savedPosition
+      } else {
+        return {
+          x: 0,
+          y: 0
+        }
       }
     }
-  }
 })

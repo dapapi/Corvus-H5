@@ -21,6 +21,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
     data(){
         return {
+            id:this.$route.params.id
             // classifyArr:config.classifyArr
         }
     },
@@ -31,6 +32,15 @@ export default {
     },
     mounted(){
        this.getNoticeDetail({id:this.$route.params.id})
+    },
+    watch:{
+       '$route' (to,from) {
+           if(this.$route.params.id){
+               this.getNoticeDetail({id:this.$route.params.id})
+               
+           }
+           window.leftClick = this.leftClick
+       }
     },
     computed:{
         ...mapState([
@@ -45,9 +55,7 @@ export default {
         ]),
         leftClick:function(){
             window.leftClick = this.reLeftClick
-            this.$router.push({
-                path: `/notice/list`,
-            })
+            history.back()
         },
         reLeftClick:function(){
             config.deviceWay('back',2)
