@@ -132,7 +132,6 @@ export default {
     },
     // 选择级别
     checkLevel (data) {
-      console.log(data)
       this.levelVisible = !this.levelVisible
       this.clientLevel = data.value
       this.clientLevelName = data.name
@@ -204,7 +203,6 @@ export default {
         desc: this.desc,
         client_rating: this.rating
       }
-      console.log(data)
       fetch('post', '/clients', data).then(res => {
         toast('添加成功!')
         setTimeout(() => {
@@ -245,7 +243,6 @@ export default {
     // 选择地区
     checkRegional (data) {
       this.regionVisible = !this.regionVisible
-      console.log(data)
       if (data) {
         this.region = data.join('-')
         this.province = data[0]

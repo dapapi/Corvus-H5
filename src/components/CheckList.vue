@@ -73,7 +73,6 @@ export default {
     window.rightClick = this.changeShow
     window.leftClick = this.changeHidden
     tool.nativeEvent('setTitle', this.newTitle)
-    console.log(this.checkedArr)
   },
   beforeDestroy () {
     if (this.rightClick) {

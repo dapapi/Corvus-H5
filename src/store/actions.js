@@ -23,7 +23,6 @@ export default {
   // 获取任务详情
   getTasks ({ commit }, params) {
     fetch('get', `/tasks/${params.id}`, params.data).then(res => {
-      console.log(res.data)
       commit('setTaskDetail', res.data)
     })
   },
@@ -51,7 +50,6 @@ export default {
   // 获取行业
   getIndustries ({ commit }, params) {
     fetch('get', '/industries/all').then(res => {
-      console.log(res)
       const data = res.data.map(n => {
         return {
           label: n.name,
@@ -68,7 +66,8 @@ export default {
       const data = res.data.map(n => {
         return {
           value: n.id + '',
-          label: n.name
+          label: n.name,
+          flag: n.flag
         }
       })
       commit('setStarAndBlogger', data)
@@ -82,7 +81,6 @@ export default {
   },
   //添加艺人
   postArtist({commit}, params) {
-    console.log(params.data)
     fetch('post', `/stars`, params.data).then(res => {
       Toast(params.toast)
       config.deviceBack(2)
@@ -110,7 +108,6 @@ export default {
   },
   //添加博主
   postBlogger({commit}, params) {
-    console.log(params.data)
     fetch('post', `/bloggers`, params.data).then(res => {
       Toast(params.toast)
       config.deviceBack(2)
@@ -144,14 +141,12 @@ export default {
   //获取项目详情
   getProjectDetail({commit},params){
     fetch('get', `/projects/${params.id}`,params.data).then(res => {
-      // console.log(res.data)
       commit('setProjectDetail', res)
     })
   },
   //项目审批流程
   getApproval({commit},params) {
     fetch('get', `/approval_instances/${params.id}/chains`).then(res => {
-      // console.log(res)
       commit('setApproval', res.data)
     })
   },
@@ -164,7 +159,6 @@ export default {
   // 获取客户联系人
   getClientContact ({ commit }, params) {
     fetch('get', `clients/${params.id}/contacts`).then(res => {
-      console.log(res)
       commit('setClientContact', res.data)
     })
   },
