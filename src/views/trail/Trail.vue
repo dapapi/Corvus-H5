@@ -5,28 +5,28 @@
         <Cell title="合作类型" @click.native="changeState('cooperationVisible', !cooperationVisible)" :value="cooperationType" isLink></Cell>
         <Selector :visible="cooperationVisible" :data="cooperationTypeArr" @change="checkCooperation" />
       </template>
-      <Field label="品牌名称" v-model="brand" />
-      <Cell title="公司名称" @click.native="changeState('clientsVisible', !clientsVisible)" :value="clientName" isLink></Cell>
-      <Field label="线索名称" v-model="title"></Field>
-      <Cell title="线索来源" @click.native="changeState('trailVisible', !trailVisible)" :value="resourceTypeName" isLink></Cell>
+      <Field class="require" label="品牌名称" v-model="brand" />
+      <Cell title="公司名称" class="require" @click.native="changeState('clientsVisible', !clientsVisible)" :value="clientName" isLink></Cell>
+      <Field label="线索名称" class="require" v-model="title"></Field>
+      <Cell title="线索来源" class="require" @click.native="changeState('trailVisible', !trailVisible)" :value="resourceTypeName" isLink></Cell>
       <Selector :visible="trailVisible" :data="trailOriginArr" @change="checkTrailOrigin" />
       <Field v-if="resourceTypeNum < 6 && resourceTypeNum > 0" v-model="resourceTypeDetail"></Field>
-      <Cell title="行业" @click.native="changeState('industryVisible', !industryVisible)" :value="industryName" isLink></Cell>
-      <Cell title="负责人" @click.native="checkKeyMan" isLink>
+      <Cell title="行业" class="require" @click.native="changeState('industryVisible', !industryVisible)" :value="industryName" isLink></Cell>
+      <Cell title="负责人" class="require" @click.native="checkKeyMan" isLink>
         <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
       </Cell>
-      <Cell title="目标艺人" :value="expectationsName" @click.native="changeState('expectationsVisible', !expectationsVisible)" isLink></Cell>
+      <Cell title="目标艺人" class="require" :value="expectationsName" @click.native="changeState('expectationsVisible', !expectationsVisible)" isLink></Cell>
       <Cell title="推荐艺人" :value="recommendationsName" @click.native="changeState('recommendationsVisible', !recommendationsVisible)" isLink></Cell>
-      <Cell title="优先级" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" isLink></Cell>
+      <Cell title="优先级" class="require" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" isLink></Cell>
       <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
-      <Field label="联系人" v-model="contact.name"></Field>
-      <Field label="联系人电话" v-model="contact.phone"></Field>
+      <Field label="联系人" class="require" v-model="contact.name"></Field>
+      <Field label="联系人电话" class="require" v-model="contact.phone"></Field>
       <template v-if="type !== 4">
         <Cell title="线索状态" @click.native="changeState('statusVisible', !statusVisible)" :value="trailStatus" isLink></Cell>
         <Selector :visible="statusVisible" :data="trailStatusArr" @change="checkStatus" />
       </template>
       <Field label="销售进展" disabled v-model="salesProgressText"></Field>
-      <Field label="预计订单收入" v-model="fee"></Field>
+      <Field label="预计订单收入" class="require" v-model="fee"></Field>
       <!-- papi的可以锁价 -->
       <template v-if="type === 4">
         <Cell title="是否锁价" :value="lockName" @click.native="changeState('lockVisible', !lockVisible)" isLink></Cell>
@@ -233,6 +233,46 @@ export default {
       this[name] = value
     },
     addNewTrail () {
+      if (!this.brand) {
+        toast('品牌名称不能为空！')
+        return
+      }
+      if (!this.client.id) {
+        toast('公司名称不能为空！')
+        return
+      }
+      if (!this.title) {
+        toast('线索名称不能为空！')
+        return
+      }
+      if (!this.resourceTypeNum) {
+        toast('线索来源不能为空！')
+        return
+      }
+      if (!this.industryId) {
+        toast('行业不能为空！')
+        return
+      }
+      if (!this.principalId) {
+        toast('负责人不能为空！')
+        return
+      }
+      if (this.expectations.length <= 0) {
+        toast('目标艺人不能为空！')
+        return
+      }
+      if (!this.contact.name) {
+        toast('联系人不能为空！')
+        return
+      }
+      if (!this.contact.phone) {
+        toast('联系人电话不能为空！')
+        return
+      }
+      if (!this.fee) {
+        toast('预计订单收入不能为空！')
+        return
+      }
       const params = {
         title: this.title, // 线索名称
         brand: this.brand, // 品牌名称
@@ -253,6 +293,7 @@ export default {
         priorityName: '', // 优先级
         status: this.trailStatus // 线索状态
       }
+      console.log(data)
 
       fetch('post', '/trails', params).then(res => {
         console.log(res)
@@ -337,7 +378,7 @@ export default {
     },
     // 选择线索来源
     checkTrailOrigin (data) {
-      // console.log(data)
+      console.log(data)
       this.trailVisible = !this.trailVisible
       this.resourceTypeName = data.name
       this.resourceTypeNum = data.value
