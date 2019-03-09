@@ -245,18 +245,8 @@ export default {
     // 监听客户(公司)是否显示 
     clientsVisible () {
       if (this.clientsVisible) {
-        //  setTimeout(() => {
-        //   try {
-        //     tool.nativeEvent('setRightText', '哈哈')
-        //   } catch (err) {
-        //     console.log(err)
-        //   }
-        // }, 3000)
         window.rightClick = this.addCompany
-      } else {
-        // tool.nativeEvent('setRightText', this.pageTitle)
-        // window.rightClick = null
-      }
+      } 
     },
     isAddClients () {
       if (!this.isAddClients) {
@@ -482,7 +472,6 @@ export default {
     },
     // 选择目标艺人
     selectExpectations (data) {
-      console.log(data)
       this.expectationsVisible = false
       const expectations = []
       const expectationsName = []
@@ -551,7 +540,6 @@ export default {
       }, 500)
       tool.nativeEvent('setTitle', '公司名称')
       window.rightClick = this.addNewCompanyClient
-      console.log(window.leftClick)
     },
     leftClickTemp () {
       tool.nativeEvent('back', 2)
