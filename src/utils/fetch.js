@@ -57,7 +57,9 @@ axios.interceptors.response.use(res => {
     const errors = response.data.errors
     const errInfoArr = Object.keys(errors)
     if (errInfoArr.length > 0) {
+
       toast(errors[errInfoArr[0]]+'')
+      // console.log(error[errInfoArr[0]])
     } else {
       toast(response.data.message+'')
     }

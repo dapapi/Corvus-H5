@@ -82,6 +82,7 @@ export default {
             company:'',//签约公司名称
             remark:'',//备注
         }
+        
     },
     computed:{
         ...mapState([
@@ -126,6 +127,11 @@ export default {
             }
             // console.log(this.selectedPlatform)
             this.platformName = aPlatformName.join(',')
+       },
+       remark:function(){
+           const el = this.$refs.textarea.$el.querySelector('textarea')
+           el.style.height = el.scrollHeight - 4 + 'px'
+
        }
     },
     created(){

@@ -83,14 +83,18 @@ export default {
   postArtist({commit}, params) {
     fetch('post', `/stars`, params.data).then(res => {
       Toast(params.toast)
-      config.deviceBack(2)
+      setTimeout(() => {
+        config.deviceBack(2)
+      }, 1000);
     })
   },
   //编辑艺人
   putArtist({commit}, params) {
     fetch('put', `/stars/${params.id}`, params.data).then(res => {
       Toast(params.toast)
-      config.deviceBack(2)
+      setTimeout(() => {
+        config.deviceBack(2)
+      }, 1000);
     })
   },
   //获取博主类型
@@ -110,14 +114,19 @@ export default {
   postBlogger({commit}, params) {
     fetch('post', `/bloggers`, params.data).then(res => {
       Toast(params.toast)
-      config.deviceBack(2)
+      setTimeout(() => {
+        config.deviceBack(2)
+      }, 1000);
+      
     })
   },
   //编辑博主
   putBlogger({commit}, params) {
     fetch('put', `/bloggers/${params.id}`, params.data).then(res => {
       Toast(params.toast)
-      config.deviceBack(2)
+      setTimeout(() => {
+        config.deviceBack(2)
+      }, 1000);
     })
   },
   //获取公告列表

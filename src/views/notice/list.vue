@@ -61,6 +61,9 @@ export default {
         this.getNoticeType()
         window.leftClick = this.leftClick
     },
+    activated(){
+        window.leftClick = this.leftClick
+    },
     mounted(){
         this.getNoticeList(0)
         this.isActive = this.navList[0].value

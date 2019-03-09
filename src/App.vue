@@ -4,6 +4,9 @@
   </div>
 </template>
 <style lang="scss">
+html{
+  font-size: 48px;
+}
 body.modal-open {
     position: fixed;
     width: 100%;

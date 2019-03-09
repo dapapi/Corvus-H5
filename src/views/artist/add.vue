@@ -56,7 +56,7 @@
                     </FileUpload>
                 </template>
             </Cell>
-            <Field label="备注" v-model="remark"></Field>
+            <Field type="textarea" ref="textarea" label="备注" v-model="remark" rows="1"></Field>
             <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addArtist()">提交</button>
             </div> -->
@@ -118,6 +118,7 @@ export default {
             company:'',//签约公司名称
             uploadUrl:'',//艺人头像
             remark:'',//备注
+            txtHeight:0,//备注框高度
             handler:function(e){
                 e.preventDefault()
             },
@@ -168,10 +169,15 @@ export default {
                     aPlatformName.push(this.artistPlatformList[i].label)
                 }
             }
-            // console.log(this.selectedPlatform)
             this.platformName = aPlatformName.join(',')
+       },
+       remark:function(){
+           const el = this.$refs.textarea.$el.querySelector('textarea')
+           el.style.height = el.scrollHeight - 4 + 'px'
+
        }
     },
+
     created(){
         this.startDate = new Date('1900')
         if(this.$route.params.id){
@@ -182,8 +188,8 @@ export default {
     },
     mounted () {
         window.leftClick = this.leftClick
-        
-        
+        let el = this.$refs.textarea.$el.querySelector('textarea')
+        console.log(el.offsetHeight)
     },
     methods:{
         ...mapActions([
@@ -312,7 +318,7 @@ export default {
                 return false
             }
             if(!this.phone){
-                Toast('请输入手机')
+                Toast('请输入手机号码')
                 return false
             }
             if(!this.artistStatus.value){
