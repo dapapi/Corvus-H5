@@ -178,7 +178,9 @@ export default {
       this.resourceTypeName = this.trailOriginArr.find( n => n.value === trailDetail.resource_type).name
       this.resourceTypeDetail = trailDetail.resource
       if (this.resourceType == 4 || this.resourceType == 5) {
-        this.getUserInfo(this.resourceTypeDetail)
+        if (this.resourceTypeDetail) {
+          this.getUserInfo(this.resourceTypeDetail)
+        }
       }
       if (trailDetail.bloggerrecommendations || trailDetail.starrecommendations) {
         this.recommendationsName = [
@@ -197,7 +199,6 @@ export default {
             }})
         ]
       }
-     
 
       if (trailDetail.bloggerexpectations || trailDetail.starexpectations) {
         this.expectationsName = [
@@ -444,12 +445,13 @@ export default {
     },
     // 选择目标艺人
     selectExpectations (data) {
+      console.log(data)
       this.expectationsVisible = false
       const expectations = []
       const expectationsName = []
       data.map(n => {
         expectations.push({
-          id: n.value,
+          id: n.value.split('_')[0],
           flag: n.flag
         })
         expectationsName.push(n.label)
@@ -463,7 +465,7 @@ export default {
       const recommendationsName = []
       data.map(n => {
         recommendations.push({
-          id: n.value,
+          id: n.value.split('_')[0],
           flag: n.flag
         })
         recommendationsName.push(n.label)
@@ -539,6 +541,7 @@ export default {
     getUserInfo (id) {
       fetch('get', `/users/${id}`).then(res => {
         this.resourceTypeDetailArr.push(res.data)
+        console.log(this.resourceTypeDetailArr)
       })
     }
   }

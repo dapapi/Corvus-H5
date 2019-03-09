@@ -65,7 +65,7 @@ export default {
     fetch('get', '/starandblogger?sign_contract_status=2').then(res => {
       const data = res.data.map(n => {
         return {
-          value: n.id + '',
+          value: n.id + '_' + n.flag,
           label: n.name,
           flag: n.flag
         }
