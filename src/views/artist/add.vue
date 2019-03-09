@@ -121,6 +121,7 @@ export default {
             handler:function(e){
                 e.preventDefault()
             },
+            reSubmit:false //重复提交参数
         }
     },
     computed:{
@@ -268,6 +269,7 @@ export default {
         },
         //添加--编辑艺人
         addArtist:function(){
+            
             let plat =[]
             let platform= ''
             let toast,id
@@ -278,7 +280,7 @@ export default {
                 }
                 platform = plat.join(',')
             }
-            console.log(platform)
+            // console.log(platform)
             if(id){
                 toast = '编辑艺人成功'
             }else{
@@ -287,7 +289,7 @@ export default {
             let params= {
                 toast:toast,
                 data:{},
-                id:id
+                id:id,
             }
             if(!this.username){
                 Toast('请输入姓名')

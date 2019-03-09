@@ -115,4 +115,7 @@ a{
 .mint-cell{
   padding-left:0.14rem;
 }
+img{
+  max-width:100%;
+}
 </style>

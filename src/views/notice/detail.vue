@@ -22,7 +22,6 @@ export default {
     data(){
         return {
             id:this.$route.params.id
-            // classifyArr:config.classifyArr
         }
     },
     created(){
@@ -37,9 +36,8 @@ export default {
        '$route' (to,from) {
            if(this.$route.params.id){
                this.getNoticeDetail({id:this.$route.params.id})
-               
+               window.leftClick = this.leftClick
            }
-           window.leftClick = this.leftClick
        }
     },
     computed:{
@@ -102,7 +100,8 @@ export default {
         padding:0.4rem;
         font-size: .28rem;
         line-height: 2;
-        color:#666
+        color:#666;
     }
+    
 </style>
 
