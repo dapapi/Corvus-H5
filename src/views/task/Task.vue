@@ -23,6 +23,7 @@
       <DatetimePicker
         ref="startPicker"
         type="datetime"
+        v-model="startTimeModel"
         @confirm="startConfirm"
         @visible-change="handleValueChange"
       />
@@ -30,6 +31,7 @@
       <DatetimePicker
         ref="endPicker"
         type="datetime"
+        v-model="endTimeModel"
         @visible-change="handleValueChange"
         @confirm="endConfirm"
       />
@@ -110,6 +112,9 @@ export default {
       rightClick: null , // 右侧按钮触发的事件
       leftClick: null , // 左侧按钮触发的事件
       code: '', // 修改关联资源需要传
+      startTimeModel: new Date(), // 默认开始时间
+      endTimeModel: new Date(), // 默认开始时间
+      isLoading: false
     }
   },
   computed: {
@@ -165,6 +170,13 @@ export default {
       const el = this.$refs.textarea.$el.querySelector('textarea')
       el.style.height = el.scrollHeight - 4 + 'px'
     },
+    isLoading () {
+      if (this.isLoading) {
+        Indicator.open()
+      } else {
+        Indicator.close()
+      }
+    }
   },
   mounted () {
     this.getResourceList()
@@ -265,7 +277,14 @@ export default {
     },
     // 新建任务，子任务
     addNewTask () {
-      this.checkField()
+      if (this.isLoading) {
+        return
+      }
+      
+      if (!this.checkField()) {
+        return
+      }
+      
       const params = {
         type: this.taskType,
         title: this.title,
@@ -281,27 +300,39 @@ export default {
         params.resource_type = this.resourceId
         params.resourceable_id = this.resourceableId
       }
+      this.isLoading = true
       if (this.$route.name === 'task/addSubTask') {
         // 执行添加子任务
         fetch('post', '/tasks/' + this.taskId + '/subtask', params).then( res => {
+          this.isLoading = false
           toast('添加成功！')
           setTimeout(() => {
             this.leftClick()
           }, 900)
+        }).catch( res => {
+          this.isLoading = false
         })
       } else {
         // 执行添加任务
         fetch('post', '/tasks', params).then(res => {
+          this.isLoading = false
           toast('添加成功！')
           setTimeout(() => {
             this.leftClick()
           }, 900)
+        }).catch( res => {
+          this.isLoading = false
         })
       }
     },
     // 编辑任务，子任务
     editTask () {
-      this.checkField()
+      if (!this.checkField()) {
+        return
+      }
+      if (this.isLoading) {
+        return
+      }
       const params = {
         type: this.taskType,
         title: this.title,
@@ -320,11 +351,14 @@ export default {
       }
       fetch('put', '/tasks/' + this.taskId, params).then(res => {
         // 回调app原生方法
+        this.isLoading = false
         toast('修改成功')
           setTimeout(() => {
             this.leftClick()
           }, 900)
-      })
+      }).catch( err => {
+          this.isLoading = false
+        })
     },
     getTaskDetail () {
       const params = {}
@@ -415,6 +449,7 @@ export default {
         toast('截止时间不能小于开始时间！')
         return
       }
+      return true
     }
   }
 }

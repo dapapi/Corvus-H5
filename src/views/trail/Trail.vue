@@ -92,6 +92,7 @@ import _default,{ mapState,mapActions,mapMutations } from 'vuex'
 import config from '@/utils/config'
 import fetch from '@/utils/fetch'
 import tool from '@/utils/tool'
+import verify from '@/utils/verify'
 
 export default {
   name: 'Task',
@@ -149,6 +150,7 @@ export default {
       rightClick: null,
       leftClick: null , // 左侧按钮触发的事件
       trailId: this.$route.params.id,
+      isLoading: false
     }
   },
   computed: {
@@ -255,6 +257,13 @@ export default {
       } else {
         tool.nativeEvent('setRightText', '提交')
       }
+    },
+    isLoading () {
+      if (this.isLoading) {
+        Indicator.open()
+      } else {
+        Indicator.close()
+      }
     }
   },
   mounted () {
@@ -288,50 +297,14 @@ export default {
       this[name] = value
     },
     addNewTrail () {
-      if (!this.brand) {
-        toast('品牌名称不能为空！')
+      if (this.isLoading) {
         return
       }
-      if (!this.clientName) {
-        toast('公司名称不能为空！')
+
+      if (!this.checkField()) {
         return
       }
-      if (!this.title) {
-        toast('线索名称不能为空！')
-        return
-      }
-      if (!this.resourceType) {
-        toast('线索来源不能为空！')
-        return
-      }
-      if (this.resourceType > 0 && this.resourceType < 6 && !this.resourceTypeDetail) {
-        toast('线索来源不能为空！')
-        return
-      }
-      if (!this.industryId) {
-        toast('行业不能为空！')
-        return
-      }
-      if (!this.principalId) {
-        toast('负责人不能为空！')
-        return
-      }
-      if (this.expectations.length <= 0) {
-        toast('目标艺人不能为空！')
-        return
-      }
-      if (!this.contact.name) {
-        toast('联系人不能为空！')
-        return
-      }
-      if (!this.contact.phone) {
-        toast('联系人电话不能为空！')
-        return
-      }
-      if (!this.fee) {
-        toast('预计订单收入不能为空！')
-        return
-      }
+
       const params = {
         title: this.title, // 线索名称
         brand: this.brand, // 品牌名称
@@ -354,59 +327,28 @@ export default {
         status: this.trailStatus // 线索状态
       }
 
+      this.isLoading = true
+
       fetch('post', '/trails', params).then(res => {
+        this.isLoading = false
         toast('添加成功！')
           setTimeout(() => {
             this.leftClick()
           }, 900)
-      })
+      }).catch( res => {
+          this.isLoading = false
+        })
     },
     editTrail () {
-      if (!this.brand) {
-        toast('品牌名称不能为空！')
+      if (this.isLoading) {
         return
       }
-      if (!this.clientName) {
-        toast('公司名称不能为空！')
+
+      if (!this.checkField()) {
         return
       }
-      if (!this.title) {
-        toast('线索名称不能为空！')
-        return
-      }
-      if (!this.resourceType) {
-        toast('线索来源不能为空！')
-        return
-      }
-      if (this.resourceType > 0 && this.resourceType < 6 && !this.resourceTypeDetail) {
-        toast('线索来源不能为空！')
-        return
-      }
-      if (!this.industryId) {
-        toast('行业不能为空！')
-        return
-      }
-      if (!this.principalId) {
-        toast('负责人不能为空！')
-        return
-      }
-      if (this.expectations.length <= 0) {
-        toast('目标艺人不能为空！')
-        return
-      }
-      if (!this.contact.name) {
-        toast('联系人不能为空！')
-        return
-      }
-      if (!this.contact.phone) {
-        toast('联系人电话不能为空！')
-        return
-      }
-      if (!this.fee) {
-        toast('预计订单收入不能为空！')
-        return
-      }
-   const params = {
+
+      const params = {
         title: this.title, // 线索名称
         brand: this.brand, // 品牌名称
         client: this.client, // 公司id
@@ -427,12 +369,17 @@ export default {
         // priorityName: '', // 优先级
         status: this.trailStatus // 线索状态
       }
+      this.isLoading = true
+
       fetch('put', '/trails/' + this.trailId, params).then(() => {
+        this.isLoading = false
         toast('修改成功！')
         setTimeout(() => {
           this.leftClick()
         }, 900)
-      })
+      }).catch( res => {
+          this.isLoading = false
+        })
     },
     // 选择客户
     seletedClient (data) {
@@ -585,6 +532,73 @@ export default {
     // 关闭新增客户的小页面
     closeAddNewClient () {
       this.isAddClients = false
+    },
+    // 必填字段校验
+    checkField () {
+      if (!this.brand) {
+        toast('品牌名称不能为空！')
+        return
+      }
+      if (!this.clientName) {
+        toast('公司名称不能为空！')
+        return
+      }
+      if (!this.title) {
+        toast('线索名称不能为空！')
+        return
+      }
+      if (!this.resourceType) {
+        toast('线索来源不能为空！')
+        return
+      }
+
+      if (this.resourceType > 0 && this.resourceType < 3) {
+        if (!verify.email(this.resourceTypeDetail)) {
+          toast('线索来源邮箱格式错误！')
+          return
+        }
+      }
+
+      if (this.resourceType > 2 && this.resourceType < 6 && !this.resourceTypeDetail) {
+        toast('线索来源不能为空！')
+        return
+      }
+      if (!this.industryId) {
+        toast('行业不能为空！')
+        return
+      }
+      if (!this.principalId) {
+        toast('负责人不能为空！')
+        return
+      }
+      if (this.expectations.length <= 0) {
+        toast('目标艺人不能为空！')
+        return
+      }
+      if (!this.contact.name) {
+        toast('联系人不能为空！')
+        return
+      }
+      if (!this.contact.phone) {
+        toast('联系人电话不能为空！')
+        return
+      }
+       if (!verify.phone(this.contact.phone)) {
+        toast('联系人电话号码格式错误！')
+        return
+      }
+      if (!this.fee) {
+        toast('预计订单收入不能为空！')
+        return
+      }
+      var reg = /^[0-9]+.?[0-9]*$/
+      if (!reg.test(this.fee)) {
+        toast('预计订单收入格式错误！')
+        return
+      } else {
+        this.fee = Number(this.fee).toFixed(2)
+      }
+      return true
     }
   }
 }
