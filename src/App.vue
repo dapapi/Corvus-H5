@@ -120,6 +120,8 @@ a{
 }
 img{
   max-width:100%;
+  pointer-events: auto
+
 }
 .mint-popup{
   overflow:scroll;

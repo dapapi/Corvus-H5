@@ -49,7 +49,7 @@
                 Indicator.open()
                 if(e.target.files[0].type.indexOf('image')>-1){
                     lrz( e.target.files[0], {
-                        width : 80,
+                        width : 100,
                         quality: 0.9   //自定义使用压缩方式
                     })  
                     .then(function(rst) {

@@ -4,7 +4,9 @@
             <li @click="changeActive(item.value)" :class="isActive == item.value?'active':''" v-for="(item,index) in navList" :key="index">{{item.name}}</li>
             <div class="active-line" :style="{left:`${posLeft}%`,width:`${activeLineWidth}%`}"></div>
         </ul>
-        <ul class="nav-ul">
+        <ul class="nav-ul" v-infinite-scroll="loadMore"
+  infinite-scroll-disabled="loading"
+  infinite-scroll-distance="10">
         <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive " @click="changeState(item.id)">
             <!-- <router-link :to="`/notice/detail/${item.id}`"> -->
                 <div class="nav-title">
@@ -35,6 +37,8 @@ export default {
         return {
             // classifyArr:config.classifyArr,
             loading:false,
+            page:1,
+            pageNum:10,
             noticeList:[],
             navList:[
                 {
@@ -81,22 +85,26 @@ export default {
         },
         loadMore:function(){
          this.loading = true
+         this.page ++
          this.getNoticeList()
          
        },
        changeActive:function(value){
            this.isActive = value
            this.posLeft = (100/this.navList.length/4)+(100/this.navList.length*(value))
+           this.page = 1
            this.getNoticeList(value)
        },
        //readflag 0 未读 1 已读
        getNoticeList(value){
            Indicator.open();
            let data ={
-               readflag:value
+               readflag:value,
+               page:this.page,
+               pageNum:this.pageNum
            }
            fetch('get', `/announcements?include=creator`,data).then(res => {
-               this.noticeList = res.data
+               this.noticeList = this.noticeList.concat(res.data)
                Indicator.close();
            })
        },

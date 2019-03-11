@@ -12,6 +12,7 @@
                 type="date"
                 v-model="defaultDate"
                 :startDate="startDate"
+                :endDate ="defaultDate"
                 @confirm="bornConfirm"
                 @visible-change="handleValueChange"
             />
@@ -177,15 +178,15 @@ export default {
            el.style.height = el.scrollHeight - 4 + 'px'
 
        },
-       isLoading:function(){
-           if(this.isLoading == true){
-            //    alert(111)
-               Indicator.open();
-           }else{
-            //    alert(222)
-               Indicator.close();
-           }
-       }
+    //    isLoading:function(){
+    //        if(this.isLoading == true){
+    //         //    alert(111)
+    //            Indicator.open();
+    //        }else{
+    //         //    alert(222)
+    //            Indicator.close();
+    //        }
+    //    }
     },
 
     created(){
