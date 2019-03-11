@@ -30,7 +30,7 @@
 import tool from '@/utils/tool'
 
 export default {
-  props: ['selectorData', 'multiple','selectedData', 'needSearch', 'originTitle', 'newTitle', 'leftClick', 'rightClick'],
+  props: ['selectorData', 'multiple','selectedData', 'needSearch', 'originTitle', 'newTitle', 'leftClick', 'rightClick', 'rightBtnText'],
   data () {
     return {
       checkedArr: [],
@@ -70,9 +70,14 @@ export default {
     }
   },
   mounted () {
-    window.rightClick = this.changeShow
+    if (this.rightClick) {
+      window.rightClick = this.changeShow
+    }
     window.leftClick = this.changeHidden
     tool.nativeEvent('setTitle', this.newTitle)
+    if (this.rightBtnText) {
+      tool.nativeEvent('setRightText', this.rightBtnText)
+    }
   },
   beforeDestroy () {
     if (this.rightClick) {
@@ -81,7 +86,14 @@ export default {
     if (this.leftClick) {
       window.leftClick = this.leftClick
     }
-    tool.nativeEvent('setTitle', this.originTitle)
+    if (this.rightClick) {
+      tool.nativeEvent('setTitle', this.originTitle)
+    }
+    if (this.rightBtnText) {
+      setTimeout(() => {
+        tool.nativeEvent('setRightText', '提交')
+      }, 100)
+    }
   },
   methods:{
     changeShow(){

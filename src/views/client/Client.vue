@@ -28,6 +28,7 @@ import config from '@/utils/config'
 import fetch from '@/utils/fetch'
 import { mapState, mapActions } from 'vuex'
 import tool from '@/utils/tool'
+import verify from '@/utils/verify'
 
 export default {
   data () {
@@ -64,6 +65,7 @@ export default {
       clientId: this.$route.params.id,
       type: this.$route.query.type,
       leftClick: null , // 左侧按钮触发的事件
+      isLoading: false
     }
   },
 
@@ -119,6 +121,13 @@ export default {
         this.isKeyName = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).name
         this.isKey = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).value
       }
+    },
+    isLoading () {
+      if (this.isLoading) {
+        Indicator.open()
+      } else {
+        Indicator.close()
+      }
     }
   },
 
@@ -150,39 +159,14 @@ export default {
     },
     // 新增客户
     addClient () {
-      // this.checkField()
-      if (!this.companyName) {
-        toast('公司名称不能为空！')
+      if (this.isLoading) {
         return
       }
-      if (!this.clientLevel) {
-        toast('级别不能为空！')
+
+      if (!this.checkField()) {
         return
       }
-      if (!this.principalId) {
-        toast('负责人不能为空！')
-        return
-      }
-      if (!this.contactName) {
-        toast('联系人不能为空！')
-        return
-      }
-      if (!this.contactPhone) {
-        toast('联系人电话不能为空！')
-        return
-      }
-      if (!this.isKey) {
-        toast('关键决策人不能为空！')
-        return
-      }
-      if (!this.position) {
-        toast('职位不能为空！')
-        return
-      }
-      if (!this.rating) {
-        toast('客户评级不能为空！')
-        return
-      }
+      
       let data = {
         type: this.type, // 需要移动端传入，新增客户的类型
         company: this.companyName,
@@ -198,20 +182,30 @@ export default {
             position: this.position,
             type: this.isKey,
         },
-        // keyman: this.clientDecision,
         size: this.scale,
         desc: this.desc,
         client_rating: this.rating
       }
+      this.isLoading = true
       fetch('post', '/clients', data).then(res => {
+        this.isLoading = false
         toast('添加成功!')
         setTimeout(() => {
           this.leftClick()
         }, 900)
-      })
+      }).catch( res => {
+          this.isLoading = false
+        })
     },
     // 编辑客户
     editClient () {
+      if (this.isLoading) {
+        return
+      }
+
+      if (!this.checkField()) {
+        return
+      }
       let data = {
         type: this.type, // 需要移动端传入，新增客户的类型
         company: this.companyName,
@@ -227,18 +221,21 @@ export default {
             position: this.position,
             type: this.isKey,
         },
-        // keyman: this.clientDecision,
         size: this.scale,
         desc: this.desc,
         client_rating: this.rating
       }
+      this.isLoading = true
       fetch('put', '/clients/' + this.clientId, data).then(res => {
         // 回调
+        this.isLoading = false
         toast('修改成功!')
         setTimeout(() => {
           this.leftClick()
         }, 900)
-      })
+      }).catch( res => {
+          this.isLoading = false
+        })
     },
     // 选择地区
     checkRegional (data) {
@@ -309,6 +306,10 @@ export default {
         toast('联系人电话不能为空！')
         return
       }
+      if (!verify.phone(this.contactPhone)) {
+        toast('联系人电话号码格式错误！')
+        return
+      }
       if (!this.isKey) {
         toast('关键决策人不能为空！')
         return
@@ -321,6 +322,7 @@ export default {
         toast('客户评级不能为空！')
         return
       }
+      return true
     }
   }
 }
