@@ -39,9 +39,9 @@
             
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark"></Field>
-            <!-- <div style='text-align:center'>
+            <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
-            </div> -->
+            </div>
         </div>
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
     </div>
@@ -51,6 +51,7 @@ import config from '@/utils/config.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
 import { Toast } from 'mint-ui'
+import fetch from '@/utils/fetch'
 export default {
     data(){
         return {
@@ -81,6 +82,7 @@ export default {
             uploadUrl:'',//头像
             company:'',//签约公司名称
             remark:'',//备注
+            reSubmit:false,//是否提交
         }
         
     },
@@ -148,8 +150,8 @@ export default {
         ...mapActions([
             'getBlogDetail',
             'getBlogType',
-            'postBlogger',//添加艺人
-            'putBlogger',//编辑艺人
+            // 'postBlogger',//添加艺人
+            // 'putBlogger',//编辑艺人
         ]),
         //返回
         leftClick:function(){
@@ -220,6 +222,11 @@ export default {
         },
         //添加和编辑博主
         addBlog:function(){
+            if(this.reSubmit){
+                Toast('正在提交数据,请勿重复提交')
+                return false
+            }
+            this.reSubmit = !this.reSubmit
             let plat =[]
             let platform= ''
             if(this.selectedPlatform){
@@ -273,7 +280,7 @@ export default {
                 Toast('请输入签约其他公司名称')
                 return false
             }
-            
+            Indicator.open()
             params.data = {
                 nickname: this.username,
                 type_id: this.blogTypeSelect.value,
@@ -290,7 +297,37 @@ export default {
                 avatar: this.uploadUrl
             }
             id?this.putBlogger(params):this.postBlogger(params)
-        }
+        },
+         //添加博主
+        postBlogger(params) {
+            fetch('post', `/bloggers`, params.data).then(res => {
+            Indicator.close()
+            Toast(params.toast)
+            this.reSubmit = false
+            setTimeout(() => {
+                config.deviceBack(2)
+            }, 1000);
+            
+            }).catch((error) => {
+                this.reSubmit = false
+                Indicator.close()
+            })
+        },
+        //编辑博主
+        putBlogger(params) {
+            fetch('put', `/bloggers/${params.id}`, params.data).then(res => {
+            this.reSubmit = false
+            Indicator.close()
+            Toast(params.toast)
+            setTimeout(() => {
+                config.deviceBack(2)
+            }, 1000);
+            }).catch((error) => {
+                this.reSubmit = false
+                Indicator.close()
+                // console.log(error)
+            })
+        },
     }
 }
 </script>

@@ -46,11 +46,13 @@
             //压缩图片
             zip:function(e){
                 let _this = this
-                Indicator.open()
+                if(e.target.files[0].name){
+                    Indicator.open()
+                }
                 if(e.target.files[0].type.indexOf('image')>-1){
                     lrz( e.target.files[0], {
-                        width : 100,
-                        quality: 0.9   //自定义使用压缩方式
+                        // width : 100,
+                        quality: 0.6   //自定义使用压缩方式
                     })  
                     .then(function(rst) {
                         _this.uploadFile(rst,true)

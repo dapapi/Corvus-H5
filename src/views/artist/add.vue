@@ -12,7 +12,6 @@
                 type="date"
                 v-model="defaultDate"
                 :startDate="startDate"
-                :endDate ="defaultDate"
                 @confirm="bornConfirm"
                 @visible-change="handleValueChange"
             />
@@ -58,9 +57,9 @@
                 </template>
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark" rows="1"></Field>
-            <!-- <div style='text-align:center'>
+            <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addArtist()">提交</button>
-            </div> -->
+            </div>
         </div>
         <!--选择平台-->
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" :originTitle="'新增艺人'" :newTitle="'艺人平台'" :rightClick="addArtist" :leftClick ="leftClick" @change="seletedData"/>
@@ -71,6 +70,7 @@ import config from '@/utils/config.js'
 import tool from '@/utils/tool.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
+import fetch from '@/utils/fetch'
 import { Toast } from 'mint-ui'
 export default {
     data(){
@@ -205,8 +205,8 @@ export default {
     methods:{
         ...mapActions([
             'getArtistDetail',//获取艺人详情
-            'postArtist',//添加艺人
-            'putArtist',//编辑艺人
+            // 'postArtist',//添加艺人
+            // 'putArtist',//编辑艺人
         ]),
         //返回
         leftClick:function(){
@@ -286,7 +286,11 @@ export default {
         },
         //添加--编辑艺人
         addArtist:function(){
-            
+            if(this.reSubmit){
+                Toast('正在提交数据,请勿重复提交')
+                return false
+            }
+            this.reSubmit = !this.reSubmit
             let plat =[]
             let platform= ''
             let toast,id
@@ -356,7 +360,8 @@ export default {
                 Toast('请选择平台')
                 return false
             }
-            this.$store.commit('setLoading',true)
+            // this.$store.commit('setLoading',true)
+            Indicator.open()
             params.data = {
                 name: this.username,//名字
                 gender: this.gender.value,//性别
@@ -388,13 +393,41 @@ export default {
             //id存在 编辑  否则添加
             id?this.putArtist(params):this.postArtist(params)
         },
-
+        //添加艺人
+        postArtist(params) {
+            fetch('post', `/stars`, params.data).then(res => {
+            Indicator.close()
+            Toast(params.toast)
+            this.reSubmit = false
+            setTimeout(() => {
+                config.deviceBack(2)
+            }, 1000);
+            }).catch((error) => {
+                Indicator.close()
+                this.reSubmit = false
+                // console.log(error)
+            })
+        },
+        //编辑艺人
+        putArtist(params) {
+            fetch('put', `/stars/${params.id}`, params.data).then(res => {
+            Indicator.close()
+            Toast(params.toast)
+            this.reSubmit = false
+            setTimeout(() => {
+                config.deviceBack(2)
+            }, 1000);
+            }).catch((error) => {
+                Indicator.close()
+                this.reSubmit = false
+                // console.log(error)
+            })
+        },
         //滚动穿透调用的方法
         handleValueChange: function (val) {
             if(val) {
                 tool.ModalHelper.afterOpen()
             } else {
-                
                 tool.ModalHelper.beforeClose()
             }
         }
