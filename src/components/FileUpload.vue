@@ -47,18 +47,23 @@
             zip:function(e){
                 let _this = this
                 Indicator.open()
+                
                 if(e.target.files[0].type.indexOf('image')>-1){
-                    lrz( e.target.files[0], {
-                        width : 100,
-                        quality: 0.9   //自定义使用压缩方式
-                    })  
-                    .then(function(rst) {
-                        _this.uploadFile(rst,true)
-                        
-                    }).catch(function(error) {
-                        //失败时执行
-                    }).always(function() {
-                        //不管成功或失败，都会执行
+
+                    this.getImgWidth(e.target.files[0]).then(res => {
+
+                        lrz( e.target.files[0], {
+                            width : res ? res : 400,
+                            quality: 0.9   //自定义使用压缩方式
+                        })  
+                        .then(function(rst) {
+                            _this.uploadFile(rst,true)
+                            
+                        }).catch(function(error) {
+                            //失败时执行
+                        }).always(function() {
+                            //不管成功或失败，都会执行
+                        })
                     })
                 }else{
                     _this.uploadFile(e,false)
@@ -89,6 +94,7 @@
                 let key = this.guid() + '.' + type[type.length - 1];
                 let conf = null;
                 let fileSize = file.size;
+                // return
                 this.getQiniuAccessToken((token) => {
                     let observable = qiniu.upload(file, key, token, putExtra, conf);
                     let subscription = observable.subscribe(function (res) {
@@ -142,6 +148,26 @@
                 return 'android'
                 }
             },
+
+            // 获取元素原始大小
+            getImgWidth (file) {
+                return new Promise((resolve, reject) => {
+                    const reader  = new FileReader()
+                    reader.readAsDataURL(file)
+                    reader.onload = function () {
+                        const img = new Image()
+                        img.src = this.result
+                        img.onload = () => {
+                            const size = img.width * img.height
+                            if (size > 500 * 1024) { // 这里理论上最后图片大小为500k 实际上尺寸比500k小很多 300k左右
+                                resolve(size/ (500 * 1024) * img.width)
+                            } else {
+                                resolve(img.width)
+                            }
+                        }
+                    }
+                })
+            }
         }
     }
 </script>
