@@ -251,6 +251,7 @@ export default {
     // 监听客户(公司)是否显示 
     clientsVisible () {
       if (this.clientsVisible) {
+        window.rightClick = null
         window.rightClick = this.addCompany
       } 
     },
