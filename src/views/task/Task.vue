@@ -1,7 +1,8 @@
 <template>
   <div>
     <template v-if="!checkListVisible">
-      <Cell title="关联资源" is-link @click.native="changeState('popupVisible', !popupVisible)" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
+      <Cell v-if="!query.resourceType" title="关联资源" is-link @click.native="changeState('popupVisible', !popupVisible)" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
+      <Cell v-else title="关联资源" :value="linkResourceName ? linkResourceName : noneResource "></Cell>
       <Popup position="bottom" v-model="popupVisible" popup-transition="popup-fade" style="width: 100%">
         <Cell title="暂不关联资源" @click.native="checkResource('')"><span class="mint-cell-mask"></span></Cell>
         <Cell v-for="(item, index) in resourceList" :title="item.title" @click.native="checkResource(item)" :key="index">
