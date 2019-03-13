@@ -114,7 +114,8 @@ export default {
       code: '', // 修改关联资源需要传
       startTimeModel: new Date(), // 默认开始时间
       endTimeModel: new Date(), // 默认开始时间
-      isLoading: false
+      isLoading: false,
+      query: this.$route.query
     }
   },
   computed: {
@@ -179,6 +180,15 @@ export default {
     }
   },
   mounted () {
+    const query = this.query
+    if (query.resourceType) {
+      this.resourceId = query.resourceType
+      this.resourceName = query.resourceName
+    }
+    if (query.resourceableId) {
+      this.resourceableId = query.resourceableId
+      this.resourceableName = query.resourceableName
+    }
     this.getResourceList()
     this.getTaskTypes()
     // 赋值给浏览器
