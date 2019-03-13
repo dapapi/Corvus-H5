@@ -251,7 +251,6 @@ export default {
     // 监听客户(公司)是否显示 
     clientsVisible () {
       if (this.clientsVisible) {
-        window.rightClick = null
         window.rightClick = this.addCompany
       } 
     },
@@ -381,6 +380,7 @@ export default {
     // 选择客户
     seletedClient (data) {
       this.clientsVisible = !this.clientsVisible
+      window.rightClick = this.rightClick
       if (data.value) {
         this.client = {}
         this.client.id = data.value
