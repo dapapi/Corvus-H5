@@ -13,8 +13,10 @@
 <script>
 import config from '@/utils/config'
 import { mapMutations } from 'vuex'
+import tool from '@/utils/tool'
 
 export default {
+  props: ['leftClick', 'rightClick', 'originTitle', 'newTitle'],
   data () {
     return {
       clientLevelArr: config.clientLevelArr,
@@ -23,6 +25,16 @@ export default {
       gradeName: '',
       popupVisible: false
     }
+  },
+  mounted () {
+    tool.nativeEvent('setTitle', this.newTitle)
+    window.rightClick = this.submit
+    window.leftClick = this.close
+  },
+  beforeDestroy () {
+    window.rightClick = this.rightClick
+    window.leftClick = this.leftClick
+    tool.nativeEvent('setTitle', this.originTitle)
   },
   methods: {
     ...mapMutations([
@@ -52,6 +64,9 @@ export default {
       }
       // this.setNewClient(data)
       this.$emit('change', data)
+    },
+    close () {
+      this.$emit('change', '')
     }
   }
 }

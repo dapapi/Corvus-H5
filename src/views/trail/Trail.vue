@@ -55,6 +55,10 @@
     <AddClient
       v-if="isAddClients"
       @change="addNewCompany"
+      :rightClick="rightClick"
+      :leftClick="leftClick"
+      :originTitle="pageTitle"
+      newTitle="公司名称"
       ref="addClient"
     />
     <Popup position="bottom" v-model="industryVisible" popup-transition="popup-fade" style="width: 100%">
@@ -88,7 +92,7 @@
 </template>
 
 <script>
-import _default,{ mapState,mapActions,mapMutations } from 'vuex'
+import { mapState,mapActions,mapMutations } from 'vuex'
 import config from '@/utils/config'
 import fetch from '@/utils/fetch'
 import tool from '@/utils/tool'
@@ -250,14 +254,6 @@ export default {
         window.rightClick = this.addCompany
       } 
     },
-    isAddClients () {
-      if (!this.isAddClients) {
-        window.leftClick = this.leftClickTemp
-        // tool.nativeEvent('setRightText', '提交')
-      } else {
-        tool.nativeEvent('setRightText', '提交')
-      }
-    },
     isLoading () {
       if (this.isLoading) {
         Indicator.open()
@@ -392,18 +388,21 @@ export default {
     },
     // 新增客户(公司)
     addNewCompany (data) {
-       if (this.$route.name === 'trail/edit') {
-        this.rightClick = this.editTrail
-      } else {
-        this.rightClick = this.addNewTrail
-      }
-      window.rightClick = this.rightClick
+      // if (this.$route.name === 'trail/edit') {
+      //   this.rightClick = this.editTrail
+      // } else {
+      //   this.rightClick = this.addNewTrail
+      // }
+      // window.rightClick = this.rightClick
       this.isAddClients = !this.isAddClients
+      if (!data) {
+        return
+      }
       this.client = {}
       this.client.company = data.companyName
       this.client.grade = data.grade
       this.clientName = data.companyName
-      tool.nativeEvent('setTitle', this.pageTitle)
+      // tool.nativeEvent('setTitle', this.pageTitle)
     },
     // 选择行业
     checkIndustry (data) {
@@ -481,12 +480,6 @@ export default {
       this.clientsVisible = false
       // 显示新增公司
       this.isAddClients = true
-      window.leftClick = null
-      setTimeout(() => {
-        window.leftClick = this.closeAddNewClient
-      }, 500)
-      tool.nativeEvent('setTitle', '公司名称')
-      window.rightClick = this.addNewCompanyClient
     },
     leftClickTemp () {
       tool.nativeEvent('back', 2)
@@ -526,9 +519,9 @@ export default {
       })
     },
     // 新增公司(客户)
-    addNewCompanyClient () {
-      this.$refs.addClient.submit()
-    },
+    // addNewCompanyClient () {
+    //   this.$refs.addClient.submit()
+    // },
     // 关闭新增客户的小页面
     closeAddNewClient () {
       this.isAddClients = false
