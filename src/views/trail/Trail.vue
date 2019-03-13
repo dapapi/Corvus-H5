@@ -381,7 +381,7 @@ export default {
     seletedClient (data) {
       this.clientsVisible = !this.clientsVisible
       window.rightClick = this.rightClick
-      tool.nativeEvent('setTitle', pageTitle)
+      tool.nativeEvent('setTitle', this.pageTitle)
       if (data.value) {
         this.client = {}
         this.client.id = data.value
