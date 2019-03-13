@@ -381,6 +381,7 @@ export default {
     seletedClient (data) {
       this.clientsVisible = !this.clientsVisible
       window.rightClick = this.rightClick
+      tool.nativeEvent('setTitle', pageTitle)
       if (data.value) {
         this.client = {}
         this.client.id = data.value
@@ -389,12 +390,6 @@ export default {
     },
     // 新增客户(公司)
     addNewCompany (data) {
-      // if (this.$route.name === 'trail/edit') {
-      //   this.rightClick = this.editTrail
-      // } else {
-      //   this.rightClick = this.addNewTrail
-      // }
-      // window.rightClick = this.rightClick
       this.isAddClients = !this.isAddClients
       if (!data) {
         return
@@ -403,7 +398,6 @@ export default {
       this.client.company = data.companyName
       this.client.grade = data.grade
       this.clientName = data.companyName
-      // tool.nativeEvent('setTitle', this.pageTitle)
     },
     // 选择行业
     checkIndustry (data) {
@@ -518,14 +512,6 @@ export default {
       fetch('get', `/users/${id}`).then(res => {
         this.resourceTypeDetailArr.push(res.data)
       })
-    },
-    // 新增公司(客户)
-    // addNewCompanyClient () {
-    //   this.$refs.addClient.submit()
-    // },
-    // 关闭新增客户的小页面
-    closeAddNewClient () {
-      this.isAddClients = false
     },
     // 必填字段校验
     checkField () {
