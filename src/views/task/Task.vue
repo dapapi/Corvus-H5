@@ -52,7 +52,7 @@
             </div>
           </div>
           <div class="right">
-            <i class="iconfont icon-shanchu" @click="delAnnex(index)"></i>
+            <i class="iconfont icon-shanchu" @click="delAnnex(index, item)"></i>
           </div>
         </div>
       </div>
@@ -360,6 +360,7 @@ export default {
         params.resourceable_id = this.resourceableId
         params.code = this.code
       }
+
       fetch('put', '/tasks/' + this.taskId, params).then(res => {
         // 回调app原生方法
         this.isLoading = false
@@ -398,8 +399,16 @@ export default {
       )
     },
     // 删除附件
-    delAnnex (index) {
-      this.annexArr.splice(index, 1)
+    delAnnex (index, data) {
+      MessageBox.confirm('确定执行此操作?').then(res => {
+        if (data.id) {
+          fetch('delete', '/tasks/' + this.taskId + '/affixes/' + data.id).then(res => {
+            this.annexArr.splice(index, 1)
+          })
+        } else {
+          this.annexArr.splice(index, 1)
+        }
+      })
     },
     leftClickTemp () {
       tool.nativeEvent('back', 2)
