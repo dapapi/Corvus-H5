@@ -182,7 +182,6 @@ export default {
     }
   },
   mounted () {
-    alert(Cookies.get('Authorization'))
     const query = this.query
     if (query.resourceType) {
       this.resourceId = query.resourceType
