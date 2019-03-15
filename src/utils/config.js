@@ -563,5 +563,23 @@ export default {
       value: 3
     }
   ],
+  //博主级别
+  taskLevelArr: [{
+      name: 'S',
+      value: 4
+    },
+    {
+      name: 'A',
+      value: 3
+    },
+    {
+      name: 'B',
+      value: 2
+    },
+    {
+      name: 'C',
+      value: 1
+    },
+  ],
 }
 

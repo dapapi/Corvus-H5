@@ -13,12 +13,12 @@
         <div class="list">
             <span class="listleft">与我司签约意向:</span>
             <span class="listright">{{yesOrNo.find(item => item.value == blogDetail.intention).name}}</span>
-            <span class="listright" v-if="blogDetail.intention == false">-{{intention_desc}}</span>
+            <span class="listright" v-if="blogDetail.intention == false&&blogDetail.intention_desc">-{{blogDetail.intention_desc}}</span>
         </div>
         <div class="list">
             <span class="listleft">是否签约其他公司:</span>
             <span class="listright">{{yesOrNo.find(item => item.value == blogDetail.sign_contract_other).name}}</span>
-            <span class="listright" v-if="blogDetail.sign_contract_other == 1">{{blogDetail.sign_contract_other_name}}</span>
+            <span class="listright" v-if="blogDetail.sign_contract_other == 1&&blogDetail.sign_contract_other_name">{{blogDetail.sign_contract_other_name}}</span>
         </div>
         <div class="list">
             <span class="listleft">社交平台:</span>
@@ -39,6 +39,18 @@
         <div class="list">
             <span class="listleft">抖音粉丝数:</span>
             <span class="listright">{{blogDetail.douyin_fans_num}}</span>
+        </div>
+        <div class="list" >
+            <span class="listleft">博主级别:</span>
+            <span class="listright" v-if="blogDetail.level">{{taskLevelArr.find(item => item.value == blogDetail.level).name}}</span>
+        </div>
+        <div class="list" v-if='blogDetail.hatch_star_at !== "privacy"'>
+            <span class="listleft">孵化期:</span>
+            <span class="listright">{{blogDetail.hatch_star_at + '至' + blogDetail.hatch_end_at}}</span>
+        </div>
+        <div class="list">
+            <span class="listleft">商务合作要求:</span>
+            <span class="listright">{{blogDetail.cooperation_demand}}</span>
         </div>
         <div class="list">
             <span class="listleft">备注:</span>
@@ -80,10 +92,9 @@ export default {
     data(){
         return {
             genderArr:config.genderArr,//性别
-            artistSourceArr:config.artistSourceArr,//艺人来源
-            artistStatusArr:config.artistStatusArr,//沟通状态
+            artistStatusArr:config.papiCommunicationStatusArr,//沟通状态
             yesOrNo:config.blogBoolean,
-            attachmentTypeArr:config.attachmentTypeArr,//附件类型
+            taskLevelArr:config.taskLevelArr,
             artistPlatformList:config.platformArr,//平台列表
             platform:''
         }
@@ -121,57 +132,6 @@ export default {
             params.id = this.$route.params.id
             this.getBlogDetail(params)
         }
-    },
-    filters: {
-        jsGetAge: function (strBirthday) {
-            if (strBirthday) {
-                var returnAge;
-                // 根据生日计算年龄（"1995-09-25"）
-                //以下五行是为了获取出生年月日，如果是从身份证上获取需要稍微改变一下
-                var strBirthdayArr = strBirthday.split("-");
-                var birthYear = strBirthdayArr[0];
-                var birthMonth = strBirthdayArr[1];
-                var birthDay = strBirthdayArr[2];
-
-                var d = new Date();
-                var nowYear = d.getFullYear();
-                var nowMonth = d.getMonth() + 1;
-                var nowDay = d.getDate();
-
-                if (nowYear == birthYear) {
-                    returnAge = 0;//同年 则为0岁
-                }
-                else {
-                    var ageDiff = nowYear - birthYear; //年之差
-                    if (ageDiff > 0) {
-                        if (nowMonth == birthMonth) {
-                            var dayDiff = nowDay - birthDay;//日之差
-                            if (dayDiff < 0) {
-                                returnAge = ageDiff - 1;
-                            }
-                            else {
-                                returnAge = ageDiff;
-                            }
-                        }
-                        else {
-                            var monthDiff = nowMonth - birthMonth;//月之差
-                            if (monthDiff < 0) {
-                                returnAge = ageDiff - 1;
-                            }
-                            else {
-                                returnAge = ageDiff;
-                            }
-                        }
-                    }
-                    else {
-                        returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
-                    }
-                }
-                return returnAge;//返回周岁年龄
-            } else {
-                return strBirthday
-            }
-        },
     }
 }
 </script>
