@@ -108,20 +108,17 @@ a{
   border-radius: 50%;
   margin-left: .1rem;
 }
-.require{
-  &::before{
+.require .mint-cell-text{
+  &::after{
     content:'*';
-    display: inline-block;
-    position: absolute;
-    top:0.24rem;
-    left:.1rem;
+    // display: inline-block;
+    position: relative;
+    top:0.1rem;
+    left:.05rem;
     min-height: .96rem;
     color:red;
     font-size: .44rem;
   }
-}
-.mint-cell{
-  padding:0 0.14rem;
 }
 img{
   max-width:100%;

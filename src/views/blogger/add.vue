@@ -360,7 +360,6 @@ export default {
     line-height: .56rem;
     text-align: center;
     font-style: normal;
-    margin-right:-0.2rem;
 }
 </style>
 
