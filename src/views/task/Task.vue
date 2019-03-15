@@ -79,6 +79,7 @@ import config from '@/utils/config'
 import moment from 'moment'
 import fetch from '@/utils/fetch'
 import tool from '@/utils/tool'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'Task',
@@ -181,6 +182,7 @@ export default {
     }
   },
   mounted () {
+    alert(Cookies.get('Authorization'))
     const query = this.query
     if (query.resourceType) {
       this.resourceId = query.resourceType
