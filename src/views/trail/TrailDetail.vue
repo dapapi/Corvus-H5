@@ -116,6 +116,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import config from '@/utils/config'
+import tool from '@/utils/tool'
 
 export default {
   name: 'TaskDetail',
@@ -126,7 +127,8 @@ export default {
       taskLevelArr: config.taskLevelArr,
       lockArr: config.lockArr,
       trailStatusArr: config.trailStatusArr, // 线索状态
-      cooperationTypeArr: config.cooperationTypeArr // 合作类型
+      cooperationTypeArr: config.cooperationTypeArr, // 合作类型
+      tool: tool.interceptTime
     }
   },
   mounted () {
