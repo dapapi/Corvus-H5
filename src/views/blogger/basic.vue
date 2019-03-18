@@ -5,7 +5,11 @@
             <span class="listleft">昵称:</span>
             <span class="listright">{{blogDetail.nickname}}</span>
         </div>
-        
+        <div class="list">
+            <span class="listleft">类型:</span>
+            <span class="listright">{{blogDetail.type.data.name}}</span>
+        </div>
+       
         <div class="list">
             <span class="listleft">沟通状态:</span>
             <span class="listright">{{artistStatusArr.find(item => item.value ==blogDetail.communication_status).name}}</span>
@@ -53,6 +57,11 @@
             <span class="listright">{{blogDetail.cooperation_demand}}</span>
         </div>
         <div class="list">
+            <span class="listleft">签约状态:</span>
+            <span class="listright">{{signState.find(item=>item.value ===
+                                                    blogDetail.sign_contract_status).name}}</span>
+        </div>
+        <div class="list">
             <span class="listleft">备注:</span>
             <span class="listright">{{blogDetail.desc}}</span>
         </div>
@@ -77,10 +86,11 @@
         <div class="list">
             <span class="listleft">更新时间:</span>
             <span class="listright">
-                <template v-if="blogDetail.last_follow_up_at">
+                {{blogDetail.updated_at}}
+                <!-- <template v-if="blogDetail.last_follow_up_at">
                     {{blogDetail.last_follow_up_at}}
                 </template>
-                <template v-else>{{ blogDetail.created_at }}</template>
+                <template v-else>{{ blogDetail.created_at }}</template> -->
             </span>
         </div>
     </div>
@@ -96,7 +106,8 @@ export default {
             yesOrNo:config.blogBoolean,
             taskLevelArr:config.taskLevelArr,
             artistPlatformList:config.platformArr,//平台列表
-            platform:''
+            platform:'',
+            signState:config.signState
         }
     },
     computed:{

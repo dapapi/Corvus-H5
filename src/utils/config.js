@@ -582,5 +582,22 @@ export default {
       value: 1
     },
   ],
+  // 签约状态
+  signState: [{
+      name: '签约中',
+      value: 1,
+      color: '#ff9800'
+    },
+    {
+      name: '已签约',
+      value: 2,
+      color: '#4caf50'
+    },
+    {
+      name: '已解约',
+      value: 3,
+      color: '#f44336'
+    }
+  ],
 }
 

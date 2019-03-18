@@ -44,6 +44,11 @@
             <span class="listright">{{artistDetail.star_location}}</span>
         </div>
         <div class="list">
+            <span class="listleft">潜在风险点:</span>
+            <span class="listright">{{artistDetail.star_risk_point}}</span>
+        </div>
+        
+        <div class="list">
             <span class="listleft">手机号:</span>
             <span class="listright">{{artistDetail.phone}}</span>
         </div>
@@ -76,9 +81,15 @@
             <span class="listright">{{artistDetail.douyin_fans_num}}</span>
         </div>
         <div class="list">
+            <span class="listleft">签约状态:</span>
+            <span class="listright">{{signState.find(item=>item.value ===
+                                                    artistDetail.sign_contract_status).name}}</span>
+        </div>
+        <div class="list">
             <span class="listleft">备注:</span>
             <span class="listright">{{artistDetail.desc}}</span>
         </div>
+        
         <div class="section" v-if="artistDetail.affixes.data">
             <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index"><span class="listleft">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</span></Cell>
         </div>
@@ -123,7 +134,8 @@ export default {
             yesOrNo:config.yesOrNo,
             attachmentTypeArr:config.attachmentTypeArr,//附件类型
             artistPlatformList:config.artistPlatformList,//平台列表
-            platform:''
+            platform:'',
+            signState:config.signState // 签约状态
         }
     },
     computed:{
