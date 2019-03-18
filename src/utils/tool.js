@@ -26,5 +26,12 @@ export default{
       if (isAndroid) {
           window.webView[name](params)
       }
+    },
+    // 处理时间，去掉秒 变为xxxx-xx-xx xx:xx
+    interceptTime (time) {
+      if (time) {
+        return time.substr(0, 16)
+      }
+      return time
     }
 }

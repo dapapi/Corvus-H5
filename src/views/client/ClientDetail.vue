@@ -41,7 +41,7 @@
     </div>
     <div class="item">
       <span class="left">录入时间：</span>
-      <span class="right">{{ clientDetail.created_at ? clientDetail.created_at : '' }}</span>
+      <span class="right">{{ clientDetail.created_at ? interceptTime(clientDetail.created_at) : '' }}</span>
     </div>
     <div class="item">
       <span class="left">最近更新人：</span>
@@ -57,6 +57,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import config from '@/utils/config'
+import tool from '@/utils/tool'
 
 export default {
   name: 'TaskDetail',
@@ -64,7 +65,8 @@ export default {
     return {
       clientLevelArr: config.clientLevelArr,
       clientScaleArr: config.clientScaleArr,
-      ratingArr: config.taskLevelArr
+      ratingArr: config.taskLevelArr,
+      interceptTime: tool.interceptTime
     }
   },
   mounted () {

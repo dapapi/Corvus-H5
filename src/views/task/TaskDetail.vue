@@ -24,11 +24,11 @@
     </div>
     <div class="item">
       <span class="left">开始时间：</span>
-      <span class="right">{{ taskDetail.start_at }}</span>
+      <span class="right">{{ interceptTime(taskDetail.start_at) }}</span>
     </div>
     <div class="item">
       <span class="left">结束时间：</span>
-      <span class="right">{{ taskDetail.end_at }}</span>
+      <span class="right">{{ interceptTime(taskDetail.end_at) }}</span>
     </div>
     <div class="item">
       <span class="left">优先级：</span>
@@ -66,12 +66,14 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import config from '@/utils/config'
+import tool from '@/utils/tool'
 
 export default {
   name: 'TaskDetail',
   data () {
     return {
-      taskLevelArr: config.priorityArr
+      taskLevelArr: config.priorityArr,
+      interceptTime: tool.interceptTime
     }
   },
   mounted () {
