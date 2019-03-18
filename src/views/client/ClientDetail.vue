@@ -69,6 +69,7 @@ export default {
   },
   mounted () {
     this.getClientInfo()
+    alert(config.token)
   },
   computed: {
     ...mapState([

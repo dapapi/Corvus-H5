@@ -182,7 +182,6 @@ export default {
     }
   },
   mounted () {
-    alert(config.token)
     const query = this.query
     if (query.resourceType) {
       this.resourceId = query.resourceType
