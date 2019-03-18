@@ -28,7 +28,7 @@
     </div>
     <div class="item">
       <span class="left">结束时间：</span>
-      <span class="right">{{ taskDetail.stop_at }}</span>
+      <span class="right">{{ taskDetail.end_at }}</span>
     </div>
     <div class="item">
       <span class="left">优先级：</span>
@@ -50,7 +50,7 @@
     </div>
     <div class="item">
       <span class="left">最近更新人：</span>
-      <span class="right">测试</span>
+      <span class="right">{{ taskDetail.last_updated_user }}</span>
     </div>
     <div class="item">
       <span class="left">更新时间：</span>
