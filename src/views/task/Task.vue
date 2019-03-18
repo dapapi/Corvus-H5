@@ -255,7 +255,7 @@ export default {
         data: {}
       }
       if (code === 'bloggers' || code === 'stars') {
-        params.data.sign_contract_status = 2
+        params.data.status = 2
       }
       this.getRelatedResources(params)
     },
