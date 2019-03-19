@@ -96,6 +96,12 @@
                 <span v-for="(item,index) in projectDetail.relate_tasks.data" :key="index">{{item.title}}</span>
             </span>
         </div>
+        <div class="list">
+            <span class="listleft">关联销售线索:</span>
+            <span class="listright" v-if="projectDetail.trail">
+                <span>{{projectDetail.trail.data.title}}</span>
+            </span>
+        </div>
         <div class="list isMargin" v-if="projectDetail.form_instance_number">
             <ApprovalProgress :formid="projectDetail.form_instance_number"></ApprovalProgress>
         </div>
