@@ -48,9 +48,10 @@
             <span class="listleft">博主级别:</span>
             <span class="listright" v-if="blogDetail.level">{{taskLevelArr.find(item => item.value == blogDetail.level).name}}</span>
         </div>
-        <div class="list" v-if='blogDetail.hatch_star_at !== "privacy"'>
+        <div class="list" >
             <span class="listleft">孵化期:</span>
-            <span class="listright">{{blogDetail.hatch_star_at + '至' + blogDetail.hatch_end_at}}</span>
+            <span class="listright" v-if='blogDetail.hatch_star_at !== "privacy"&&blogDetail.hatch_end_at!== "privacy"'>{{blogDetail.hatch_star_at + '至' + blogDetail.hatch_end_at}}</span>
+            <span class="listright" v-else>***</span>
         </div>
         <div class="list">
             <span class="listleft">商务合作要求:</span>

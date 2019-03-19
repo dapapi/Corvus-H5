@@ -45,7 +45,8 @@
         </div>
         <div class="list">
             <span class="listleft">潜在风险点:</span>
-            <span class="listright">{{artistDetail.star_risk_point}}</span>
+            <span class="listright" v-if="artistDetail.star_risk_point !== 'privacy'">{{artistDetail.star_risk_point}}</span>
+            <span class="listright" v-else>***</span>
         </div>
         
         <div class="list">
@@ -91,7 +92,7 @@
         </div>
         
         <div class="section" v-if="artistDetail.affixes.data">
-            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index"><span class="listleft">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</span></Cell>
+            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index"><a :href="affix.url" class="listleft affix">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</a></Cell>
         </div>
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>更新信息</h4>
         <div class="list">
