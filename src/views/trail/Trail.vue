@@ -277,6 +277,7 @@ export default {
     } else {
       this.pageTitle = '新增线索'
       this.rightClick = this.addNewTrail
+      this.getUserInfo()
     }
     window.rightClick = this.rightClick
     window.leftClick = this.leftClick
@@ -579,7 +580,19 @@ export default {
         this.fee = Number(this.fee).toFixed(2)
       }
       return true
-    }
+    },
+    // 获取用户信息
+    getUserInfo () {
+      fetch('get', `/users/my`).then(res => {
+        const data = res.data
+        this.principalIconArr.push({
+          id: data.id,
+          name: data.name,
+          icon_url: data.icon_url
+        })
+        this.principalId = this.principalIconArr[0].id || ''
+      })
+    },
   }
 }
 </script>
