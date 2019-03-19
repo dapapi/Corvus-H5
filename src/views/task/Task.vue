@@ -250,12 +250,16 @@ export default {
       this.code = data.code
 
       const code = data.code
+      let _code = code.substr(0, code.length - 1) + '/related'
+
       let params = {
-        url: code,
+        url: _code,
         data: {}
       }
-      if (code === 'bloggers' || code === 'stars') {
-        params.data.status = 2
+    
+      if (code === 'bloggers') { 
+        params.url = code + '/all'
+        params.data.sign_contract_status = 2
       }
       this.getRelatedResources(params)
     },
