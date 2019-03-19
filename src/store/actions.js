@@ -21,7 +21,7 @@ export default {
   },
   // 获取任务类型
   getTaskTypes ({ commit }, params) {
-    fetch('get', `/task_types?t=${new Date().getTime()}`).then(res => {
+    fetch('get', `/task_types`).then(res => {
       commit('setTaskTypes', res.data)
     })
   },
