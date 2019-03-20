@@ -81,6 +81,7 @@ export default {
       this.getClientContactInfo()
       window.rightClick = this.editClient
     } else {
+      this.getUserInfo()
       window.rightClick = this.addClient
     }
     this.leftClick = this.leftClickTemp
@@ -323,7 +324,19 @@ export default {
         return
       }
       return true
-    }
+    },
+    // 获取用户信息
+    getUserInfo () {
+      fetch('get', `/users/my`).then(res => {
+        const data = res.data
+        this.principalIconArr.push({
+          id: data.id,
+          name: data.name,
+          icon_url: data.icon_url
+        })
+        this.principalId = this.principalIconArr[0].id || ''
+      })
+    },
   }
 }
 </script>

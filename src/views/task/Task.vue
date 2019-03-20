@@ -201,6 +201,7 @@ export default {
       this.rightClick = this.editTask
     } else {
       this.rightClick = this.addNewTask
+      this.getUserInfo()
       if (this.$route.name === 'task/addSubTask') {
         this.pageTitle = '新增子任务'
       } else {
@@ -475,7 +476,19 @@ export default {
         return
       }
       return true
-    }
+    },
+    // 获取用户信息
+    getUserInfo () {
+      fetch('get', `/users/my`).then(res => {
+        const data = res.data
+        this.principalIconArr.push({
+          id: data.id,
+          name: data.name,
+          icon_url: data.icon_url
+        })
+        this.principalId = this.principalIconArr[0].id || ''
+      })
+    },
   }
 }
 </script>
