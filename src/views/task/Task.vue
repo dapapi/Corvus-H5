@@ -149,6 +149,9 @@ export default {
         this.resourceableId = taskDetail.resource.data.resourceable.data.id
         this.code = taskDetail.resource.data.resource.data.code
       }
+      if (this.$route.name === 'task/addSubTask') {
+        return
+      }
       this.title = taskDetail.title
       this.taskType = taskDetail.type.data.id
       this.taskTypeName = taskDetail.type.data.title
@@ -205,6 +208,7 @@ export default {
       this.getUserInfo()
       if (this.$route.name === 'task/addSubTask') {
         this.pageTitle = '新增子任务'
+        this.getTaskDetail()
       } else {
         this.pageTitle = '新增任务'
       }
