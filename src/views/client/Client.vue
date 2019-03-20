@@ -13,6 +13,8 @@
     <Cell title="关键决策人" class="require" @click.native="changeState('keyVisible', !keyVisible)" :value="isKeyName" isLink></Cell>
     <Selector :visible="keyVisible" :data="yesOrNoArr" @change="checkKey" />
     <Field label="联系人电话" class="require" v-model="contactPhone" />
+    <Field label="微信" v-model="wechat"></Field>
+    <Field label="其他联系方式" v-model="otherContactWays"></Field>
     <Field label="职位" class="require" v-model="position" />
     <Cell title="规模" @click.native="changeState('scaleVisible', !scaleVisible)" :value="scaleName" isLink></Cell>
     <Selector :visible="scaleVisible" :data="clientScaleArr" @change="checkScale" />
@@ -48,6 +50,8 @@ export default {
       detailAddress: '',
       contactName: '',
       contactPhone: '',
+      wechat: '',
+      otherContactWays: '',
       isKey: '', // 是否是关键人
       isKeyName: '', // 是否是关键人
       position: '',
@@ -118,6 +122,8 @@ export default {
       if (this.clientContact.length > 0) {
         this.contactName = this.clientContact[0].name
         this.contactPhone = this.clientContact[0].phone
+        this.wechat = this.clientContact[0].wechat
+        this.otherContactWays = this.clientContact[0].other_contact_ways
         this.position = this.clientContact[0].position
         this.isKeyName = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).name
         this.isKey = this.yesOrNoArr.find(n => n.value === this.clientContact[0].type).value
@@ -182,6 +188,8 @@ export default {
             phone: this.contactPhone,
             position: this.position,
             type: this.isKey,
+            other_contact_ways: this.otherContactWays,
+            wechat: this.wechat
         },
         size: this.scale,
         desc: this.desc,
@@ -221,6 +229,8 @@ export default {
             phone: this.contactPhone,
             position: this.position,
             type: this.isKey,
+            other_contact_ways: this.otherContactWays,
+            wechat: this.wechat
         },
         size: this.scale,
         desc: this.desc,
@@ -303,11 +313,7 @@ export default {
         toast('联系人不能为空！')
         return
       }
-      if (!this.contactPhone) {
-        toast('联系人电话不能为空！')
-        return
-      }
-      if (!verify.phone(this.contactPhone)) {
+      if (this.contactPhone && !verify.phone(this.contactPhone)) {
         toast('联系人电话号码格式错误！')
         return
       }

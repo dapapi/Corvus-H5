@@ -24,7 +24,9 @@
       <Cell title="优先级" class="require" @click.native="changeState('levelVisible', !levelVisible)" :value="priorityName" isLink></Cell>
       <Selector :visible="levelVisible" :data="taskLevelArr" @change="checkTaskLevel" />
       <Field label="联系人" class="require" v-model="contact.name"></Field>
-      <Field label="联系人电话" class="require" v-model="contact.phone"></Field>
+      <Field label="联系人电话" v-model="contact.phone"></Field>
+      <Field label="微信" v-model="contact.wechat"></Field>
+      <Field label="其他联系方式" v-model="contact.otherContactWays"></Field>
       <template v-if="type !== 4">
         <Cell title="线索状态" @click.native="changeState('statusVisible', !statusVisible)" :value="trailStatusName" isLink></Cell>
         <Selector :visible="statusVisible" :data="trailStatusArr" @change="checkStatus" />
@@ -154,7 +156,9 @@ export default {
       rightClick: null,
       leftClick: null , // 左侧按钮触发的事件
       trailId: this.$route.params.id,
-      isLoading: false
+      isLoading: false,
+      wechat: '', // 联系人微信
+      otherContactWays: '', // 其他联系方式
     }
   },
   computed: {
@@ -232,7 +236,9 @@ export default {
       // expectationsName: '', // 目标艺人数组
       this.contact = {
         name: trailDetail.contact.data.name,
-        phone: trailDetail.contact.data.phone
+        phone: trailDetail.contact.data.phone,
+        wechat: trailDetail.contact.wechat,
+        otherContactWays: trailDetail.contact.other_contact_ways
       },
       this.fee = trailDetail.fee
       this.desc = trailDetail.desc
@@ -312,7 +318,9 @@ export default {
         expectations: this.expectations, // 目标艺人
         contact: {
           name: this.contact.name, // 联系人
-          phone: this.contact.phone // 联系人电话
+          phone: this.contact.phone, // 联系人电话
+          wechat: this.contact.wechat,
+          other_contact_ways: this.contact.otherContactWays
         },
         fee: this.fee, // 预计订单收入
         desc: this.desc, // 备注
@@ -321,7 +329,7 @@ export default {
         principal_id: this.principalId, // 负责人
         priority: this.priority, // 优先级
         // priorityName: '', // 优先级
-        status: this.trailStatus // 线索状态
+        status: this.trailStatus, // 线索状态
       }
 
       this.isLoading = true
@@ -364,7 +372,9 @@ export default {
         principal_id: this.principalId, // 负责人
         priority: this.priority, // 优先级
         // priorityName: '', // 优先级
-        status: this.trailStatus // 线索状态
+        status: this.trailStatus, // 线索状态
+        wechat: this.wechat,
+        other_contact_ways: this.otherContactWays
       }
       this.isLoading = true
 
@@ -560,11 +570,8 @@ export default {
         toast('联系人不能为空！')
         return
       }
-      if (!this.contact.phone) {
-        toast('联系人电话不能为空！')
-        return
-      }
-       if (!verify.phone(this.contact.phone)) {
+
+      if (this.contact.phone && !verify.phone(this.contact.phone)) {
         toast('联系人电话号码格式错误！')
         return
       }

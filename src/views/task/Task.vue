@@ -85,6 +85,7 @@ export default {
   name: 'Task',
   data () {
     return {
+      interceptTime: tool.interceptTime,
       taskLevelArr: config.priorityArr,
       popupVisible: false,
       checkListVisible: false,
@@ -148,6 +149,9 @@ export default {
         this.resourceableId = taskDetail.resource.data.resourceable.data.id
         this.code = taskDetail.resource.data.resource.data.code
       }
+      if (this.$route.name === 'task/addSubTask') {
+        return
+      }
       this.title = taskDetail.title
       this.taskType = taskDetail.type.data.id
       this.taskTypeName = taskDetail.type.data.title
@@ -163,8 +167,8 @@ export default {
       })
       this.participantIds = taskDetail.participants.data.map(n => n.id)
       this.participantIconArr = taskDetail.participants.data
-      this.startTime = taskDetail.start_at
-      this.endTime = taskDetail.end_at
+      this.startTime = this.interceptTime(taskDetail.start_at)
+      this.endTime = this.interceptTime(taskDetail.end_at)
       this.desc = taskDetail.desc
       this.annexArr = taskDetail.affixes.data
     },
@@ -204,6 +208,7 @@ export default {
       this.getUserInfo()
       if (this.$route.name === 'task/addSubTask') {
         this.pageTitle = '新增子任务'
+        this.getTaskDetail()
       } else {
         this.pageTitle = '新增任务'
       }
