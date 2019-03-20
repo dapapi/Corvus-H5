@@ -85,6 +85,7 @@ export default {
   name: 'Task',
   data () {
     return {
+      interceptTime: tool.interceptTime,
       taskLevelArr: config.priorityArr,
       popupVisible: false,
       checkListVisible: false,
@@ -163,8 +164,8 @@ export default {
       })
       this.participantIds = taskDetail.participants.data.map(n => n.id)
       this.participantIconArr = taskDetail.participants.data
-      this.startTime = taskDetail.start_at
-      this.endTime = taskDetail.end_at
+      this.startTime = this.interceptTime(taskDetail.start_at)
+      this.endTime = this.interceptTime(taskDetail.end_at)
       this.desc = taskDetail.desc
       this.annexArr = taskDetail.affixes.data
     },

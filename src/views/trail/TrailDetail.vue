@@ -78,6 +78,14 @@
       <span class="right">{{ trailDetail.contact && trailDetail.contact.data.phone }}</span>
     </div>
     <div class="item">
+      <span class="left">微信：</span>
+      <span class="right">{{ trailDetail.contact && trailDetail.contact.data.wechat }}</span>
+    </div>
+    <div class="item">
+      <span class="left">其他联系方式：</span>
+      <span class="right">{{ trailDetail.contact && trailDetail.contact.data.other_contact_ways }}</span>
+    </div>
+    <div class="item">
       <span class="left">备注：</span>
       <span class="right">{{ trailDetail.desc }}</span>
     </div>
