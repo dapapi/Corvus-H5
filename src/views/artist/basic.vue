@@ -90,9 +90,8 @@
             <span class="listleft">备注:</span>
             <span class="listright">{{artistDetail.desc}}</span>
         </div>
-        
         <div class="section" v-if="artistDetail.affixes.data">
-            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index"><a :href="affix.url" class="listleft affix">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</a></Cell>
+            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index"><a :download="affix.title" :href="affix.url" class="listleft affix">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</a></Cell>
         </div>
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>更新信息</h4>
         <div class="list">
