@@ -1,6 +1,6 @@
 <template>
     <div style="display: inline-block;">
-        <label :for="`fileUploader${mulId}`">
+        <label class="needsclick" :for="`fileUploader${mulId}`">
             <slot></slot>
         </label>
         
@@ -176,5 +176,10 @@
     .progress {
         margin-top: 10px;
         width: 200px;
+    }
+    label{
+        display: inline-block;
+        width:100%;
+        height: 100%;
     }
 </style>
