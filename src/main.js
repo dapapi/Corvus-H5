@@ -24,7 +24,6 @@ import AddClient from '@/components/AddClient'
 import Regional from '@/components/Regional'
 import VueWechatTitle from 'vue-wechat-title'
 import 'scrolling-element'
-import FastClick from 'fastclick'
 
 
 Vue.config.productionTip = false
@@ -54,7 +53,6 @@ Vue.component('Regional', Regional)
 window.toast = Toast
 window.Indicator = Indicator
 window.MessageBox = MessageBox
-FastClick.attach(document.body) 
 
 new Vue({
   router,
