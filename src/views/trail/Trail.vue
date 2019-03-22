@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="!clientsVisible && !isAddClients && !industryVisible && !expectationsVisible && !recommendationsVisible">
+    <template v-if="!clientsVisible && !isAddClients && !expectationsVisible && !recommendationsVisible">
       <template v-if="type !== 4">
         <Cell title="合作类型" @click.native="changeState('cooperationVisible', !cooperationVisible)" :value="cooperationType" isLink></Cell>
         <Selector :visible="cooperationVisible" :data="cooperationTypeArr" @change="checkCooperation" />
