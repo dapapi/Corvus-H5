@@ -1,5 +1,5 @@
 <template>
-  <Popup position="bottom" v-model="show" popup-transition="popup-fade" :closeOnClickModal="true">
+  <Popup position="bottom" v-model="show" popup-transition="popup-fade">
     <!-- <div class="con"> -->
        <Cell v-for="(item, index) in data" :title="item.name" :key="index" @click.native="handleClick(item)">
           <span class="mint-cell-mask"></span>
@@ -24,9 +24,9 @@ export default {
     }
   },
   watch: {
-    show () {
+    visible () {
       this.show = this.visible
-      if(this.show) {
+      if(this.visible) {
             tool.ModalHelper.afterOpen()
         } else {
             tool.ModalHelper.beforeClose()
