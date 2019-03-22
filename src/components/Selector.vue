@@ -24,7 +24,7 @@ export default {
     }
   },
   watch: {
-    visible () {
+    show () {
       this.show = this.visible
       if(this.visible) {
             tool.ModalHelper.afterOpen()
