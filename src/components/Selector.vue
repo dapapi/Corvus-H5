@@ -26,7 +26,7 @@ export default {
   watch: {
     show () {
       this.show = this.visible
-      if(this.visible) {
+      if(this.show) {
             tool.ModalHelper.afterOpen()
         } else {
             tool.ModalHelper.beforeClose()
