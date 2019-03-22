@@ -1,5 +1,5 @@
 <template>
-  <Popup position="bottom" v-model="show" popup-transition="popup-fade">
+  <Popup position="bottom" v-model="show" popup-transition="popup-fade" @click.stop.native="wrapClick">
     <!-- <div class="con"> -->
        <Cell v-for="(item, index) in data" :title="item.name" :key="index" @click.native="handleClick(item)">
           <span class="mint-cell-mask"></span>
@@ -37,6 +37,11 @@ export default {
   methods: {
     handleClick (item) {
       this.$emit('change', item)
+    },
+    // 点击空白区域
+    wrapClick () {
+      console.log(1)
+      this.$emit('change', {})
     }
   }
 }
