@@ -51,6 +51,14 @@ export default new Router({
       }
     },
     {
+      path: '/task/question/:id',
+      name: 'task/question',
+      component: () => import('./views/task/Question.vue'),
+      meta: {
+        title: '问卷详情'
+      }
+    },
+    {
       path: '/trail/add',
       name: 'trail/add',
       component: () => import('./views/trail/Trail.vue'),
