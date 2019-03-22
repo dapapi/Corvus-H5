@@ -136,4 +136,8 @@ img{
 .mint-cell-wrapper input, .mint-cell-wrapper textarea{
   color:#666
 }
+.mint-popup, .mint-popup-bottom {
+  max-height: 75%;
+  overflow-y: scroll;
+}
 </style>
