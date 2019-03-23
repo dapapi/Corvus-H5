@@ -494,6 +494,19 @@ export default {
         this.principalId = this.principalIconArr[0].id || ''
       })
     },
+    // 整理附件名字
+    cutName (title) {
+      if (title) {
+        const typeIndex = title.lastIndexOf('.')
+        const fileType = title.substr(typeIndex + 1)
+        const fileName = title.substr(0, typeIndex)
+        if (fileName.length > 19) {
+          return fileName.substr(0, 12) + '...' + fileName.substr(fileName.length - 4 ,fileName) + '.' +fileType
+        } else {
+          return title
+        }
+      }
+    }
   }
 }
 </script>
