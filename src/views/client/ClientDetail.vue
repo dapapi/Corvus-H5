@@ -49,7 +49,7 @@
     </div>
     <div class="item">
       <span class="left">最近更新时间：</span>
-      <span class="right">{{ interceptTime(clientDetail.updated_at) }}</span>
+      <span class="right">{{ interceptTime(clientDetail.last_updated_at) }}</span>
     </div>
   </div>
 </template>
