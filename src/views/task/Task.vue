@@ -501,7 +501,7 @@ export default {
         const fileType = title.substr(typeIndex + 1)
         const fileName = title.substr(0, typeIndex)
         if (fileName.length > 19) {
-          return fileName.substr(0, 12) + '...' + fileName.substr(fileName.length - 4 ,fileName) + '.' +fileType
+          return fileName.substr(0, 10) + '...' + fileName.substr(fileName.length - 5) + '.' +fileType
         } else {
           return title
         }
