@@ -47,7 +47,7 @@
               <img :src="item.url" />
             </div>
             <div class="info">
-              <div class="title">{{ item.title }}</div>
+              <div class="title">{{ cutName(item.title) }}</div>
               <div class="size">{{ (item.size  / 1024).toFixed(1) }}k</div>
             </div>
           </div>
