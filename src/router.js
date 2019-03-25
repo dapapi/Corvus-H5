@@ -180,6 +180,14 @@ export default new Router({
       path: '/client/detail/:id',
       name: 'client/detail',
       component: () => import('./views/client/ClientDetail.vue')
+    },
+    {
+      path: '/download',
+      name: 'dowmload',
+      component: () => import('./views/download/download.vue'),
+      meta: {
+        title: '泰洋系Group'
+      }
     }
   ],
   scrollBehavior(to, from, savedPosition) {
