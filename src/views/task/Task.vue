@@ -290,11 +290,11 @@ export default {
       this.$refs.endPicker.open()
     },
     startConfirm (date) {
-      const time = moment(date).format('YYYY-MM-DD HH-SS')
+      const time = moment(date).format('YYYY-MM-DD HH-mm')
       this.startTime = time.substr(0,13) + ':' + time.substr(-2)
     },
     endConfirm (date) {
-      const time = moment(date).format('YYYY-MM-DD HH-SS')
+      const time = moment(date).format('YYYY-MM-DD HH-mm')
       this.endTime = time.substr(0,13) + ':' + time.substr(-2)
     },
     // 新建任务，子任务
