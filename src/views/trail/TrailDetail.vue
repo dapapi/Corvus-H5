@@ -136,7 +136,7 @@ export default {
       lockArr: config.lockArr,
       trailStatusArr: config.trailStatusArr, // 线索状态
       cooperationTypeArr: config.cooperationTypeArr, // 合作类型
-      tool: tool.interceptTime
+      interceptTime: tool.interceptTime
     }
   },
   mounted () {
