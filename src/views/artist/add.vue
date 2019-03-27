@@ -178,15 +178,6 @@ export default {
            el.style.height = el.scrollHeight - 4 + 'px'
 
        },
-    //    isLoading:function(){
-    //        if(this.isLoading == true){
-    //         //    alert(111)
-    //            Indicator.open();
-    //        }else{
-    //         //    alert(222)
-    //            Indicator.close();
-    //        }
-    //    }
     },
 
     created(){
@@ -290,7 +281,7 @@ export default {
                 Toast('正在提交数据,请勿重复提交')
                 return false
             }
-            this.reSubmit = !this.reSubmit
+            
             let plat =[]
             let platform= ''
             let toast,id
@@ -360,6 +351,7 @@ export default {
                 Toast('请选择平台')
                 return false
             }
+            this.reSubmit = !this.reSubmit
             // this.$store.commit('setLoading',true)
             Indicator.open()
             params.data = {
