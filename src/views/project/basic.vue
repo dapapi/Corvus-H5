@@ -223,6 +223,7 @@ export default {
         background-color:#fff;
         display: flex;
         justify-content: flex-start;
+        align-items: center;
         span{
             display: inline-block;
         }

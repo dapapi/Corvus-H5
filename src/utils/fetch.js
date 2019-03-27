@@ -12,8 +12,8 @@ axios.defaults.headers.common['Access-Control-Expose-Headers'] = 'Location'
 // axios.defaults.headers.common['Cache-Control'] = 'no-cache'
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Authorization'
 // console.log(config.token)
-let token = config.token ? config.token : tempToken
-// let token = config.token ? config.token : ''
+// let token = config.token ? config.token : tempToken
+let token = config.token ? config.token : ''
 if (token.substr(0, 7) !== 'Bearer ') {
   token = 'Bearer ' + token
 }

@@ -136,7 +136,9 @@ export default {
       expectationsName: '', // 目标艺人数组
       contact: {
         name: '', // 联系人
-        phone: '' // 联系人电话
+        phone: '', // 联系人电话
+        wechat: '', // 联系人微信
+        otherContactWays: '', // 其他联系方式
       },
       fee: '', // 预计订单收入
       desc: '', // 备注
@@ -157,8 +159,7 @@ export default {
       leftClick: null , // 左侧按钮触发的事件
       trailId: this.$route.params.id,
       isLoading: false,
-      wechat: '', // 联系人微信
-      otherContactWays: '', // 其他联系方式
+     
     }
   },
   computed: {
@@ -194,7 +195,7 @@ export default {
       this.resourceTypeDetail = trailDetail.resource
       if (this.resourceType == 4 || this.resourceType == 5) {
         if (this.resourceTypeDetail) {
-          this.getUserInfo(this.resourceTypeDetail)
+          this.getResourceUserInfo(this.resourceTypeDetail)
         }
       }
       if (trailDetail.bloggerrecommendations || trailDetail.starrecommendations) {
@@ -237,8 +238,8 @@ export default {
       this.contact = {
         name: trailDetail.contact.data.name,
         phone: trailDetail.contact.data.phone,
-        wechat: trailDetail.contact.wechat,
-        otherContactWays: trailDetail.contact.other_contact_ways
+        wechat: trailDetail.contact.data.wechat,
+        otherContactWays: trailDetail.contact.data.other_contact_ways
       },
       this.fee = trailDetail.fee
       this.desc = trailDetail.desc
@@ -363,7 +364,9 @@ export default {
         expectations: this.expectations, // 目标艺人
         contact: {
           name: this.contact.name, // 联系人
-          phone: this.contact.phone // 联系人电话
+          phone: this.contact.phone, // 联系人电话
+          wechat: this.contact.wechat,
+          other_contact_ways: this.contact.otherContactWays
         },
         fee: this.fee, // 预计订单收入
         desc: this.desc, // 备注
@@ -373,8 +376,8 @@ export default {
         priority: this.priority, // 优先级
         // priorityName: '', // 优先级
         status: this.trailStatus, // 线索状态
-        wechat: this.wechat,
-        other_contact_ways: this.otherContactWays
+        // wechat: this.wechat,
+        // other_contact_ways: this.otherContactWays
       }
       this.isLoading = true
 
@@ -519,7 +522,7 @@ export default {
       this.resourceTypeDetail = this.resourceTypeDetailArr[0].id || ''
     },
     // 获取员工信息
-    getUserInfo (id) {
+    getResourceUserInfo (id) {
       fetch('get', `/users/${id}`).then(res => {
         this.resourceTypeDetailArr.push(res.data)
       })
