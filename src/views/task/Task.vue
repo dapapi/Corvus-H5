@@ -376,18 +376,22 @@ export default {
 
       // 修改参与人
       const data = {}
+      const delPersonIds = []
+      const personIds = []
       this.oldParticipantIds.map(n => {
         if (this.participantIds.indexOf(n) === -1) {
-          data.del_person_ids.push(n)
+         delPersonIds.push(n)
         }
       })
       this.participantIds.map(n => {
         if (this.oldParticipantIds.indexOf(n) === -1) {
-          data.person_ids.push(n)
+          personIds.push(n)
         }
       })
-
-      if (JSON.stringify(data) !== "{}") {
+      
+      if (delPersonIds.length > 0 || personIds.length > 0) {
+        data.del_person_ids = delPersonIds
+        data.person_ids = personIds
         fetch('post', '/tasks/' + this.taskId + '/participant', data).then(() => {
           //
         }).catch(() => {
