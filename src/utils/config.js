@@ -6,8 +6,8 @@ const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
 export default {
   tokenString: 'CORVUS-ACCESS-TOKEN',
   // apiUrl: `http${isIOS?'s':''}://sandbox-api-crm.papitube.com`,
-  // apiUrl: `https://sandbox-api-crm.papitube.com`,
-  apiUrl: `https://test-api-crm.papitube.com`,
+  apiUrl: `https://sandbox-api-crm.papitube.com`,
+  // apiUrl: `https://test-api-crm.papitube.com`,
   imgUrl: 'https://res-crm.papitube.com/',
   getHeaders: function () {
       let headers = {

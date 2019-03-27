@@ -91,7 +91,10 @@
             <span class="listright">{{artistDetail.desc}}</span>
         </div>
         <div class="section" v-if="artistDetail.affixes.data">
-            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index"><a :download="affix.title" :href="affix.url" class="listleft affix">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</a></Cell>
+            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index">
+                <!-- <router-link :to="{path:'/preview',params:{url:affix.url,name:affix.title}}">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</router-link> -->
+                <a @click="toPreview(affix.url,affix.title)" class="listleft affix">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</a>
+            </Cell>
         </div>
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>更新信息</h4>
         <div class="list">
@@ -170,6 +173,9 @@ export default {
             }
             params.id = this.$route.params.id
             this.getArtistDetail(params)
+        },
+        toPreview:function(url,name){
+           this.$router.push({path:'/preview',query:{url:url,name:name}})
         }
     },
     filters: {
