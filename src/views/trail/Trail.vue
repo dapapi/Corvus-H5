@@ -195,7 +195,7 @@ export default {
       this.resourceTypeDetail = trailDetail.resource
       if (this.resourceType == 4 || this.resourceType == 5) {
         if (this.resourceTypeDetail) {
-          this.getUserInfo(this.resourceTypeDetail)
+          this.getResourceUserInfo(this.resourceTypeDetail)
         }
       }
       if (trailDetail.bloggerrecommendations || trailDetail.starrecommendations) {
@@ -522,7 +522,7 @@ export default {
       this.resourceTypeDetail = this.resourceTypeDetailArr[0].id || ''
     },
     // 获取员工信息
-    getUserInfo (id) {
+    getResourceUserInfo (id) {
       fetch('get', `/users/${id}`).then(res => {
         this.resourceTypeDetailArr.push(res.data)
       })
