@@ -26,18 +26,22 @@ export default {
   watch: {
     visible () {
       this.show = this.visible
-      if(this.visible) {
-            tool.ModalHelper.afterOpen()
-        } else {
-            tool.ModalHelper.beforeClose()
-        }
-
+    },
+    show () {
+      if (this.show) {
+        tool.ModalHelper.afterOpen()
+      } else {
+        tool.ModalHelper.beforeClose()
+      }
+      if (this.show !== this.visible) {
+        this.handleClick()
+      }
     }
   },
   methods: {
     handleClick (item) {
       this.$emit('change', item)
-    }
+    },
   }
 }
 </script>

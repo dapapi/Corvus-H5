@@ -6,6 +6,8 @@
 <style lang="scss">
 html{
   font-size: 48px;
+  height: 100%;
+  width: 100%;
 }
 body.modal-open {
     position: fixed;
@@ -17,8 +19,12 @@ body.modal-open {
   -moz-osx-font-smoothing: grayscale;
   color: #333;
   font-size: .28rem;
+  height: 100%;
+  width: 100%;
 }
 body {
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   background-color: #f3f4f5;
@@ -135,5 +141,9 @@ img{
 }
 .mint-cell-wrapper input, .mint-cell-wrapper textarea{
   color:#666
+}
+.mint-popup, .mint-popup-bottom {
+  max-height: 75%;
+  overflow-y: scroll;
 }
 </style>

@@ -97,7 +97,7 @@
     </div>
     <div class="item">
       <span class="left">录入时间：</span>
-      <span class="right">{{ trailDetail.created_at }}</span>
+      <span class="right">{{ interceptTime(trailDetail.created_at) }}</span>
     </div>
     <div class="item">
       <span class="left">最近更新人：</span>
@@ -105,7 +105,7 @@
     </div>
     <div class="item">
       <span class="left">更新时间：</span>
-      <span class="right">{{ trailDetail.last_updated_at }}</span>
+      <span class="right">{{ interceptTime(trailDetail.last_updated_at) }}</span>
     </div>
     <template v-if="trailDetail.type === 4">
       <div class="item">
@@ -114,7 +114,7 @@
       </div>
       <div class="item">
         <span class="left">锁价时间：</span>
-        <span class="right">{{ trailDetail.lock_at }}</span>
+        <span class="right">{{ interceptTime(trailDetail.lock_at) }}</span>
       </div>
     </template>
    
@@ -136,7 +136,7 @@ export default {
       lockArr: config.lockArr,
       trailStatusArr: config.trailStatusArr, // 线索状态
       cooperationTypeArr: config.cooperationTypeArr, // 合作类型
-      tool: tool.interceptTime
+      interceptTime: tool.interceptTime
     }
   },
   mounted () {

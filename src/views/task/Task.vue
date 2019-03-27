@@ -47,7 +47,7 @@
               <img :src="item.url" />
             </div>
             <div class="info">
-              <div class="title">{{ item.title }}</div>
+              <div class="title">{{ cutName(item.title) }}</div>
               <div class="size">{{ (item.size  / 1024).toFixed(1) }}k</div>
             </div>
           </div>
@@ -290,11 +290,11 @@ export default {
       this.$refs.endPicker.open()
     },
     startConfirm (date) {
-      const time = moment(date).format('YYYY-MM-DD HH-SS')
+      const time = moment(date).format('YYYY-MM-DD HH-mm')
       this.startTime = time.substr(0,13) + ':' + time.substr(-2)
     },
     endConfirm (date) {
-      const time = moment(date).format('YYYY-MM-DD HH-SS')
+      const time = moment(date).format('YYYY-MM-DD HH-mm')
       this.endTime = time.substr(0,13) + ':' + time.substr(-2)
     },
     // 新建任务，子任务
@@ -494,6 +494,19 @@ export default {
         this.principalId = this.principalIconArr[0].id || ''
       })
     },
+    // 整理附件名字
+    cutName (title) {
+      if (title) {
+        const typeIndex = title.lastIndexOf('.')
+        const fileType = title.substr(typeIndex + 1)
+        const fileName = title.substr(0, typeIndex)
+        if (fileName.length > 19) {
+          return fileName.substr(0, 10) + '...' + fileName.substr(fileName.length - 5) + '.' +fileType
+        } else {
+          return title
+        }
+      }
+    }
   }
 }
 </script>
