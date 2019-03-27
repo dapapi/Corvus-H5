@@ -308,6 +308,7 @@ export default {
     margin: .2rem;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     .left {
       color: #666;
       flex-shrink: 0;

@@ -38,6 +38,11 @@
       <span class="left">任务说明：</span>
       <span class="right">{{ taskDetail.desc }}</span>
     </div>
+    <div class="item">
+      <span class="left">任务类型：</span>
+      <span class="right">{{ taskDetail.type ? taskDetail.type.data.title: '' }}</span>
+    </div>
+
     <div class="line"></div>
     <div class="title"><i class="iconfont icon-biaoti"></i>更新信息</div>
     <div class="item">
@@ -114,6 +119,7 @@ export default {
     margin: .2rem;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     .left {
       color: #666;
       flex-shrink: 0;
