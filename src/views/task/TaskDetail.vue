@@ -59,7 +59,7 @@
     </div>
     <div class="item">
       <span class="left">更新时间：</span>
-      <span class="right">{{ interceptTime(taskDetail.updated_at) }}</span>
+      <span class="right">{{ interceptTime(taskDetail.last_updated_at) }}</span>
     </div>
     <div class="item">
       <span class="left">完成时间：</span>
