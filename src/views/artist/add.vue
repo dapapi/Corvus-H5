@@ -6,7 +6,9 @@
             <Cell class="require"  title="性别" is-link @click.native="changeState('popupGender',!popupGender)" :value="gender.name"></Cell>
             <Selector :visible="popupGender" :data="genderArr" @change="changeGender" />
            <!--出生日期-->
-            <Cell class="require" title="出生日期" is-link @click.native="changeBornTime" :value="bornTime"></Cell>
+            
+            <Field class="require" v-if="$route.params.id&&bornTime==='***'" label="出生日期" v-model="bornTime" :disabled="$route.params.id&&bornTime==='***'"></Field>
+            <Cell class="require" v-else title="出生日期" is-link @click.native="changeBornTime" :value="bornTime"></Cell>
             <DatetimePicker
                 ref="bornPicker"
                 type="date"
@@ -19,11 +21,15 @@
             <Cell class="require" title="艺人来源" is-link @click.native="changeState('popupArtistSource',!popupArtistSource)" :value="artistSource.name"></Cell>
             <Selector :visible="popupArtistSource" :data="artistSourceArr" @change="changeArtistSource" />
             
-            <Field class="require" label="邮箱" v-model="email"></Field>
-            <Field class="require" label="手机号" v-model="phone"></Field>
-            <Field label="微信" v-model="wechat"></Field>
+            <Field class="require" label="邮箱" v-model="email" :disabled="$route.params.id&&email==='***'"></Field>
+            <Field class="require" label="手机号" v-model="phone" :disabled="$route.params.id&&phone==='***'"></Field>
+            <Field label="微信" v-model="wechat" :disabled="$route.params.id&&wechat==='***'"></Field>
             <Field label="星探姓名" v-model="scout"></Field>
             <Field label="地区" v-model="region"></Field>
+
+            <!--潜在风险点-->
+            <Field v-if="$route.params.id" type="textarea" ref="starRisk" label="潜在风险点" v-model="star_risk_point" :disabled="$route.params.id&&star_risk_point==='***'" rows="1"></Field>
+
             <!--平台-->
             <Cell class="require" title="平台" is-link @click.native="changeState('popupPlatform',!popupPlatform)" :value="platformName"></Cell>
             
@@ -92,6 +98,7 @@ export default {
             wechat:'',//微信
             scout:'',//星探
             region:'',//地区
+            star_risk_point:'',//潜在风险点
 
             artistPlatformList:config.artistPlatformList,//平台列表
             popupPlatform:false,
@@ -136,12 +143,12 @@ export default {
         artistDetail(){
             this.username = this.artistDetail.name
             this.gender = this.genderArr.find(item =>item.value == this.artistDetail.gender)
-            this.bornTime = this.artistDetail.birthday
+            this.bornTime = this.$route.params.id&&this.artistDetail.email==='privacy'?'***':this.artistDetail.birthday
             this.defaultDate = this.artistDetail.birthday
             this.artistSource = this.artistSourceArr.find(item => item.value == this.artistDetail.source)
-            this.email = this.artistDetail.email
-            this.phone = this.artistDetail.phone
-            this.wechat = this.artistDetail.wechat
+            this.email = this.$route.params.id&&this.artistDetail.email==='privacy'?'***':this.artistDetail.email
+            this.phone = this.$route.params.id&&this.artistDetail.phone==='privacy'?'***':this.artistDetail.phone
+            this.wechat = this.$route.params.id&&this.artistDetail.wechat==='privacy'?'***':this.artistDetail.wechat
             this.region =this.artistDetail.star_location
             this.artistStatus = this.artistStatusArr.find(item => item.value == this.artistDetail.communication_status)
             this.intention = this.yesOrNo.find(item => item.value == this.artistDetail.intention)
@@ -149,6 +156,7 @@ export default {
             this.sign = this.yesOrNo.find(item => item.value == this.artistDetail.sign_contract_other)
             this.company = this.artistDetail.sign_contract_other_name
             this.remark = this.artistDetail.desc
+            this.star_risk_point = this.$route.params.id&&this.artistDetail.star_risk_point==='privacy'?'***':this.artistDetail.star_risk_point
            
             this.weiboUrl =this.artistDetail.weibo_url
             this.weiboFansNum=this.artistDetail.weibo_fans_num
@@ -178,6 +186,10 @@ export default {
            el.style.height = el.scrollHeight - 4 + 'px'
 
        },
+       star_risk_point:function(){
+           const el = this.$refs.textarea.$el.querySelector('starRisk')
+           el.style.height = el.scrollHeight - 4 + 'px'
+       }
     },
 
     created(){
@@ -438,11 +450,11 @@ export default {
     height: 0.8rem;
     background-size:cover;
 }
-.text-left{
-    input{
-        text-align:left!important;
-    }
-}
+// .text-left{
+//     input{
+//         text-align:left!important;
+//     }
+// }
 .uploadIcon{
     display: inline-block;
     width: .56rem;

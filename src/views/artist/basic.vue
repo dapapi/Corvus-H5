@@ -1,5 +1,5 @@
 <template>
-    <div v-if="artistDetail.name">
+    <div class="details" v-if="artistDetail.name">
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>基本资料</h4>
         <div class="list">
             <span class="listleft">姓名:</span>
@@ -10,12 +10,14 @@
             <span class="listright">{{genderArr.find(item =>item.value==artistDetail.gender).name}}</span>
         </div>
         <div class="list">
-            <span class="listleft">出生日期:</span>
-            <span class="listright">{{artistDetail.birthday}}</span>
+            <span class="listleft" >出生日期:</span>
+            <span class="listright" v-if="artistDetail.birthday !== 'privacy'">{{artistDetail.birthday}}</span>
+            <span class="listright dot" v-else>***</span>
         </div>
         <div class="list">
             <span class="listleft">年龄:</span>
-            <span class="listright">{{artistDetail.birthday|jsGetAge}}</span>
+            <span class="listright" v-if="artistDetail.birthday !== 'privacy'">{{artistDetail.birthday|jsGetAge}}</span>
+            <span class="listright dot" v-else>***</span>
         </div>
         <div class="list">
             <span class="listleft">艺人来源:</span>
@@ -46,20 +48,23 @@
         <div class="list">
             <span class="listleft">潜在风险点:</span>
             <span class="listright" v-if="artistDetail.star_risk_point !== 'privacy'">{{artistDetail.star_risk_point}}</span>
-            <span class="listright" v-else>***</span>
+            <span class="listright dot" v-else>***</span>
         </div>
         
         <div class="list">
             <span class="listleft">手机号:</span>
-            <span class="listright">{{artistDetail.phone}}</span>
+            <span class="listright"  v-if="artistDetail.phone !== 'privacy'">{{artistDetail.phone}}</span>
+            <span class="listright dot" v-else>***</span>
         </div>
         <div class="list">
             <span class="listleft">微信:</span>
-            <span class="listright">{{artistDetail.wechat}}</span>
+            <span class="listright"  v-if="artistDetail.wechat !== 'privacy'">{{artistDetail.wechat}}</span>
+            <span class="listright dot" v-else>***</span>
         </div>
         <div class="list">
             <span class="listleft">邮箱:</span>
-            <span class="listright">{{artistDetail.email}}</span>
+            <span class="listright" v-if="artistDetail.email !== 'privacy'">{{artistDetail.email}}</span>
+            <span class="listright dot" v-else>***</span>
         </div>
         <div class="list">
             <span class="listleft">社交平台:</span>
@@ -117,8 +122,8 @@
         <div class="list">
             <span class="listleft">更新时间:</span>
             <span class="listright">
-                <template v-if="artistDetail.last_follow_up_at">
-                    {{artistDetail.last_follow_up_at}}
+                <template v-if="artistDetail.last_updated_at">
+                    {{artistDetail.last_updated_at}}
                 </template>
                 <template v-else>{{ artistDetail.created_at }}</template>
             </span>
@@ -233,25 +238,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .list{
-        font-size:0.28rem;
-        padding:0 0.4rem 0.16rem 0.4rem;
+    .details{
         background-color:#fff;
+        padding-bottom:0.28rem;
+        font-size:0.32rem;
+    }
+    .list{
+        margin:0 0.4rem 0.16rem 0.4rem;
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        span{
-            display: inline-block;
-        }
     }
     .listleft{
         color:#666;
         flex-shrink:0;
     }
     .listright{
-        margin-left:0.12rem;
         color:#151515;
         flex-shrink:1;
+        padding-left:0.1rem;
     }
     .bg-white{
         background-color:#fff
@@ -273,6 +278,10 @@ export default {
     }
     .text-left{
         text-align: left
+    }
+    .dot{
+        position: relative;
+        top:0.08rem
     }
 </style>
 

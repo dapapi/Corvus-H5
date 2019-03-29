@@ -51,7 +51,7 @@
         <div class="list" >
             <span class="listleft">孵化期:</span>
             <span class="listright" v-if='blogDetail.hatch_star_at !== "privacy"&&blogDetail.hatch_end_at!== "privacy"'>{{blogDetail.hatch_star_at + '至' + blogDetail.hatch_end_at}}</span>
-            <span class="listright" v-else>***</span>
+            <span class="listright dot" v-else>***</span>
         </div>
         <div class="list">
             <span class="listleft">商务合作要求:</span>
@@ -165,7 +165,7 @@ export default {
         flex-shrink:0;
     }
     .listright{
-        margin-left:0.12rem;
+        margin-left:0.1rem;
         color:#151515;
         flex-shrink:1;
     }
@@ -187,8 +187,12 @@ export default {
             margin-left:-2px;
         }
     }
-    .text-left{
-        text-align: left
+    // .text-left{
+    //     text-align: left
+    // }
+    .dot{
+        position: relative;
+        top:0.08rem
     }
 </style>
 

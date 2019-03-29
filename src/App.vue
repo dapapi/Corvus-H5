@@ -14,7 +14,7 @@ body.modal-open {
     width: 100%;
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family:'Microsoft Yahei',sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333;
@@ -140,7 +140,8 @@ img{
   display: none
 }
 .mint-cell-wrapper input, .mint-cell-wrapper textarea{
-  color:#666
+  color:#666;
+  text-align: right;
 }
 .mint-popup, .mint-popup-bottom {
   max-height: 75%;

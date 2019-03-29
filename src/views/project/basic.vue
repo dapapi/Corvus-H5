@@ -233,7 +233,7 @@ export default {
         flex-shrink:0;
     }
     .listright{
-        margin-left:0.12rem;
+        margin-left:0.1rem;
         color:#151515;
         flex-shrink:1;
     }
@@ -255,9 +255,9 @@ export default {
             margin-left:-2px;
         }
     }
-    .text-left{
-        text-align: left
-    }
+    // .text-left{
+    //     text-align: left
+    // }
     .isMargin{
         margin-top:0.2rem
     }

@@ -337,11 +337,11 @@ export default {
   padding: .2rem;
   background-color: #fff;
 }
-.text-left{
-    input{
-        text-align:left!important;
-    }
-}
+// .text-left{
+//     input{
+//         text-align:left!important;
+//     }
+// }
 .avatar{
     display: inline-block;
     width: 0.8rem;
