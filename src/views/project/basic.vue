@@ -22,6 +22,10 @@
             <span class="listleft">项目来源:</span>
             <span class="listright" v-if="projectDetail.trail">{{trailOrigin.find(item => item.value == projectDetail.trail.data.resource_type).name}}</span>
         </div>
+        <div class="list">
+            <span class="listleft">项目类型:</span>
+            <span class="listright" v-if="projectDetail.type">{{projectType.find(item => item.value == projectDetail.type).name}}</span>
+        </div>
         <div class="list" v-if="projectDetail.type != 5">
             <span class="listleft">目标艺人:</span>
             <span class="listright" v-if="projectDetail.trail && projectDetail.trail.data.expectations">
@@ -96,12 +100,12 @@
                 <span v-for="(item,index) in projectDetail.relate_tasks.data" :key="index">{{item.title}}</span>
             </span>
         </div>
-        <div class="list">
+        <!-- <div class="list">
             <span class="listleft">关联销售线索:</span>
             <span class="listright" v-if="projectDetail.trail">
                 <span>{{projectDetail.trail.data.title}}</span>
             </span>
-        </div>
+        </div> -->
         <div class="list isMargin" v-if="projectDetail.form_instance_number">
             <ApprovalProgress :formid="projectDetail.form_instance_number"></ApprovalProgress>
         </div>
@@ -118,6 +122,28 @@ export default {
             trailOrigin:config.trailOrigin,//项目来源
             levelArr: config.levelArr,//优先级
             visibleRangeArr: config.visibleRangeArr,//可见范围
+            projectType:[
+                {
+                    value:1,
+                    name:'影视项目'
+                },
+                {
+                    value:2,
+                    name:'综艺项目'
+                },
+                {
+                    value:3,
+                    name:'商务项目'
+                },
+                {
+                    value:4,
+                    name:'商务项目'
+                },
+                {
+                    value:5,
+                    name:'基础项目'
+                }
+            ]
         }
     },
     computed:{
