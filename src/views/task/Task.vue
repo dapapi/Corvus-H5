@@ -103,6 +103,7 @@ export default {
       principalId: '', // 负责人
       principalIconArr: [], // 负责人头像
       participantIds: [], // 参与人
+      oldParticipantIds: [], // 参与人副本
       participantIconArr: [], // 参与人头像
       priority: '', // 任务优先级
       priorityName: '',
@@ -166,6 +167,7 @@ export default {
         icon_url: taskDetail.principal.data.icon_url
       })
       this.participantIds = taskDetail.participants.data.map(n => n.id)
+      this.oldParticipantIds = taskDetail.participants.data.map(n => n.id)
       this.participantIconArr = taskDetail.participants.data
       this.startTime = this.interceptTime(taskDetail.start_at)
       this.endTime = this.interceptTime(taskDetail.end_at)
@@ -311,7 +313,7 @@ export default {
         type: this.taskType,
         title: this.title,
         principal_id: this.principalId,
-        participant_ids: this.participantIds,
+        // participant_ids: this.participantIds,
         priority: this.priority,
         start_at: this.startTime,
         end_at: this.endTime,
@@ -359,7 +361,7 @@ export default {
         type: this.taskType,
         title: this.title,
         principal_id: this.principalId,
-        participant_ids: this.participantIds,
+        // participant_ids: this.participantIds,
         priority: this.priority,
         start_at: this.startTime,
         end_at: this.endTime,
@@ -370,6 +372,31 @@ export default {
         params.resource_type = this.resourceId
         params.resourceable_id = this.resourceableId
         params.code = this.code
+      }
+
+      // 修改参与人
+      const data = {}
+      const delPersonIds = []
+      const personIds = []
+      this.oldParticipantIds.map(n => {
+        if (this.participantIds.indexOf(n) === -1) {
+         delPersonIds.push(n)
+        }
+      })
+      this.participantIds.map(n => {
+        if (this.oldParticipantIds.indexOf(n) === -1) {
+          personIds.push(n)
+        }
+      })
+      
+      if (delPersonIds.length > 0 || personIds.length > 0) {
+        data.del_person_ids = delPersonIds
+        data.person_ids = personIds
+        fetch('post', '/tasks/' + this.taskId + '/participant', data).then(() => {
+          //
+        }).catch(() => {
+          //
+        })
       }
 
       fetch('put', '/tasks/' + this.taskId, params).then(res => {

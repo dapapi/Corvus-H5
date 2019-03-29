@@ -20,7 +20,7 @@
     <div class="item">
       <span class="left">目标艺人：</span>
       <span class="right">
-        {{ trailDetail.bloggerexceptions && trailDetail.bloggerexceptions.data.map(n => n.nickname).join('、') }}
+        {{ trailDetail.bloggerexpectations && trailDetail.bloggerexpectations.data.map(n => n.nickname).join('、') }}
         {{ trailDetail.starexpectations && trailDetail.starexpectations.data.map(n => n.name).join('、') }}
       </span>
     </div>
