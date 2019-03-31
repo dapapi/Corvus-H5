@@ -28,7 +28,7 @@
             <Field label="地区" v-model="region"></Field>
 
             <!--潜在风险点-->
-            <Field v-if="$route.params.id" type="textarea" ref="starRisk" label="潜在风险点" v-model="star_risk_point" :disabled="$route.params.id&&star_risk_point==='***'" rows="1"></Field>
+            <Field v-if="$route.params.id" label="潜在风险点" v-model="star_risk_point" :disabled="$route.params.id&&star_risk_point==='***'" rows="1"></Field>
 
             <!--平台-->
             <Cell class="require" title="平台" is-link @click.native="changeState('popupPlatform',!popupPlatform)" :value="platformName"></Cell>
@@ -185,10 +185,6 @@ export default {
            const el = this.$refs.textarea.$el.querySelector('textarea')
            el.style.height = el.scrollHeight - 4 + 'px'
 
-       },
-       star_risk_point:function(){
-           const el = this.$refs.textarea.$el.querySelector('starRisk')
-           el.style.height = el.scrollHeight - 4 + 'px'
        }
     },
 
