@@ -14,8 +14,8 @@
             <span class="listleft">参与人:</span>
             <span class="listright">{{participantsName}}</span>
         </div>
-        <div class="list">
-            <span class="listleft" v-if="projectDetail.type == 5">可见范围:</span>
+        <div class="list" v-if="projectDetail.type == 5">
+            <span class="listleft">可见范围:</span>
             <span class="listright" v-if='projectDetail.privacy'>{{visibleRangeArr.find(item => item.value == projectDetail.privacy).name}}</span>
         </div>
         <div class="list" v-if="projectDetail.type != 5">
@@ -51,11 +51,11 @@
             <span class="listleft">截止时间:</span>
             <span class="listright" v-if='projectDetail.end_at'>{{projectDetail.end_at.split(' ')[0]}}</span>
         </div>
-        <div class="list" v-if="projectDetail.type != 5">
+        <div class="list" v-if="projectDetail.type == 3||projectDetail.type == 4">
             <span class="listleft">合作类型:</span>
             <span class="listright" v-if='projectDetail.trail.data.cooperation_type'>{{cooperationTypeArr.find(item => item.value ==projectDetail.trail.data.cooperation_type).name}}</span>
         </div>
-        <div class="list" v-if="projectDetail.type != 5">
+        <div class="list" v-if="projectDetail.type == 3||projectDetail.type == 4">
             <span class="listleft">状态:</span>
             <span class="listright" v-if='projectDetail.trail.data.status'>{{trailStatusArr.find(item =>item.value ==projectDetail.trail.data.status).name}}</span>
         </div>
