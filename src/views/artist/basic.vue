@@ -98,7 +98,7 @@
         <div class="section" v-if="artistDetail.affixes.data">
             <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index">
                 <!-- <router-link :to="{path:'/preview',params:{url:affix.url,name:affix.title}}">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</router-link> -->
-                <a @click="review(affix.url)" class="listleft affix">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</a>
+                <a @click="preview(affix.url)" class="listleft affix">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</a>
             </Cell>
         </div>
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>更新信息</h4>
