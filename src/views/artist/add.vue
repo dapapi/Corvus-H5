@@ -386,6 +386,7 @@ export default {
                 douyin_fans_num: this.douyinFansNum,
                 qita_url: this.qitaUrl,
                 qita_fans_num: this.qitaFansNum,
+                star_risk_point:this.star_risk_point,//潜在风险点
                 // affix: this.affixes,//附件
                 desc: this.remark,//  备注
                 avatar: this.uploadUrl

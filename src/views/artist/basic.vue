@@ -133,6 +133,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import config from '@/utils/config'
+
 export default {
     data(){
         return {
@@ -165,8 +166,10 @@ export default {
     },
     
     created(){
+        config.back()
         this.getArtist()
     },
+    
     methods:{
         ...mapActions([
             'getArtistDetail'
