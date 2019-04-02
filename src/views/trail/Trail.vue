@@ -121,6 +121,7 @@ export default {
       trailVisible: false,
       lockVisible: false,
       cooperationType: '', // 合作类型
+      cooperationTypeValue: '', // 合作类型
       title: '', // 线索名称
       brand: '', // 品牌名称
       client: {}, // 公司
@@ -184,6 +185,7 @@ export default {
       const trailDetail = this.trailDetail
       if (trailDetail.cooperation_type) {
         this.cooperationType = this.cooperationTypeArr.find(n => n.value === trailDetail.cooperation_type).name
+        this.cooperationTypeValue = trailDetail.cooperation_type
       }
       this.title = trailDetail.title
       this.brand = trailDetail.brand
@@ -310,6 +312,7 @@ export default {
       }
 
       const params = {
+        cooperation_type: this.cooperationTypeValue * 1, // 合作类型
         title: this.title, // 线索名称
         brand: this.brand, // 品牌名称
         client: this.client, // 公司id
@@ -355,6 +358,7 @@ export default {
       }
 
       const params = {
+        cooperation_type: this.cooperationTypeValue * 1, // 合作类型
         title: this.title, // 线索名称
         brand: this.brand, // 品牌名称
         client: this.client, // 公司id
@@ -469,6 +473,7 @@ export default {
     checkCooperation (data) {
       this.cooperationVisible = !this.cooperationVisible
       this.cooperationType = data.name
+      this.cooperationTypeValue = data.value + ''
     },
     // 线索状态
     checkStatus (data) {
