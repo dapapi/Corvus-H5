@@ -213,12 +213,16 @@ export default {
         //沟通状态
         changeArtistStatus:function(data){
             this.popupArtistStatus = !this.popupArtistStatus
-            this.artistStatus = data
+            if(data){
+                this.artistStatus = data
+            }
         },
         //签约意向
         changeIntention:function(data){
             this.popupIntention = !this.popupIntention
-            this.intention = data
+            if(data){
+                this.intention = data
+            }
             if(this.intention.value == 1){
                 this.intentionTxt = ''
             }
@@ -226,7 +230,9 @@ export default {
         //签约公司
         changeSign:function(data){
             this.popupSign = !this.popupSign
-            this.sign = data
+            if(data){
+                this.sign = data
+            }
             if(this.sign.value == 1){
                 this.company = ''
             }
@@ -269,7 +275,9 @@ export default {
         //博主类型
         changeBlogType:function(data){
            this.popupBlogType = !this.popupBlogType
-           this.blogTypeSelect = data
+           if(data){
+               this.blogTypeSelect = data
+           }
         },
         checkResource:function(){
            this.popupPlatform = !this.popupPlatform           

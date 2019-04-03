@@ -8,8 +8,10 @@
            <!--出生日期-->
             
             <Field class="require" v-if="$route.params.id&&bornTime==='***'" label="出生日期" v-model="bornTime" :disabled="$route.params.id&&bornTime==='***'"></Field>
+            
             <Cell class="require" v-else title="出生日期" is-link @click.native="changeBornTime" :value="bornTime"></Cell>
-            <DatetimePicker
+            <DatetimePicker 
+                v-if="$route.params.id&&bornTime!=='***'"
                 ref="bornPicker"
                 type="date"
                 v-model="defaultDate"
@@ -63,9 +65,9 @@
                 </template>
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark" rows="1"></Field>
-            <!-- <div style='text-align:center'>
+            <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addArtist()">提交</button>
-            </div> -->
+            </div>
         </div>
         <!--选择平台-->
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" :originTitle="'新增艺人'" :newTitle="'艺人平台'" :rightClick="addArtist" :leftClick ="leftClick" @change="seletedData"/>
@@ -227,7 +229,9 @@ export default {
         // 性别
         changeGender:function(data){
            this.popupGender = !this.popupGender
-           this.gender = data
+           if(data){
+               this.gender = data
+           }
         },
         // 出生日期
         changeBornTime:function (){
@@ -243,18 +247,24 @@ export default {
         changeArtistSource:function(data){
             
             this.popupArtistSource = !this.popupArtistSource
-            this.artistSource = data
+            if(data){
+                this.artistSource = data
+            }
         },
         // 沟通状态
         changeArtistStatus:function(data){
             this.popupArtistStatus = !this.popupArtistStatus
-            this.artistStatus = data
+            if(data){
+                this.artistStatus = data
+            }
 
         },
         // 签约意向
         changeIntention:function(data){
             this.popupIntention = !this.popupIntention
-            this.intention = data
+            if(data){
+                this.intention = data
+            }
             if(this.intention.value == 1){
                 this.intentionTxt = ''
             }
@@ -262,7 +272,9 @@ export default {
         // 签约公司
         changeSign:function(data){
             this.popupSign = !this.popupSign
-            this.sign = data
+            if(data){
+                this.sign = data
+            }
             if(this.sign.value == 1){
                 this.company = ''
             }
@@ -402,7 +414,8 @@ export default {
                 delete params.data.wechat
                
             }
-            if(id&&this.birthday==='***'){
+            if(id&&this.bornTime==='***'){
+                
                 delete params.data.birthday
                
             }
