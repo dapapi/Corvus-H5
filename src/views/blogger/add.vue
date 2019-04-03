@@ -12,20 +12,22 @@
             <Field class="text-left" label="抖音粉丝数" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item.value ==2)" v-model="douyinFansNum"></Field>
             <Field class="text-left" label="小红书链接" placeholder="小红书链接" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsUrl"></Field>
             <Field class="text-left" label="小红书粉丝数" placeholder="小红书粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsFansNum"></Field>
-            <!--孵化期v-if="this.$route.params.id"-->
-            <div class="angry" style="height:200px">
-                <span>孵化期</span>
-                <span v-if='blogDetail.hatch_star_at !== "privacy"&&blogDetail.hatch_end_at!== "privacy"'>
-                   <span @click="changeStartTime">{{hatch_star_at||`开始时间`}}</span>
-                   <span @click="changeEndTime">{{hatch_end_at||`结束时间`}}</span> 
-                </span>
-                <span v-else>***</span>
+            <!--孵化期-->
+            <div class="angry mint-cell" v-if="this.$route.params.id">
+                <div class="mint-cell-wrapper">
+                    <span class="veryAngry">孵化期</span>
+                    <span v-if='blogDetail.hatch_star_at !== "privacy"&&blogDetail.hatch_end_at!== "privacy"'>
+                    <span class="isAngry" @click="changeStartTime">{{hatch_star_at||`请选择开始时间`}}</span>至
+                    <span class="isAngry" @click="changeEndTime">{{hatch_end_at||`请选择结束时间`}}</span> 
+                    </span>
+                    <span v-else>***</span>
+                </div>
             </div>
             <!-- <Cell title="孵化期" is-link class="angry" > 
                 
             </Cell> -->
             <DatetimePicker
-                ref="endPicker"
+                ref="startPicker"
                 type="date"
                 v-model="defaultDate"
                 :startDate="startDate"
@@ -33,7 +35,7 @@
                 @visible-change="handleValueChange"
             />
             <DatetimePicker
-                ref="startPicker"
+                ref="endPicker"
                 type="date"
                 v-model="defaultDate"
                 :startDate="startDate"
@@ -66,9 +68,9 @@
             
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark"></Field>
-            <!-- <div style='text-align:center'>
+            <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
-            </div> -->
+            </div>
         </div>
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
     </div>
@@ -148,7 +150,10 @@ export default {
             this.xhsUrl=this.blogDetail.xiaohongshu_url
             this.xhsFansNum=this.blogDetail.xiaohongshu_fans_num
             this.uploadUrl = this.blogDetail.avatar
-            
+
+            this.hatch_star_at = this.$route.params.id&&this.blogDetail.hatch_star_at==='privacy'?'***':this.blogDetail.hatch_star_at
+            this.hatch_end_at = this.$route.params.id&&this.blogDetail.hatch_end_at==='privacy'?'***':this.blogDetail.hatch_end_at
+
             let rPlatform = this.blogDetail.platform.split(',')
             let aPlatformName =[]
             for (let i = 0; i < this.artistPlatformList.length; i++) {               
@@ -242,15 +247,15 @@ export default {
         },
         // 孵化期开始时间
         changeStartTime:function (){
-            if (!this.bornTime) {
-               this.bornTime = moment(this.defaultDate).format('YYYY-MM-DD')
+            if (!this.hatch_star_at) {
+               this.hatch_star_at = moment(this.defaultDate).format('YYYY-MM-DD')
             }
            this.$refs.startPicker.open()            
         },
         // 孵化期结束时间
         changeEndTime:function (){
-            if (!this.bornTime) {
-               this.bornTime = moment(this.defaultDate).format('YYYY-MM-DD')
+            if (!this.hatch_end_at) {
+               this.hatch_end_at = moment(this.defaultDate).format('YYYY-MM-DD')
             }
            this.$refs.endPicker.open()            
         },
@@ -258,6 +263,7 @@ export default {
             this.hatch_star_at = moment(date).format('YYYY-MM-DD')
         },
         endConfirm (date) {
+            alert(111)
             this.hatch_end_at = moment(date).format('YYYY-MM-DD')
         },
         //博主类型
@@ -347,7 +353,13 @@ export default {
                 star_weibo_infos: {url: this.weiboUrl,avatar: this.weiboFansNum},
                 star_xiaohongshu_infos: {url: this.xhsUrl,avatar: this.xhsFansNum},
                 desc: this.remark,//  备注
-                avatar: this.uploadUrl
+                avatar: this.uploadUrl,
+                hatch_star_at:this.hatch_star_at,
+                hatch_end_at:this.hatch_end_at
+            }
+            if(id&&this.hatch_star_at==='***'&&this.hatch_end_at==='***'){
+                delete params.data.hatch_star_at
+                delete params.data.hatch_end_at
             }
             id?this.putBlogger(params):this.postBlogger(params)
         },
@@ -424,6 +436,16 @@ export default {
 .angry input{
     height: 100%;
     text-align: left !important;
+    display: flex
+}
+.angry .isAngry{
+    display: inline-block;
+    margin:0 10px;
+    color:#666 ;
+    
+}
+.veryAngry{
+    flex: 1
 }
 </style>
 
