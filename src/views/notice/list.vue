@@ -4,24 +4,24 @@
             <li @click="changeActive(item.value)" :class="isActive == item.value?'active':''" v-for="(item,index) in navList" :key="index">{{item.name}}</li>
             <div class="active-line" :style="{left:`${posLeft}%`,width:`${activeLineWidth}%`}"></div>
         </ul>
-        <ul class="nav-ul" v-infinite-scroll="loadMore"
-  infinite-scroll-disabled="loading"
-  infinite-scroll-distance="10">
-        <li v-for="(item,index) in noticeList" :key="index" v-show="item.readflag ==isActive " @click="changeState(item.id)">
-            <!-- <router-link :to="`/notice/detail/${item.id}`"> -->
-                <div class="nav-title">
-                    <i class="iconfont icon-biaoti"></i>
-                    <span class="title">{{item.title}}</span>
-                </div>
-                <div class="clearfix details">
-                    <img class="float-left picImg" v-if="item.creator" :src="item.creator.data.icon_url" alt="">
-                    <span class="float-left name" v-if="item.creator">{{item.creator.data.name}}</span>
-                    <span class="float-left type">{{noticeType.find(notice => notice.id == item.classify).name}}</span>
-                    <span class="float-right time">{{item.created_at}}</span>
-                </div>
-            <!-- </router-link> -->
-        </li>
-        </ul>
+        <div class="scroll" ref="isScroll">
+            <ul class="nav-ul">
+                <li v-for="(item,index) in noticeList" :key="index" @click="changeState(item.id)">
+                    <!-- <router-link :to="`/notice/detail/${item.id}`"> -->
+                        <div class="nav-title">
+                            <i class="iconfont icon-biaoti"></i>
+                            <span class="title">{{item.title}}</span>
+                        </div>
+                        <div class="clearfix details">
+                            <img class="float-left picImg" v-if="item.creator" :src="item.creator.data.icon_url" alt="">
+                            <span class="float-left name" v-if="item.creator">{{item.creator.data.name}}</span>
+                            <span class="float-left type">{{noticeType.find(notice => notice.id == item.classify).name}}</span>
+                            <span class="float-right time">{{item.created_at}}</span>
+                        </div>
+                    <!-- </router-link> -->
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -36,9 +36,7 @@ export default {
     data(){
         return {
             // classifyArr:config.classifyArr,
-            loading:false,
             page:1,
-            pageNum:10,
             noticeList:[],
             navList:[
                 {
@@ -54,6 +52,8 @@ export default {
             isActive:0,
             posLeft:0,//选中状态的位置
             activeLineWidth:0,//选中状态的宽度
+            maxPage:0,
+            isLoadingMore:false
         }
     },
     computed:{
@@ -73,6 +73,17 @@ export default {
         this.isActive = this.navList[0].value
         this.posLeft = (100/this.navList.length/4)
         this.activeLineWidth =(100/this.navList.length/2)
+        this.$refs.isScroll.addEventListener('scroll',()=>{
+           
+            let sHeight = this.$refs.isScroll.scrollHeight, //元素真实高度
+                cHeight = this.$refs.isScroll.clientHeight, //可视区高度
+                sTop = this.$refs.isScroll.scrollTop //滚动高度
+            let loadHeight = sHeight - cHeight -sTop;
+            if(loadHeight<=20&&this.maxPage>this.page&&this.isLoadingMore){
+                this.page ++ //增加页数
+                this.getNoticeList(this.isActive)
+            }
+        })
         
     },
     
@@ -83,36 +94,38 @@ export default {
         leftClick:function(){
             config.deviceWay('back',2)
         },
-        loadMore:function(){
-         this.loading = true
-         this.page ++
-         this.getNoticeList()
-         
-       },
        changeActive:function(value){
            this.isActive = value
            this.posLeft = (100/this.navList.length/4)+(100/this.navList.length*(value))
            this.page = 1
-           this.getNoticeList(value)
+           this.getNoticeList(this.isActive)
        },
        //readflag 0 未读 1 已读
        getNoticeList(value){
+
            Indicator.open();
            let data ={
                readflag:value,
                page:this.page,
-               pageNum:this.pageNum
            }
-           fetch('get', `/announcements?include=creator`,data).then(res => {
-               this.noticeList = this.noticeList.concat(res.data)
-               Indicator.close();
-           })
+           this.isLoadingMore = false
+            if(this.page==1){
+                this.noticeList = []
+            }
+            fetch('get', `/announcements?include=creator`,data).then(res => {
+                this.noticeList = this.noticeList.concat(res.data)
+                this.page = res.meta.pagination.current_page
+                this.maxPage = res.meta.pagination.total_pages
+                this.isLoadingMore = true //阻止多次加载
+                Indicator.close();
+            })
        },
        changeState(id){
             let data = {
                 readflag:1
             }
             if(this.isActive == 0){
+                this.getNoticeList(0)
                 fetch('put', `/announcements/${id}/readflag`,data).then(res => {
                     this.$router.push({
                         path:`/notice/detail/${id}`
@@ -151,6 +164,10 @@ export default {
             bottom: 0px;
             
         }
+    }
+    .scroll{
+        height: calc(100vh - 60px);
+        overflow-y:scroll
     }
     .nav-ul{
        
