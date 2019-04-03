@@ -12,7 +12,36 @@
             <Field class="text-left" label="抖音粉丝数" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item.value ==2)" v-model="douyinFansNum"></Field>
             <Field class="text-left" label="小红书链接" placeholder="小红书链接" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsUrl"></Field>
             <Field class="text-left" label="小红书粉丝数" placeholder="小红书粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsFansNum"></Field>
-            
+            <!--孵化期-->
+            <div class="angry mint-cell" v-if="this.$route.params.id">
+                <div class="mint-cell-wrapper">
+                    <span class="veryAngry">孵化期</span>
+                    <span v-if='blogDetail.hatch_star_at !== "privacy"&&blogDetail.hatch_end_at!== "privacy"'>
+                    <span class="isAngry" @click="changeStartTime">{{hatch_star_at||`请选择开始时间`}}</span>至
+                    <span class="isAngry" @click="changeEndTime">{{hatch_end_at||`请选择结束时间`}}</span> 
+                    </span>
+                    <span v-else>***</span>
+                </div>
+            </div>
+            <!-- <Cell title="孵化期" is-link class="angry" > 
+                
+            </Cell> -->
+            <DatetimePicker
+                ref="startPicker"
+                type="date"
+                v-model="defaultDate"
+                :startDate="startDate"
+                @confirm="startConfirm"
+                @visible-change="handleValueChange"
+            />
+            <DatetimePicker
+                ref="endPicker"
+                type="date"
+                v-model="defaultDate"
+                :startDate="startDate"
+                @confirm="endConfirm"
+                @visible-change="handleValueChange"
+            />
             <!--类型-->
             <Cell class="require" title="类型" is-link  @click.native="changeState('popupBlogType',!popupBlogType)" :value="blogTypeSelect.name"></Cell>
             <Selector :visible="popupBlogType" :data="blogType" @change="changeBlogType" />
@@ -39,15 +68,16 @@
             
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark"></Field>
-            <!-- <div style='text-align:center'>
+            <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
-            </div> -->
+            </div>
         </div>
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
     </div>
 </template>
 <script>
 import config from '@/utils/config.js'
+import tool from '@/utils/tool.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
 import { Toast } from 'mint-ui'
@@ -69,7 +99,7 @@ export default {
             douyinFansNum: '',
             xhsUrl: '',
             xhsFansNum: '',
-
+            
             artistStatusArr:config.papiCommunicationStatusArr,//沟通状态
             popupArtistStatus:false,
             artistStatus:{},
@@ -83,6 +113,11 @@ export default {
             company:'',//签约公司名称
             remark:'',//备注
             reSubmit:false,//是否提交
+            hatch_star_at:'',
+            hatch_end_at:'',
+            defaultDate:new Date(),
+            startDate:null
+
         }
         
     },
@@ -115,7 +150,10 @@ export default {
             this.xhsUrl=this.blogDetail.xiaohongshu_url
             this.xhsFansNum=this.blogDetail.xiaohongshu_fans_num
             this.uploadUrl = this.blogDetail.avatar
-            
+
+            this.hatch_star_at = this.$route.params.id&&this.blogDetail.hatch_star_at==='privacy'?'***':this.blogDetail.hatch_star_at
+            this.hatch_end_at = this.$route.params.id&&this.blogDetail.hatch_end_at==='privacy'?'***':this.blogDetail.hatch_end_at
+
             let rPlatform = this.blogDetail.platform.split(',')
             let aPlatformName =[]
             for (let i = 0; i < this.artistPlatformList.length; i++) {               
@@ -142,7 +180,7 @@ export default {
         if(this.$route.params.id){
             this.getBlog()
         }
-        
+        this.startDate = new Date('1900')
         window.rightClick = this.addBlog
         window.leftClick = this.leftClick
     },
@@ -206,6 +244,27 @@ export default {
            })
            this.platformName = platformName.join(',')
            
+        },
+        // 孵化期开始时间
+        changeStartTime:function (){
+            if (!this.hatch_star_at) {
+               this.hatch_star_at = moment(this.defaultDate).format('YYYY-MM-DD')
+            }
+           this.$refs.startPicker.open()            
+        },
+        // 孵化期结束时间
+        changeEndTime:function (){
+            if (!this.hatch_end_at) {
+               this.hatch_end_at = moment(this.defaultDate).format('YYYY-MM-DD')
+            }
+           this.$refs.endPicker.open()            
+        },
+        startConfirm (date) {
+            this.hatch_star_at = moment(date).format('YYYY-MM-DD')
+        },
+        endConfirm (date) {
+            alert(111)
+            this.hatch_end_at = moment(date).format('YYYY-MM-DD')
         },
         //博主类型
         changeBlogType:function(data){
@@ -294,7 +353,13 @@ export default {
                 star_weibo_infos: {url: this.weiboUrl,avatar: this.weiboFansNum},
                 star_xiaohongshu_infos: {url: this.xhsUrl,avatar: this.xhsFansNum},
                 desc: this.remark,//  备注
-                avatar: this.uploadUrl
+                avatar: this.uploadUrl,
+                hatch_star_at:this.hatch_star_at,
+                hatch_end_at:this.hatch_end_at
+            }
+            if(id&&this.hatch_star_at==='***'&&this.hatch_end_at==='***'){
+                delete params.data.hatch_star_at
+                delete params.data.hatch_end_at
             }
             id?this.putBlogger(params):this.postBlogger(params)
         },
@@ -328,6 +393,13 @@ export default {
                 // console.log(error)
             })
         },
+        handleValueChange: function (val) {
+            if(val) {
+                tool.ModalHelper.afterOpen()
+            } else {
+                tool.ModalHelper.beforeClose()
+            }
+        }
     }
 }
 </script>
@@ -360,6 +432,20 @@ export default {
     line-height: .56rem;
     text-align: center;
     font-style: normal;
+}
+.angry input{
+    height: 100%;
+    text-align: left !important;
+    display: flex
+}
+.angry .isAngry{
+    display: inline-block;
+    margin:0 10px;
+    color:#666 ;
+    
+}
+.veryAngry{
+    flex: 1
 }
 </style>
 
