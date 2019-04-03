@@ -12,7 +12,34 @@
             <Field class="text-left" label="抖音粉丝数" placeholder="抖音粉丝数" v-if="selectedPlatform.find(item => item.value ==2)" v-model="douyinFansNum"></Field>
             <Field class="text-left" label="小红书链接" placeholder="小红书链接" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsUrl"></Field>
             <Field class="text-left" label="小红书粉丝数" placeholder="小红书粉丝数" v-if="selectedPlatform.find(item => item.value ==3)" v-model="xhsFansNum"></Field>
-            
+            <!--孵化期v-if="this.$route.params.id"-->
+            <div class="angry" style="height:200px">
+                <span>孵化期</span>
+                <span v-if='blogDetail.hatch_star_at !== "privacy"&&blogDetail.hatch_end_at!== "privacy"'>
+                   <span @click="changeStartTime">{{hatch_star_at||`开始时间`}}</span>
+                   <span @click="changeEndTime">{{hatch_end_at||`结束时间`}}</span> 
+                </span>
+                <span v-else>***</span>
+            </div>
+            <!-- <Cell title="孵化期" is-link class="angry" > 
+                
+            </Cell> -->
+            <DatetimePicker
+                ref="endPicker"
+                type="date"
+                v-model="defaultDate"
+                :startDate="startDate"
+                @confirm="startConfirm"
+                @visible-change="handleValueChange"
+            />
+            <DatetimePicker
+                ref="startPicker"
+                type="date"
+                v-model="defaultDate"
+                :startDate="startDate"
+                @confirm="endConfirm"
+                @visible-change="handleValueChange"
+            />
             <!--类型-->
             <Cell class="require" title="类型" is-link  @click.native="changeState('popupBlogType',!popupBlogType)" :value="blogTypeSelect.name"></Cell>
             <Selector :visible="popupBlogType" :data="blogType" @change="changeBlogType" />
@@ -48,6 +75,7 @@
 </template>
 <script>
 import config from '@/utils/config.js'
+import tool from '@/utils/tool.js'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
 import { Toast } from 'mint-ui'
@@ -69,7 +97,7 @@ export default {
             douyinFansNum: '',
             xhsUrl: '',
             xhsFansNum: '',
-
+            
             artistStatusArr:config.papiCommunicationStatusArr,//沟通状态
             popupArtistStatus:false,
             artistStatus:{},
@@ -83,6 +111,11 @@ export default {
             company:'',//签约公司名称
             remark:'',//备注
             reSubmit:false,//是否提交
+            hatch_star_at:'',
+            hatch_end_at:'',
+            defaultDate:new Date(),
+            startDate:null
+
         }
         
     },
@@ -142,7 +175,7 @@ export default {
         if(this.$route.params.id){
             this.getBlog()
         }
-        
+        this.startDate = new Date('1900')
         window.rightClick = this.addBlog
         window.leftClick = this.leftClick
     },
@@ -206,6 +239,26 @@ export default {
            })
            this.platformName = platformName.join(',')
            
+        },
+        // 孵化期开始时间
+        changeStartTime:function (){
+            if (!this.bornTime) {
+               this.bornTime = moment(this.defaultDate).format('YYYY-MM-DD')
+            }
+           this.$refs.startPicker.open()            
+        },
+        // 孵化期结束时间
+        changeEndTime:function (){
+            if (!this.bornTime) {
+               this.bornTime = moment(this.defaultDate).format('YYYY-MM-DD')
+            }
+           this.$refs.endPicker.open()            
+        },
+        startConfirm (date) {
+            this.hatch_star_at = moment(date).format('YYYY-MM-DD')
+        },
+        endConfirm (date) {
+            this.hatch_end_at = moment(date).format('YYYY-MM-DD')
         },
         //博主类型
         changeBlogType:function(data){
@@ -328,6 +381,13 @@ export default {
                 // console.log(error)
             })
         },
+        handleValueChange: function (val) {
+            if(val) {
+                tool.ModalHelper.afterOpen()
+            } else {
+                tool.ModalHelper.beforeClose()
+            }
+        }
     }
 }
 </script>
@@ -360,6 +420,10 @@ export default {
     line-height: .56rem;
     text-align: center;
     font-style: normal;
+}
+.angry input{
+    height: 100%;
+    text-align: left !important;
 }
 </style>
 

@@ -319,7 +319,7 @@ export default {
                 Toast('请选择性别')
                 return false
             }
-            if(!this.bornTime){
+            if(!this.bornTime&&!id){
                 Toast('请选择出生日期')
                 return false
             }
@@ -327,11 +327,11 @@ export default {
                 Toast('请选择艺人来源')
                 return false
             }
-            if(!this.email){
+            if(!this.email&&!id){
                 Toast('请输入邮箱')
                 return false
             }
-            if(!this.phone){
+            if(!this.phone&&!id){
                 Toast('请输入手机号码')
                 return false
             }
@@ -390,6 +390,24 @@ export default {
                 // affix: this.affixes,//附件
                 desc: this.remark,//  备注
                 avatar: this.uploadUrl
+            }
+            if(id&&this.email ==='***'){
+               delete params.data.email
+            }
+            if(id&&this.phone==='***'){
+                delete params.data.phone
+               
+            }
+            if(id&&this.wechat==='***'){
+                delete params.data.wechat
+               
+            }
+            if(id&&this.birthday==='***'){
+                delete params.data.birthday
+               
+            }
+            if(id&&this.star_risk_point==='***'){
+                delete params.data.star_risk_point
             }
             //id存在 编辑  否则添加
             id?this.putArtist(params):this.postArtist(params)
