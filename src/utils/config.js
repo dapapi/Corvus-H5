@@ -7,7 +7,7 @@ export default {
   tokenString: 'CORVUS-ACCESS-TOKEN',
   // apiUrl: `http${isIOS?'s':''}://sandbox-api-crm.papitube.com`,
   // apiUrl: `https://sandbox-api-crm.papitube.com`,
-  apiUrl: `https://test-api-crm.papitube.com`,
+  apiUrl: `https://api-corvus.mttop.cn`,
   imgUrl: 'https://res-crm.papitube.com/',
   getHeaders: function () {
       let headers = {
