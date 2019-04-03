@@ -68,9 +68,9 @@
             
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark"></Field>
-            <div style='text-align:center'>
+            <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
-            </div>
+            </div> -->
         </div>
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
     </div>
@@ -362,12 +362,10 @@ export default {
                 star_xiaohongshu_infos: {url: this.xhsUrl,avatar: this.xhsFansNum},
                 desc: this.remark,//  备注
                 avatar: this.uploadUrl,
-                hatch_star_at:this.hatch_star_at,
-                hatch_end_at:this.hatch_end_at
             }
-            if(id&&this.hatch_star_at==='***'&&this.hatch_end_at==='***'){
-                delete params.data.hatch_star_at
-                delete params.data.hatch_end_at
+            if(id&&this.hatch_star_at!=='***'&&this.hatch_end_at!=='***'){
+                params.data.hatch_star_at = this.hatch_star_at
+                params.data.hatch_end_at = this.hatch_end_at
             }
             id?this.putBlogger(params):this.postBlogger(params)
         },

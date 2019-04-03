@@ -11,7 +11,7 @@
             
             <Cell class="require" v-else title="出生日期" is-link @click.native="changeBornTime" :value="bornTime"></Cell>
             <DatetimePicker 
-                v-if="$route.params.id&&bornTime!=='***'"
+                v-if="!$route.params.id&&bornTime!=='***'"
                 ref="bornPicker"
                 type="date"
                 v-model="defaultDate"
@@ -65,9 +65,9 @@
                 </template>
             </Cell>
             <Field type="textarea" ref="textarea" label="备注" v-model="remark" rows="1"></Field>
-            <div style='text-align:center'>
+            <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addArtist()">提交</button>
-            </div>
+            </div> -->
         </div>
         <!--选择平台-->
         <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" :originTitle="'新增艺人'" :newTitle="'艺人平台'" :rightClick="addArtist" :leftClick ="leftClick" @change="seletedData"/>
