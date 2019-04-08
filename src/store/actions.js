@@ -6,7 +6,12 @@ export default {
   getLoading({commit},data){
     commit('setLoading',data)
   },
-
+  getSavePosition({commit},data){
+    commit('setSavePosition', data)
+  },
+  // getActive({commit},data){
+  //   commit('setActive', data)
+  // },
   // 关联资源
   getResourceList ({ commit }) {
     fetch('get', '/resources').then(res => {

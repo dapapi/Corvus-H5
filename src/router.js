@@ -148,6 +148,10 @@ export default new Router({
       name: 'notice',
       redirect: '/notice/list',
       component: () => import('./views/notice/index.vue'),
+      meta: {
+        title: '公告',
+        keepAlive: true
+      },
       children:[
         {
           path: '/notice/list',
@@ -197,15 +201,5 @@ export default new Router({
         title: '泰洋系Group'
       }
     }
-  ],
-  scrollBehavior(to, from, savedPosition) {
-      if (savedPosition) {
-        return savedPosition
-      } else {
-        return {
-          x: 0,
-          y: 0
-        }
-      }
-    }
+  ] 
 })

@@ -30,5 +30,10 @@ export default {
   clientDetail: {},
   clientContact: [], // 客户中联系人列表
   // 线索
-  trailDetail: {}
+  trailDetail: {},
+
+  //公告缓存位置
+  savePosition:0,
+  // posActive:0
+
 }

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- <div @click="leftClick">返回</div> -->
         <div class="detail-title">
             <div class="nav-title">
                 <i class="iconfont icon-biaoti"></i>

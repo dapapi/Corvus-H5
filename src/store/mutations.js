@@ -3,6 +3,12 @@ export default {
   setLoading(state,data){
     state.isLoading = data
   },
+  setSavePosition(state,data){
+    state.savePosition = data
+  },
+  // setActive(state,data){
+  //   state.posActive = data
+  // },
   // 设置关联资源数据
   setResourceList (state, data) {
     state.resourceList = data

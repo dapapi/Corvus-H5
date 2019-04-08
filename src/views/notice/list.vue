@@ -53,40 +53,62 @@ export default {
             posLeft:0,//选中状态的位置
             activeLineWidth:0,//选中状态的宽度
             maxPage:0,
-            isLoadingMore:false
+            isLoadingMore:false,
+            saveScrollTop:0,
         }
     },
     computed:{
         ...mapState([
-            'noticeType'
+            'noticeType',
+            'savePosition',
+            
         ])
     },
+    beforeCreate(){
+        
+    },
     created(){
+       
         this.getNoticeType()
         window.leftClick = this.leftClick
     },
     activated(){
         window.leftClick = this.leftClick
+        if(this.savePosition>0){
+            this.$refs.isScroll.scrollTop = this.savePosition
+        }
+         console.log(this.savePosition)
+        // console.log(this.posActive)
+        // this.isActive = this.posActive
     },
     mounted(){
+        // alert(333)
+        // console.log(this.savePosition)
+        // console.log(this.posActive)
         this.getNoticeList(0)
-        this.isActive = this.navList[0].value
+        // this.isActive = this.navList[0].value
         this.posLeft = (100/this.navList.length/4)
         this.activeLineWidth =(100/this.navList.length/2)
+        
+        
         this.$refs.isScroll.addEventListener('scroll',()=>{
            
             let sHeight = this.$refs.isScroll.scrollHeight, //元素真实高度
                 cHeight = this.$refs.isScroll.clientHeight, //可视区高度
                 sTop = this.$refs.isScroll.scrollTop //滚动高度
+                this.saveScrollTop = this.$refs.isScroll.scrollTop
             let loadHeight = sHeight - cHeight -sTop;
             if(loadHeight<=20&&this.maxPage>this.page&&this.isLoadingMore){
                 this.page ++ //增加页数
                 this.getNoticeList(this.isActive)
             }
         })
-        
     },
-    
+    deactivated(){
+        console.log(this.saveScrollTop)
+        this.$store.dispatch('getSavePosition',this.saveScrollTop)
+        // this.$store.dispatch('getActive',this.isActive)
+    },
     methods:{
        ...mapActions([
             'getNoticeType'
@@ -125,6 +147,7 @@ export default {
                 readflag:1
             }
             if(this.isActive == 0){
+                this.page = 1
                 this.getNoticeList(0)
                 fetch('put', `/announcements/${id}/readflag`,data).then(res => {
                     this.$router.push({

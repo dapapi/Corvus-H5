@@ -95,11 +95,19 @@
             <span class="listleft">备注:</span>
             <span class="listright">{{artistDetail.desc}}</span>
         </div>
-        <div class="section" v-if="artistDetail.affixes.data">
-            <Cell class="text-left" v-for="(affix,index) in artistDetail.affixes.data" :key="index">
-                <!-- <router-link :to="{path:'/preview',params:{url:affix.url,name:affix.title}}">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</router-link> -->
-                <a @click="preview(affix.url)" class="listleft affix">{{attachmentTypeArr.find(item => item.value == affix.type).name}}--{{affix.title}}</a>
-            </Cell>
+        <div class="section attachment" v-if="artistDetail.affixes.data">        
+            <div  class="annex-list" v-for="(affix, index) in artistDetail.affixes.data" :key="index">
+                <div @click="preview(affix.url)" class="left">
+                    <div class="icon">
+                        <img :src="affix.url" />
+                    </div>
+                    <div class="info">
+                        <div class="title">{{cutName(affix.title) }}</div>
+                        <div class="size">{{ (affix.size  / 1024).toFixed(1) }}k</div>
+                    </div>
+                </div>
+            </div>
+     
         </div>
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>更新信息</h4>
         <div class="list">
@@ -183,6 +191,19 @@ export default {
         //预览
         preview:function(url){
            config.deviceWay('attachment',url)
+        },
+        // 整理附件名字
+        cutName (title) {
+        if (title) {
+            const typeIndex = title.lastIndexOf('.')
+            const fileType = title.substr(typeIndex + 1)
+            const fileName = title.substr(0, typeIndex)
+            if (fileName.length > 19) {
+            return fileName.substr(0, 10) + '...' + fileName.substr(fileName.length - 5) + '.' +fileType
+            } else {
+            return title
+            }
+        }
         }
     },
     filters: {
@@ -285,6 +306,76 @@ export default {
         position: relative;
         top:0.08rem
     }
+    .attachment {
+        background-color:#f3f4f5;
+        padding-bottom:0.2rem;
+    .annex  {
+        font-size: .4rem;
+        position: relative;
+        left: .1rem;
+    }
+    .annex-list {
+        background-color: #fff;
+        padding: .2rem .4rem;
+        height: 1rem;
+        position: relative;
+        &:after {
+        content: '';
+        border-top: 1px solid #D8D8D8;
+        width: calc(100% - .8rem);
+        position: absolute;
+        bottom: 0;
+        left: .4rem;
+        }
+        &:last-child{
+            &:after{
+                content: '';
+                border-top: 0px solid #D8D8D8;
+            }
+        }
+        .left {
+        float: left;
+        .icon {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            margin-right: .2rem;
+            img {
+            width: 100%;
+            height: 100%;
+            }
+        }
+        .info {
+            display: inline-block;
+            vertical-align: top;
+            .title {
+            font-size: .28rem;
+            color: #333;
+            margin-top: .1rem;
+            }
+            .size {
+            font-size: .24rem;
+            margin-top: .1rem;
+            color: #a4a4a4;
+            }
+        }
+        }
+        .right {
+        float: right;
+        width: 1rem;
+        height: 1rem;
+        border-left: 1px solid #D8D8D8;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        i {
+            font-size: .4rem;
+            position: relative;
+            left: .1rem;
+        }
+        }
+    }
+}
 </style>
 
 
