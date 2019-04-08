@@ -99,7 +99,11 @@
             <div  class="annex-list" v-for="(affix, index) in artistDetail.affixes.data" :key="index">
                 <div @click="preview(affix.url)" class="left">
                     <div class="icon">
-                        <img :src="affix.url" />
+
+                        <img v-if="['png','gif','bmp','jpg','jpeg'].includes(fileNameHandler(affix.url))" :src="affix.url" />
+                        <i style="font-size:0.8rem" v-else-if="['doc','docx','document'].includes(fileNameHandler(affix.url))" class="iconfont icon-worddefuben"></i>
+                        <i style="font-size:0.8rem" v-else-if="['xls','xlsx'].includes(fileNameHandler(affix.url))" class="iconfont icon-word"></i>
+                        <i style="font-size:0.8rem" v-else class="iconfont icon-word"></i>
                     </div>
                     <div class="info">
                         <div class="title">{{cutName(affix.title) }}</div>
@@ -194,17 +198,21 @@ export default {
         },
         // 整理附件名字
         cutName (title) {
-        if (title) {
-            const typeIndex = title.lastIndexOf('.')
-            const fileType = title.substr(typeIndex + 1)
-            const fileName = title.substr(0, typeIndex)
-            if (fileName.length > 19) {
-            return fileName.substr(0, 10) + '...' + fileName.substr(fileName.length - 5) + '.' +fileType
-            } else {
-            return title
+            if (title) {
+                const typeIndex = title.lastIndexOf('.')
+                const fileType = title.substr(typeIndex + 1)
+                const fileName = title.substr(0, typeIndex)
+                if (fileName.length > 19) {
+                return fileName.substr(0, 10) + '...' + fileName.substr(fileName.length - 5) + '.' +fileType
+                } else {
+                return title
+                }
             }
-        }
-        }
+        },
+        fileNameHandler(url) {
+
+            return String(url).split('.').pop(); 
+        },
     },
     filters: {
         jsGetAge: function (strBirthday) {
