@@ -102,6 +102,7 @@ export default {
       taskTypeName: '',
       principalId: '', // 负责人
       principalIconArr: [], // 负责人头像
+      principalName: '', // 名字
       participantIds: [], // 参与人
       oldParticipantIds: [], // 参与人副本
       participantIconArr: [], // 参与人头像
@@ -161,6 +162,7 @@ export default {
         this.priorityName = this.taskLevelArr.find(n => taskDetail.priority === n.value).name
       }
       this.principalId = taskDetail.principal.data.id
+      this.principalName = taskDetail.principal.data.name
       this.principalIconArr.push({
         id: taskDetail.principal.data.id,
         name: taskDetail.principal.data.name,
@@ -311,9 +313,11 @@ export default {
       
       const params = {
         type: this.taskType,
+        type_name: this.taskTypeName,
         title: this.title,
         principal_id: this.principalId,
-        // participant_ids: this.participantIds,
+        principal_name: this.principalId,
+        participant_ids: this.participantIds,
         priority: this.priority,
         start_at: this.startTime,
         end_at: this.endTime,
@@ -365,7 +369,8 @@ export default {
         type: this.taskType,
         title: this.title,
         principal_id: this.principalId,
-        // participant_ids: this.participantIds,
+        principal_name: this.principalId,
+        participant_ids: this.participantIds,
         priority: this.priority,
         start_at: this.startTime,
         end_at: this.endTime,
@@ -476,6 +481,7 @@ export default {
     setPrincipalData (data) {
       this.principalIconArr = JSON.parse(data)
       this.principalId = this.principalIconArr[0].id || ''
+      this.principalName = this.principalIconArr[0].name || ''
     },
     setParticipantData (data) {
       this.participantIconArr = JSON.parse(data)
@@ -523,6 +529,7 @@ export default {
           icon_url: data.icon_url
         })
         this.principalId = this.principalIconArr[0].id || ''
+        this.principalName = this.principalIconArr[0].name || ''
       })
     },
     // 整理附件名字
