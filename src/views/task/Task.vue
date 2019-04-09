@@ -325,9 +325,12 @@ export default {
         params.resourceable_id = this.resourceableId
       }
       this.isLoading = true
-      if (this.$route.name === 'task/addSubTask') {
+      // if (this.$route.name === 'task/addSubTask') {
+      if (this.$route.name === '/tasks/store') {
+        params.task_pid = this.taskId
         // 执行添加子任务
-        fetch('post', '/tasks/' + this.taskId + '/subtask', params).then( res => {
+        // fetch('post', '/tasks/' + this.taskId + '/subtask', params).then( res => {
+        fetch('post', '/tasks/store', params).then( res => {
           this.isLoading = false
           toast('添加成功！')
           setTimeout(() => {
@@ -337,6 +340,7 @@ export default {
           this.isLoading = false
         })
       } else {
+        params.task_pid = 0
         // 执行添加任务
         fetch('post', '/tasks', params).then(res => {
           this.isLoading = false
