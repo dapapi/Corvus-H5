@@ -41,7 +41,7 @@ export default {
       regionVisible: false,
       clientLevelArr: config.clientLevelArr,
       ratingArr: config.taskLevelArr,
-      yesOrNoArr: config.yesOrNo,
+      yesOrNoArr: config.isKey,
       clientScaleArr: config.clientScaleArr,
       ratingVisible: false,
       companyName: '',

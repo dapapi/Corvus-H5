@@ -316,7 +316,7 @@ export default {
         type_name: this.taskTypeName,
         title: this.title,
         principal_id: this.principalId,
-        principal_name: this.principalId,
+        principal_name: this.principalName,
         participant_ids: this.participantIds,
         priority: this.priority,
         start_at: this.startTime,

@@ -192,6 +192,15 @@ export default {
         value: 2
       }
     ],
+    isKey: [{
+        name: '是',
+        value: 2,
+      },
+      {
+        name: '否',
+        value: 1
+      }
+    ],
     
     blogBoolean:[
       {
