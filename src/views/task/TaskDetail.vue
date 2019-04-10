@@ -23,6 +23,10 @@
         ? taskDetail.participants.data.map(n => n.name).join('、') : '' }}</span>
     </div>
     <div class="item">
+      <span class="left">任务类型：</span>
+      <span class="right">{{ taskDetail.type ? taskDetail.type.data.title: '' }}</span>
+    </div>
+    <div class="item">
       <span class="left">开始时间：</span>
       <span class="right">{{ interceptTime(taskDetail.start_at) }}</span>
     </div>
@@ -37,10 +41,6 @@
     <div class="item">
       <span class="left">任务说明：</span>
       <span class="right">{{ taskDetail.desc }}</span>
-    </div>
-    <div class="item">
-      <span class="left">任务类型：</span>
-      <span class="right">{{ taskDetail.type ? taskDetail.type.data.title: '' }}</span>
     </div>
 
     <div class="line"></div>
