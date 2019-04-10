@@ -95,7 +95,7 @@ export default {
 .client-detail {
   background: #fff;
   padding-bottom: .2rem;
-  font-size: .32rem;
+  font-size: 14px;
   .title {
     color: #333;
     padding-top: .2rem;

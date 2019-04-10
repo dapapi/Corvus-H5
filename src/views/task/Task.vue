@@ -552,7 +552,7 @@ export default {
 <style lang="scss" scoped>
 .attachment {
   .annex  {
-    font-size: .4rem;
+    font-size: 20px;
     position: relative;
     left: .1rem;
   }
@@ -585,12 +585,12 @@ export default {
         display: inline-block;
         vertical-align: top;
         .title {
-          font-size: .28rem;
+          font-size: 14px;
           color: #333;
           margin-top: .1rem;
         }
         .size {
-          font-size: .24rem;
+          font-size: 14px;
           margin-top: .1rem;
           color: #a4a4a4;
         }
@@ -605,7 +605,7 @@ export default {
       align-items: center;
       justify-content: flex-end;
       i {
-        font-size: .4rem;
+        font-size: 20px;
         position: relative;
         left: .1rem;
       }

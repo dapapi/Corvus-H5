@@ -18,7 +18,7 @@ body.modal-open {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333;
-  font-size: .28rem;
+  font-size: 14px;
   height: 100%;
   width: 100%;
 }
@@ -36,7 +36,7 @@ body {
   right: .28rem;
 }
 .mint-cell-wrapper {
-  font-size: .32rem;
+  font-size: 16px;
   padding: 0 .2rem;
   background:none;
   border-bottom:1px solid #eaeaea;
@@ -70,7 +70,7 @@ body {
   resize: none;
 }
 .iconfont {
-  font-size: .28rem;
+  font-size: 14px;
   margin: .12rem;
 }
 textarea:disabled, input:disabled {
@@ -123,7 +123,7 @@ a{
     left:.05rem;
     min-height: .96rem;
     color:red;
-    font-size: .44rem;
+    font-size: 22px;
   }
 }
 img{
