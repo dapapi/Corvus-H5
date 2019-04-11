@@ -101,9 +101,11 @@ export default {
       const data = this.selectorData.filter(n =>
         this.checkedArr.indexOf(n.value) > -1
       )
+      console.log(data)
       this.$emit('change', data, this.isHidden)
     },
     changeHidden(){
+      console.log('hidden')
       this.isHidden = true
       this.$emit('change', {name: '', value: ''}, this.isHidden)
     },

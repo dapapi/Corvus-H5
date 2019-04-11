@@ -154,6 +154,7 @@ export default {
     },
     // 选择决策关键人
     checkKey (data) {
+      console.log(data)
       this.keyVisible = !this.keyVisible
       this.isKey = data.value
       this.isKeyName = data.name
