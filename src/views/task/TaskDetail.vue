@@ -61,9 +61,13 @@
       <span class="left">更新时间：</span>
       <span class="right">{{ interceptTime(taskDetail.last_updated_at) }}</span>
     </div>
-    <div class="item">
+    <div class="item" v-if="taskDetail.status === 2">
       <span class="left">完成时间：</span>
       <span class="right">{{ interceptTime(taskDetail.complete_at) }}</span>
+    </div>
+    <div class="item" v-if="taskDetail.status === 3">
+      <span class="left">停止时间：</span>
+      <span class="right">{{ interceptTime(taskDetail.stop_at) }}</span>
     </div>
   </div>
 </template>
