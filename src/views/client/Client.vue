@@ -144,7 +144,9 @@ export default {
       'getClientContact'
     ]),
     changeState (name, value) {
-      this[name] = value
+      this.$nextTick(() => {
+        this[name] = value
+      })
     },
     // 选择级别
     checkLevel (data) {
