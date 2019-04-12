@@ -300,7 +300,10 @@ export default {
       'getTrailDetail'
     ]),
     changeState (name, value) {
-      this[name] = value
+      document.body.scrollTop = 0
+      setTimeout(() => {
+        this[name] = value
+      }, 200)
     },
     addNewTrail () {
       if (this.isLoading) {

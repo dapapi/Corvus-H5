@@ -54,14 +54,14 @@ window.toast = Toast
 window.Indicator = Indicator
 window.MessageBox = MessageBox
 
-// v-blur用于移动端输入文字后，键盘关闭，将页面恢复到原来的位置
-Vue.directive('blur', function(el, binding, vnode) {
-  const elm = el.querySelector('input')
-    elm.onblur = function () {
-      // elm.scrollIntoView(false)
-      // document.body.scrollTop = 0;
-    }
-})
+// v-blur用于移动端输入文字后，键盘关闭，将页面恢复到原来的位置 暂时不用了
+// Vue.directive('blur', function(el, binding, vnode) {
+//   const elm = el.querySelector('input')
+//     elm.onblur = function () {
+//       // elm.scrollIntoView(false)
+//       // document.body.scrollTop = 0;
+//     }
+// })
 
 new Vue({
   router,

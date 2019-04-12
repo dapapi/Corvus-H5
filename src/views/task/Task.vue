@@ -240,7 +240,10 @@ export default {
       this.popupVisible = !this.popupVisible
     },
     changeState (name, value) {
-      this[name] = value
+      document.body.scrollTop = 0
+      setTimeout(() => {
+        this[name] = value
+      }, 200)
     },
     // 选中关联资源
     checkResource (data) {
