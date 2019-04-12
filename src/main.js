@@ -59,7 +59,7 @@ Vue.directive('blur', function(el, binding, vnode) {
   const elm = el.querySelector('input')
     elm.onblur = function () {
       // elm.scrollIntoView(false)
-      document.body.scrollTop = 0;
+      // document.body.scrollTop = 0;
     }
 })
 

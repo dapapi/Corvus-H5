@@ -145,7 +145,10 @@ export default {
       'getClientContact'
     ]),
     changeState (name, value) {
-      this[name] = value
+      document.body.scrollTop = 0
+      setTimeout(() => {
+        this[name] = value
+      }, 200)
     },
     // 选择级别
     checkLevel (data) {
