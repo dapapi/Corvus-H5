@@ -346,6 +346,7 @@ export default {
     },
     // 恢复原始位置
     reBackPos (name) {
+      console.log(1)
       this.$refs[name].scrollIntoView(true)
     }
   }
