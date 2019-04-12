@@ -269,7 +269,7 @@ export default {
             this.hatch_star_at = moment(date).format('YYYY-MM-DD')
         },
         endConfirm (date) {
-            alert(111)
+            // alert(111)
             this.hatch_end_at = moment(date).format('YYYY-MM-DD')
         },
         //博主类型
