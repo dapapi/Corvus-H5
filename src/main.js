@@ -58,6 +58,7 @@ window.MessageBox = MessageBox
 Vue.directive('blur', function(el, binding, vnode) {
   const elm = el.querySelector('input')
     elm.onblur = function () {
+      alert('blur')
       elm.scrollIntoView()
     }
 })
