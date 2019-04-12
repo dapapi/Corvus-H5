@@ -144,9 +144,7 @@ export default {
       'getClientContact'
     ]),
     changeState (name, value) {
-      setTimeout(() => {
-        this[name] = value
-      }, 2000)
+      this[name] = value
     },
     // 选择级别
     checkLevel (data) {
