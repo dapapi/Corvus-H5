@@ -23,6 +23,10 @@
         ? taskDetail.participants.data.map(n => n.name).join('、') : '' }}</span>
     </div>
     <div class="item">
+      <span class="left">任务类型：</span>
+      <span class="right">{{ taskDetail.type ? taskDetail.type.data.title: '' }}</span>
+    </div>
+    <div class="item">
       <span class="left">开始时间：</span>
       <span class="right">{{ interceptTime(taskDetail.start_at) }}</span>
     </div>
@@ -37,10 +41,6 @@
     <div class="item">
       <span class="left">任务说明：</span>
       <span class="right">{{ taskDetail.desc }}</span>
-    </div>
-    <div class="item">
-      <span class="left">任务类型：</span>
-      <span class="right">{{ taskDetail.type ? taskDetail.type.data.title: '' }}</span>
     </div>
 
     <div class="line"></div>
@@ -61,9 +61,13 @@
       <span class="left">更新时间：</span>
       <span class="right">{{ interceptTime(taskDetail.last_updated_at) }}</span>
     </div>
-    <div class="item">
+    <div class="item" v-if="taskDetail.status === 2">
       <span class="left">完成时间：</span>
       <span class="right">{{ interceptTime(taskDetail.complete_at) }}</span>
+    </div>
+    <div class="item" v-if="taskDetail.status === 3">
+      <span class="left">停止时间：</span>
+      <span class="right">{{ interceptTime(taskDetail.stop_at) }}</span>
     </div>
   </div>
 </template>
@@ -109,7 +113,7 @@ export default {
 .task-detail {
   background: #fff;
   padding-bottom: .2rem;
-  font-size: .32rem;
+  font-size: 14px;
   .title {
     color: #333;
     padding-top: .2rem;
@@ -121,11 +125,11 @@ export default {
     justify-content: flex-start;
     align-items: center;
     .left {
-      color: #666;
+      color: #333;
       flex-shrink: 0;
     }
     .right {
-      color: #333;
+      color: #a4a4a4;
       flex-shrink: 1;
     }
   }

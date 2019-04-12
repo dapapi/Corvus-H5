@@ -293,7 +293,7 @@ export default {
 <style lang="scss" scoped>
 .question {
   padding-bottom: .2rem;
-  font-size: .32rem;
+  font-size: 16px;
   .title {
     color: #333;
     font-weight: 500;
@@ -301,7 +301,7 @@ export default {
     span {
       color: #3298DC;
       float: right;
-      font-size: .34rem;
+      font-size: 17px;
     }
   }
   .item {
@@ -328,7 +328,7 @@ export default {
   .load-more {
     text-align: center;
     padding-bottom: .2rem;
-    font-size: .28rem;
+    font-size: 14px;
   }
   input[type="radio"] {
     position: absolute;

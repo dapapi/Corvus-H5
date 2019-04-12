@@ -46,6 +46,6 @@ export default {
 <style lang="scss" scoped>
 ul li {
   margin: .2rem;
-  font-size: .32rem;
+  font-size: 14px;
 }
 </style>

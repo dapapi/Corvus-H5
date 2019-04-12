@@ -95,7 +95,7 @@ export default {
 .client-detail {
   background: #fff;
   padding-bottom: .2rem;
-  font-size: .32rem;
+  font-size: 14px;
   .title {
     color: #333;
     padding-top: .2rem;
@@ -107,11 +107,11 @@ export default {
     justify-content: flex-start;
     align-items: center;
     .left {
-      color: #666;
+      color: #333;
       flex-shrink: 0;
     }
     .right {
-      color: #333;
+      color: #a4a4a4;
       flex-shrink: 1;
     }
   }

@@ -102,6 +102,7 @@ export default {
       taskTypeName: '',
       principalId: '', // 负责人
       principalIconArr: [], // 负责人头像
+      principalName: '', // 名字
       participantIds: [], // 参与人
       oldParticipantIds: [], // 参与人副本
       participantIconArr: [], // 参与人头像
@@ -161,6 +162,7 @@ export default {
         this.priorityName = this.taskLevelArr.find(n => taskDetail.priority === n.value).name
       }
       this.principalId = taskDetail.principal.data.id
+      this.principalName = taskDetail.principal.data.name
       this.principalIconArr.push({
         id: taskDetail.principal.data.id,
         name: taskDetail.principal.data.name,
@@ -311,9 +313,11 @@ export default {
       
       const params = {
         type: this.taskType,
+        type_name: this.taskTypeName,
         title: this.title,
         principal_id: this.principalId,
-        // participant_ids: this.participantIds,
+        principal_name: this.principalName,
+        participant_ids: this.participantIds,
         priority: this.priority,
         start_at: this.startTime,
         end_at: this.endTime,
@@ -325,9 +329,12 @@ export default {
         params.resourceable_id = this.resourceableId
       }
       this.isLoading = true
-      if (this.$route.name === 'task/addSubTask') {
+      // if (this.$route.name === 'task/addSubTask') {
+      if (this.$route.name === '/tasks/store') {
+        params.task_pid = this.taskId
         // 执行添加子任务
-        fetch('post', '/tasks/' + this.taskId + '/subtask', params).then( res => {
+        // fetch('post', '/tasks/' + this.taskId + '/subtask', params).then( res => {
+        fetch('post', '/tasks/store', params).then( res => {
           this.isLoading = false
           toast('添加成功！')
           setTimeout(() => {
@@ -337,6 +344,7 @@ export default {
           this.isLoading = false
         })
       } else {
+        params.task_pid = 0
         // 执行添加任务
         fetch('post', '/tasks', params).then(res => {
           this.isLoading = false
@@ -361,7 +369,8 @@ export default {
         type: this.taskType,
         title: this.title,
         principal_id: this.principalId,
-        // participant_ids: this.participantIds,
+        principal_name: this.principalId,
+        participant_ids: this.participantIds,
         priority: this.priority,
         start_at: this.startTime,
         end_at: this.endTime,
@@ -472,6 +481,7 @@ export default {
     setPrincipalData (data) {
       this.principalIconArr = JSON.parse(data)
       this.principalId = this.principalIconArr[0].id || ''
+      this.principalName = this.principalIconArr[0].name || ''
     },
     setParticipantData (data) {
       this.participantIconArr = JSON.parse(data)
@@ -519,6 +529,7 @@ export default {
           icon_url: data.icon_url
         })
         this.principalId = this.principalIconArr[0].id || ''
+        this.principalName = this.principalIconArr[0].name || ''
       })
     },
     // 整理附件名字
@@ -541,7 +552,7 @@ export default {
 <style lang="scss" scoped>
 .attachment {
   .annex  {
-    font-size: .4rem;
+    font-size: 20px;
     position: relative;
     left: .1rem;
   }
@@ -574,12 +585,12 @@ export default {
         display: inline-block;
         vertical-align: top;
         .title {
-          font-size: .28rem;
+          font-size: 14px;
           color: #333;
           margin-top: .1rem;
         }
         .size {
-          font-size: .24rem;
+          font-size: 14px;
           margin-top: .1rem;
           color: #a4a4a4;
         }
@@ -594,7 +605,7 @@ export default {
       align-items: center;
       justify-content: flex-end;
       i {
-        font-size: .4rem;
+        font-size: 20px;
         position: relative;
         left: .1rem;
       }

@@ -1,26 +1,27 @@
 <template>
   <div>
-    <Field class="require" label="公司名称" v-model="companyName" />
+    <Field class="require" label="公司名称" v-blur v-model="companyName" />
     <Cell class="require" title="级别" @click.native="changeState('levelVisible', !levelVisible)" :value="clientLevelName" isLink></Cell>
     <Selector :visible="levelVisible" :data="clientLevelArr" @change="checkLevel" />
     <Cell title="地区" @click.native="changeState('regionVisible', !regionVisible)" :value="region" isLink></Cell>
     <Regional :visible="regionVisible" @change="checkRegional" />
-    <Field label="详细地址" v-model="detailAddress" />
+    <Field label="详细地址" v-blur v-model="detailAddress" />
     <Cell title="负责人" class="require" @click.native="checkKeyMan" isLink>
         <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
       </Cell>
-    <Field label="联系人" class="require" v-model="contactName" />
+    <!-- <Field label="联系人" class="require" v-model="contactName" ref="contactName" @blur.native.capture="reBackPos('contactName')" /> -->
+    <Field label="联系人" class="require" v-model="contactName" v-blur />
     <Cell title="关键决策人" class="require" @click.native="changeState('keyVisible', !keyVisible)" :value="isKeyName" isLink></Cell>
     <Selector :visible="keyVisible" :data="yesOrNoArr" @change="checkKey" />
-    <Field label="联系人电话" class="require" v-model="contactPhone" />
-    <Field label="微信" v-model="wechat"></Field>
-    <Field label="其他联系方式" v-model="otherContactWays"></Field>
-    <Field label="职位" class="require" v-model="position" />
+    <Field label="联系人电话" class="require" v-model="contactPhone" v-blur />
+    <Field label="微信" v-model="wechat" v-blur></Field>
+    <Field label="其他联系方式" v-model="otherContactWays" v-blur></Field>
+    <Field label="职位" class="require" v-model="position" v-blur />
     <Cell title="规模" @click.native="changeState('scaleVisible', !scaleVisible)" :value="scaleName" isLink></Cell>
     <Selector :visible="scaleVisible" :data="clientScaleArr" @change="checkScale" />
     <Cell class="require" title="客户评级" @click.native="changeState('ratingVisible', !ratingVisible)" :value="ratingName" isLink></Cell>
     <Selector :visible="ratingVisible" :data="ratingArr" @change="checkRating" />
-    <Field label="备注" v-model="desc" />
+    <Field label="备注" v-model="desc" v-blur />
     <!-- <Button @click.native="addClient">新增</Button> -->
   </div>
 </template>
@@ -41,7 +42,7 @@ export default {
       regionVisible: false,
       clientLevelArr: config.clientLevelArr,
       ratingArr: config.taskLevelArr,
-      yesOrNoArr: config.yesOrNo,
+      yesOrNoArr: config.isKey,
       clientScaleArr: config.clientScaleArr,
       ratingVisible: false,
       companyName: '',
@@ -154,6 +155,7 @@ export default {
     },
     // 选择决策关键人
     checkKey (data) {
+      console.log(data)
       this.keyVisible = !this.keyVisible
       this.isKey = data.value
       this.isKeyName = data.name
@@ -343,7 +345,21 @@ export default {
         this.principalId = this.principalIconArr[0].id || ''
       })
     },
-  }
+    // 恢复原始位置
+    reBackPos (name) {
+      console.log(this.$refs[name].$el.querySelector('input'))
+      this.$refs[name].$el.querySelector('input').scrollIntoView(true)
+    }
+  },
+  // 局部注册指令
+  // directives: {
+  //   blur (el, binding, vnode) {
+  //     const elm = el.querySelector('input')
+  //     elm.onblur = function () {
+  //       elm.scrollIntoView()
+  //     }
+  //   }
+  // }
 }
 </script>
 
