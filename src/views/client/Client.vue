@@ -1,5 +1,5 @@
 <template>
-  <div ref="sss" @click="reBackPos('sss')">
+  <div>
     <Field class="require" label="公司名称" v-blur v-model="companyName" />
     <Cell class="require" title="级别" @click.native="changeState('levelVisible', !levelVisible)" :value="clientLevelName" isLink></Cell>
     <Selector :visible="levelVisible" :data="clientLevelArr" @change="checkLevel" />
@@ -144,9 +144,9 @@ export default {
       'getClientContact'
     ]),
     changeState (name, value) {
-      this.$nextTick(() => {
+      setTimeout(() => {
         this[name] = value
-      })
+      }, 500)
     },
     // 选择级别
     checkLevel (data) {
