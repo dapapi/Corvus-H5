@@ -146,7 +146,7 @@ export default {
     changeState (name, value) {
       setTimeout(() => {
         this[name] = value
-      }, 500)
+      }, 2000)
     },
     // 选择级别
     checkLevel (data) {
