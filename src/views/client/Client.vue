@@ -9,7 +9,7 @@
     <Cell title="负责人" class="require" @click.native="checkKeyMan" isLink>
         <img class="avatar" v-for="(item, index) in principalIconArr" :src="item.icon_url" :key="index">
       </Cell>
-    <Field label="联系人" class="require" v-model="contactName" ref="contactName"  @blur.native="reBackPos('contactName')" />
+    <Field label="联系人" class="require" v-model="contactName" ref="myContactName"  @blur.native.capture="reBackPos('myContactName')" />
     <Cell title="关键决策人" class="require" @click.native="changeState('keyVisible', !keyVisible)" :value="isKeyName" isLink></Cell>
     <Selector :visible="keyVisible" :data="yesOrNoArr" @change="checkKey" />
     <Field label="联系人电话" class="require" v-model="contactPhone" />
@@ -346,8 +346,8 @@ export default {
     },
     // 恢复原始位置
     reBackPos (name) {
-      console.log(1)
-      this.$refs[name].scrollIntoView(true)
+      console.log(this.$refs[name].$el.querySelector('input'))
+      this.$refs[name].$el.querySelector('input').scrollIntoView(true)
     }
   }
 }
