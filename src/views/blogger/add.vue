@@ -438,11 +438,11 @@ export default {
 .edit{
     
     min-height: 0.96rem;
-    //  padding:0.2rem;
     display: flex;
     justify-content: space-between;
     border-bottom:1px solid #eaeaea;
     background-color:#fff;
+    font-size: 16px;
     
 }
 .editable{
@@ -460,7 +460,7 @@ export default {
     vertical-align:top;
     flex-shrink:0;
     vertical-align:top;
-    font-size:0.28rem;
+    // font-size:0.28rem;
     color:#333;
 }
 .attachment {
