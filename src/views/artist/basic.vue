@@ -99,11 +99,14 @@
             <div  class="annex-list" v-for="(affix, index) in artistDetail.affixes.data" :key="index">
                 <div @click="preview(affix.url)" class="left">
                     <div class="icon">
-
                         <img v-if="['png','gif','bmp','jpg','jpeg'].includes(fileNameHandler(affix.url))" :src="affix.url" />
-                        <i style="font-size:0.8rem" v-else-if="['doc','docx','document'].includes(fileNameHandler(affix.url))" class="iconfont icon-worddefuben"></i>
-                        <i style="font-size:0.8rem" v-else-if="['xls','xlsx'].includes(fileNameHandler(affix.url))" class="iconfont icon-word"></i>
-                        <i style="font-size:0.8rem" v-else class="iconfont icon-word"></i>
+                        <i style="font-size:0.8rem;color:#37c8db" v-else-if="['doc','docx','document'].includes(fileNameHandler(affix.url))" class="iconfont icon-worddefuben"></i>
+                        <i style="font-size:0.8rem;color:#9c27b0" v-else-if="['xls','xlsx'].includes(fileNameHandler(affix.url))" class="iconfont icon-word"></i>
+                        <i class="iconfont icon-excel" style="font-size:0.8rem;color:#ff68e2" v-else-if="['mp4','WebM'].includes(fileNameHandler(affix.url))"></i>
+                        <i class="iconfont icon-pdftubiao" style="font-size:0.8rem;color:#e00b3c" v-else-if="['pdf'].includes(fileNameHandler(affix.url))"></i>
+                        <i class="iconfont icon-ppttubiao" style="font-size:0.8rem;color:#d24624" v-else-if="['ppt','pptx'].includes(fileNameHandler(affix.url))"></i>
+                        <i class="iconfont icon-ZIPtubiao" style="font-size:0.8rem;color:#474de2" v-else-if="['zip'].includes(fileNameHandler(affix.url))"></i>
+                        <i style="font-size:0.8rem" v-else class="iconfont icon-worddefuben"></i>
                     </div>
                     <div class="info">
                         <div class="title">{{cutName(affix.title) }}</div>
@@ -140,6 +143,14 @@
                 <template v-else>{{ artistDetail.created_at }}</template>
             </span>
         </div>
+        <div v-show="videoPlay" class="modal">
+           
+           <div class="modal-wrapper">
+               <i class="iconfont icon-guanbi1" @click="closeVideo"></i>
+               <img v-if="['png','gif','bmp','jpg','jpeg'].includes(fileNameHandler(affixVideo))" :src="affixVideo" alt="">
+               <video v-else-if="['mp4','WebM'].includes(fileNameHandler(affixVideo))"  ref="videoPlay" controls autoplay="autoplay"  :src="affixVideo"></video>
+           </div>
+        </div>
     </div>
 </template>
 <script>
@@ -156,7 +167,9 @@ export default {
             attachmentTypeArr:config.attachmentTypeArr,//附件类型
             artistPlatformList:config.artistPlatformList,//平台列表
             platform:'',
-            signState:config.signState // 签约状态
+            signState:config.signState, // 签约状态
+            videoPlay:false,//是否显示视频播放弹框
+            affixVideo:'',//视频地址
         }
     },
     computed:{
@@ -194,7 +207,22 @@ export default {
         },
         //预览
         preview:function(url){
-           config.deviceWay('attachment',url)
+           if(['png','gif','bmp','jpg','jpeg'].includes(this.fileNameHandler(url))){
+               this.videoPlay = true
+               this.affixVideo = url
+           }else if(['mp4','WebM'].includes(this.fileNameHandler(url))){
+               this.videoPlay = true
+               this.affixVideo = url
+           }else{
+               config.deviceWay('attachment',url)
+           }
+           
+        },
+        closeVideo:function(){
+            this.videoPlay = false;
+            if(['mp4','WebM'].includes(this.fileNameHandler(this.affixVideo))){
+                this.$refs.videoPlay.pause()
+            }    
         },
         // 整理附件名字
         cutName (title) {
@@ -272,20 +300,21 @@ export default {
     .details{
         background-color:#fff;
         padding-bottom:0.28rem;
-        font-size:0.32rem;
+        font-size:14px;
     }
     .list{
-        margin:0 0.4rem 0.16rem 0.4rem;
+        margin:.2rem;
         display: flex;
         justify-content: flex-start;
         align-items: center;
     }
     .listleft{
-        color:#666;
+        color:#333;
         flex-shrink:0;
     }
     .listright{
-        color:#151515;
+        color:#a4a4a4;
+        
         flex-shrink:1;
         padding-left:0.1rem;
     }
@@ -298,9 +327,11 @@ export default {
     }
     .head-title{
         color:#333333;
-        padding:0.2rem 0.4rem;
+        padding:0.2rem;
+        padding-bottom:0px;
         margin:0px;
         background-color:#fff;
+        font-weight: 500;
     }
     h4{
         i{
@@ -317,15 +348,15 @@ export default {
     .attachment {
         background-color:#f3f4f5;
         padding-bottom:0.2rem;
-    .annex  {
-        font-size: .4rem;
-        position: relative;
-        left: .1rem;
-    }
+    // .annex  {
+    //     font-size: .4rem;
+    //     position: relative;
+    //     left: .1rem;
+    // }
     .annex-list {
         background-color: #fff;
-        padding: .2rem .4rem;
-        height: 1rem;
+        padding: .2rem;
+        min-height: 1rem;
         position: relative;
         &:after {
         content: '';
@@ -342,31 +373,35 @@ export default {
             }
         }
         .left {
-        float: left;
-        .icon {
-            display: inline-block;
-            width: 1rem;
-            height: 1rem;
-            margin-right: .2rem;
-            img {
-            width: 100%;
-            height: 100%;
+            display: flex;
+            justify-content: flex-start;
+            // align-items: center;
+            .icon {
+                display: inline-block;
+                width: 1rem;
+                height: 1rem;
+                margin-right: .2rem;
+                flex-shrink:0;
+                img {
+                width: 100%;
+                height: 100%;
+                }
             }
-        }
-        .info {
-            display: inline-block;
-            vertical-align: top;
-            .title {
-            font-size: .28rem;
-            color: #333;
-            margin-top: .1rem;
+            .info {
+                display: inline-block;
+                vertical-align: top;
+                flex-shrink:1;
+                .title {
+                font-size: 14px;
+                color: #a4a4a4;
+                margin-top: .1rem;
+                }
+                .size {
+                font-size: .24rem;
+                margin-top: .1rem;
+                color: #a4a4a4;
+                }
             }
-            .size {
-            font-size: .24rem;
-            margin-top: .1rem;
-            color: #a4a4a4;
-            }
-        }
         }
         .right {
         float: right;
@@ -382,6 +417,34 @@ export default {
             left: .1rem;
         }
         }
+    }
+}
+.modal{
+    position: fixed;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    background-color:rgba(0,0,0,0.2);
+    .icon-guanbi1{
+        position: absolute;
+        top:.1rem;
+        right: 0rem;
+        font-size: .32rem;
+        font-weight: bold;
+    }
+    .modal-wrapper{
+        width: 100%;
+        display: flex;
+        align-items:center;
+        justify-content:center;
+        background-color:#fff;
+        video,img{
+            margin-top:.7rem;
+            width: 100%;
+        }
+        
+
     }
 }
 </style>

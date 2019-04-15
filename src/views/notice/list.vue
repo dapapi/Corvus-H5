@@ -76,17 +76,10 @@ export default {
         window.leftClick = this.leftClick
         if(this.savePosition>0){
             this.$refs.isScroll.scrollTop = this.savePosition
-        }
-         console.log(this.savePosition)
-        // console.log(this.posActive)
-        // this.isActive = this.posActive
+        }        
     },
     mounted(){
-        // alert(333)
-        // console.log(this.savePosition)
-        // console.log(this.posActive)
         this.getNoticeList(0)
-        // this.isActive = this.navList[0].value
         this.posLeft = (100/this.navList.length/4)
         this.activeLineWidth =(100/this.navList.length/2)
         
@@ -105,9 +98,7 @@ export default {
         })
     },
     deactivated(){
-        console.log(this.saveScrollTop)
         this.$store.dispatch('getSavePosition',this.saveScrollTop)
-        // this.$store.dispatch('getActive',this.isActive)
     },
     methods:{
        ...mapActions([
@@ -166,6 +157,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    .iconfont{
+        margin-left:0px;
+    }
     .nav{
         display: flex;
         height: 0.96rem;
@@ -196,7 +190,7 @@ export default {
        
        li{ 
            background-color:#fff;
-           padding:0.2rem 0.4rem 0.32rem 0.4rem;
+           padding:0.2rem;
            border-top:1px solid #ECECEC ;
            &:hover{
                background-color:#F9F9F9;
@@ -205,7 +199,7 @@ export default {
                margin-bottom:0.3rem;
            }
            .title{
-               font-size: .32rem;
+               font-size: 16px;
                color:#333333
            }
            img{
@@ -214,6 +208,10 @@ export default {
                 border-radius: 50%;
            }
            .details{
+               img{
+                   position: relative;
+                   top:-2px;
+               }
                .name{
                   margin-left:0.1rem;
                   padding-right:0.1rem;
@@ -226,7 +224,7 @@ export default {
                }
                .time{
                    color:#A4A4A4;
-                   font-size:.24rem;
+                   font-size:12px;
                }
            }
        }

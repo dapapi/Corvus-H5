@@ -63,16 +63,19 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped> 
+<style lang="scss" scoped>
+    .iconfont{
+        margin-left:0px;
+    } 
     .detail-title{ 
         background-color:#fff;
-        padding:0.2rem 0.4rem 0.32rem 0.4rem;
+        padding:0.2rem;
         border-bottom:1px solid #ECECEC ;
         .nav-title{
             margin-bottom:0.3rem;
         }
         .title{
-            font-size: .32rem;
+            font-size: 16px;
             color:#333333
         }
         img{
@@ -92,14 +95,14 @@ export default {
             }
             .time{
                 color:#A4A4A4;
-                font-size:.24rem;
+                font-size:12px;
             }
         }
     }
     .desc{
         background-color:#fff;
-        padding:0.4rem;
-        font-size: .28rem;
+        padding:0.2rem;
+        font-size: 14px;
         line-height: 2;
         color:#666;
     }

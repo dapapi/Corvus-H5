@@ -253,9 +253,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+   .details{
+        background-color:#fff;
+        padding-bottom:0.28rem;
+        font-size:14px;
+    }
     .list{
-        font-size:0.28rem;
-        padding:0 0.4rem 0.16rem 0.4rem;
+        
+        margin:0.2rem;
         background-color:#fff;
         display: flex;
         justify-content: flex-start;
@@ -265,12 +270,12 @@ export default {
         }
     }
     .listleft{
-        color:#666;
+        color:#333;
         flex-shrink:0;
     }
     .listright{
         margin-left:0.1rem;
-        color:#151515;
+        color:#a4a4a4;
         flex-shrink:1;
     }
     .bg-white{
@@ -282,7 +287,8 @@ export default {
     }
     .head-title{
         color:#333333;
-        padding:0.2rem 0.4rem;
+        padding:0.2rem;
+        padding-bottom:0px;
         margin:0px;
         background-color:#fff;
     }

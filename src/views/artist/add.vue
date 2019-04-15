@@ -30,8 +30,10 @@
             <Field label="地区" v-model="region"></Field>
 
             <!--潜在风险点-->
-            <Field v-if="$route.params.id" label="潜在风险点" v-model="star_risk_point" :disabled="$route.params.id&&star_risk_point==='***'" rows="1"></Field>
-
+            <a class="edit" v-if="$route.params.id">
+                <div class="edit-left">潜在风险点</div>
+                <div class="editable" ref="riskpoint" :contenteditable="!$route.params.id||star_risk_point!=='***'">{{star_risk_point}}</div>
+            </a>
             <!--平台-->
             <Cell class="require" title="平台" is-link @click.native="changeState('popupPlatform',!popupPlatform)" :value="platformName"></Cell>
             
@@ -50,11 +52,19 @@
             <!--与我司签约意向-->
             <Cell class="require" title="与我司签约意向" is-link @click.native="changeState('popupIntention',!popupIntention)" :value="intention.name"></Cell>
             <Selector :visible="popupIntention" :data="yesOrNo" @change="changeIntention" />
-            <Field class="text-left" v-show="intention.value == 2" v-model="intentionTxt" placeholder="请填写不签约理由"></Field>
+            <a class="edit" v-show="intention.value == 2">
+                <div class="edit-left">原因</div>
+                <div class="editable" ref="intentionTxt" contenteditable="true">{{intentionTxt}}</div>
+            </a>
+            <!-- <Field class="text-left"  v-model="intentionTxt" placeholder="请填写不签约理由"></Field> -->
             <!--是否签约其他公司-->
             <Cell class="require" title="是否签约其他公司" is-link  @click.native="changeState('popupSign',!popupSign)" :value="sign.name"></Cell>
             <Selector :visible="popupSign" :data="yesOrNo" @change="changeSign" />
-            <Field class="text-left" v-show="sign.value == 1" v-model="company" placeholder="请输入已签约公司名称"></Field>
+            <a class="edit" v-show="sign.value == 1">
+                <div class="edit-left">公司名称</div>
+                <div class="editable" ref="company" contenteditable="true">{{company}}</div>
+            </a>
+            <!-- <Field class="text-left" v-show="sign.value == 1" v-model="company" placeholder="请输入已签约公司名称"></Field> -->
 
             <Cell title="艺人头像">
                 <template>
@@ -64,7 +74,11 @@
                     </FileUpload>
                 </template>
             </Cell>
-            <Field type="textarea" ref="textarea" label="备注" v-model="remark" rows="1"></Field>
+            <a class="edit">
+                <div class="edit-left">备注</div>
+                <div class="editable" ref="remark" contenteditable="true">{{remark}}</div>
+            </a>
+            <!-- <Field type="textarea" ref="textarea" label="备注" v-model="remark" rows="1"></Field> -->
             <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addArtist()">提交</button>
             </div> -->
@@ -90,7 +104,6 @@ export default {
             bornTime:'',//出生日期
             startDate:null,
             defaultDate:new Date(),
-
             artistSourceArr:config.artistSourceArr,//艺人来源
             popupArtistSource:false,
             artistSource:{},
@@ -151,6 +164,7 @@ export default {
             this.email = this.$route.params.id&&this.artistDetail.email==='privacy'?'***':this.artistDetail.email
             this.phone = this.$route.params.id&&this.artistDetail.phone==='privacy'?'***':this.artistDetail.phone
             this.wechat = this.$route.params.id&&this.artistDetail.wechat==='privacy'?'***':this.artistDetail.wechat
+            this.scout = this.artistDetail.artist_scout_name
             this.region =this.artistDetail.star_location
             this.artistStatus = this.artistStatusArr.find(item => item.value == this.artistDetail.communication_status)
             this.intention = this.yesOrNo.find(item => item.value == this.artistDetail.intention)
@@ -182,11 +196,6 @@ export default {
                 }
             }
             this.platformName = aPlatformName.join(',')
-       },
-       remark:function(){
-           const el = this.$refs.textarea.$el.querySelector('textarea')
-           el.style.height = el.scrollHeight - 4 + 'px'
-
        }
     },
 
@@ -200,8 +209,8 @@ export default {
     },
     mounted () {
         window.leftClick = this.leftClick
-        let el = this.$refs.textarea.$el.querySelector('textarea')
-        console.log(el.offsetHeight)
+        // let el = this.$refs.textarea.$el.querySelector('textarea')
+        // console.log(el.offsetHeight)
     },
     methods:{
         ...mapActions([
@@ -301,7 +310,7 @@ export default {
                 Toast('正在提交数据,请勿重复提交')
                 return false
             }
-            
+            // console.log(this.star_risk_point)
             let plat =[]
             let platform= ''
             let toast,id
@@ -312,7 +321,13 @@ export default {
                 }
                 platform = plat.join(',')
             }
-            // console.log(platform)
+            if(this.$route.params.id&&this.star_risk_point !=="***"){
+                this.star_risk_point = this.$refs.riskpoint.innerHTML
+            }
+            this.intentionTxt = this.$refs.intentionTxt.innerHTML
+            this.company = this.$refs.company.innerHTML
+            this.remark = this.$refs.remark.innerHTML
+            console.log(this.star_risk_point,this.intentionTxt,this.company,this.remark)
             if(id){
                 toast = '编辑艺人成功'
             }else{
@@ -467,6 +482,34 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.edit{
+    
+    min-height: 0.96rem;
+    //  padding:0.2rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom:1px solid #eaeaea;
+    background-color:#fff;
+    
+}
+.editable{
+    text-align:right;
+    outline: none;
+    border:0px;
+    flex-shrink:1;
+    min-width:100px;
+    padding:.2rem;
+    color:#666;
+}
+.edit-left{
+    // height:100%;
+    padding:.2rem;
+    vertical-align:top;
+    flex-shrink:0;
+    vertical-align:top;
+    font-size:0.28rem;
+    color:#333;
+}
 .attachment {
   margin-top: .2rem;
   padding: .2rem;
@@ -478,11 +521,7 @@ export default {
     height: 0.8rem;
     background-size:cover;
 }
-// .text-left{
-//     input{
-//         text-align:left!important;
-//     }
-// }
+
 .uploadIcon{
     display: inline-block;
     width: .56rem;

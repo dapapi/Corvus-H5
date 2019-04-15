@@ -48,14 +48,27 @@
             <!--沟通状态-->
             <Cell class="require" title="沟通状态" is-link  @click.native="changeState('popupArtistStatus',!popupArtistStatus)" :value="artistStatus.name"></Cell>
             <Selector :visible="popupArtistStatus" :data="artistStatusArr" @change="changeArtistStatus" />
+            <!--商务合作要求-->
+            <a class="edit" v-if="$route.params.id">
+                <div class="edit-left">商务合作要求</div>
+                <div class="editable" ref="cooperation_demand" contenteditable="true">{{cooperation_demand}}</div>
+            </a>
             <!--与我司签约意向-->
             <Cell class="require" title="与我司签约意向" is-link @click.native="changeState('popupIntention',!popupIntention)" :value="intention.name"></Cell>
             <Selector :visible="popupIntention" :data="yesOrNo" @change="changeIntention" />
-            <Field class="text-left" v-show="intention.value == '0'" v-model="intentionTxt" placeholder="请填写不签约理由"></Field>
+            <a class="edit" v-show="intention.value == '0'">
+                <div class="edit-left">原因</div>
+                <div class="editable" ref="intentionTxt" contenteditable="true">{{intentionTxt}}</div>
+            </a>
+            <!-- <Field class="text-left" v-show="intention.value == '0'" v-model="intentionTxt" placeholder="请填写不签约理由"></Field> -->
             <!--是否签约其他公司-->
             <Cell class="require" title="是否签约其他公司" is-link  @click.native="changeState('popupSign',!popupSign)" :value="sign.name"></Cell>
             <Selector :visible="popupSign" :data="yesOrNo" @change="changeSign" />
-            <Field class="text-left" v-show="sign.value == 1" v-model="company" placeholder="请输入已签约公司名称"></Field>
+            <a class="edit" v-show="sign.value == 1">
+                <div class="edit-left">公司名称</div>
+                <div class="editable" ref="company" contenteditable="true">{{company}}</div>
+            </a>
+            <!-- <Field class="text-left" v-show="sign.value == 1" v-model="company" placeholder="请输入已签约公司名称"></Field> -->
 
             <Cell title="头像">
                 
@@ -67,7 +80,11 @@
                 </template>
             
             </Cell>
-            <Field type="textarea" ref="textarea" label="备注" v-model="remark"></Field>
+            <!-- <Field type="textarea" ref="textarea" label="备注" v-model="remark"></Field> -->
+            <a class="edit">
+                <div class="edit-left">备注</div>
+                <div class="editable" ref="remark" contenteditable="true">{{remark}}</div>
+            </a>
             <!-- <div style='text-align:center'>
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
             </div> -->
@@ -103,6 +120,7 @@ export default {
             artistStatusArr:config.papiCommunicationStatusArr,//沟通状态
             popupArtistStatus:false,
             artistStatus:{},
+            cooperation_demand:'',
             yesOrNo:config.blogBoolean,
             popupIntention:false,//签约意向
             intention:{},
@@ -137,7 +155,7 @@ export default {
             }else{
                 this.intention = this.yesOrNo.find(item => item.value == 1)
             }
-            
+            this.cooperation_demand = this.blogDetail.cooperation_demand
             this.intentionTxt = this.blogDetail.intention_desc
             this.sign = this.yesOrNo.find(item => item.value == this.blogDetail.sign_contract_other)
             this.company = this.blogDetail.sign_contract_other_name
@@ -168,11 +186,11 @@ export default {
             // console.log(this.selectedPlatform)
             this.platformName = aPlatformName.join(',')
        },
-       remark:function(){
-           const el = this.$refs.textarea.$el.querySelector('textarea')
-           el.style.height = el.scrollHeight - 4 + 'px'
+    //    remark:function(){
+    //        const el = this.$refs.textarea.$el.querySelector('textarea')
+    //        el.style.height = el.scrollHeight - 4 + 'px'
 
-       }
+    //    }
     },
     created(){
         this.startDate = new Date('1900')
@@ -305,6 +323,12 @@ export default {
             
             let id,toast
             id = this.$route.params.id
+            this.company = this.$refs.company.innerHTML
+            this.intentionTxt = this.$refs.intentionTxt.innerHTML
+            if(this.$route.params.id){
+                this.cooperation_demand = this.$refs.cooperation_demand.innerHTML
+            }
+            console.log(this.company,this.intentionTxt,this.cooperation_demand)
             if(id){
                 toast = '编辑博主成功'
             }else{
@@ -352,6 +376,7 @@ export default {
                 nickname: this.username,
                 type_id: this.blogTypeSelect.value,
                 communication_status: this.artistStatus.value,
+                cooperation_demand:this.cooperation_demand,
                 intention: this.intention.value, //签约意向
                 intention_desc: this.intentionTxt, //不签约理由
                 sign_contract_other: this.sign.value, //是否签约其他公司
@@ -410,6 +435,34 @@ export default {
 }
 </script>
 <style lang="scss">
+.edit{
+    
+    min-height: 0.96rem;
+    //  padding:0.2rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom:1px solid #eaeaea;
+    background-color:#fff;
+    
+}
+.editable{
+    text-align:right;
+    outline: none;
+    border:0px;
+    flex-shrink:1;
+    min-width:100px;
+    padding:.2rem;
+    color:#666;
+}
+.edit-left{
+    // height:100%;
+    padding:.2rem;
+    vertical-align:top;
+    flex-shrink:0;
+    vertical-align:top;
+    font-size:0.28rem;
+    color:#333;
+}
 .attachment {
   margin-top: .2rem;
   padding: .2rem;
