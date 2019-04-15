@@ -39,12 +39,20 @@
       <Field type="textarea" ref='textarea' rows="1" label="任务说明" v-model="desc" />
       <div class="attachment">
         <Cell title="附件">
-          <FileUpload @change="uploadFile"><i class="iconfont icon-fujian annex"></i></FileUpload>
+          <FileUpload @change="uploadFile"><i class="iconfont icon-fujian2 annex"></i></FileUpload>
         </Cell>
         <div class="annex-list" v-for="(item, index) in annexArr" :key="index">
           <div class="left">
             <div class="icon">
-              <img :src="item.url" />
+              <!-- <img :src="item.url" /> -->
+              <img v-if="['png','gif','bmp','jpg','jpeg'].includes(fileNameHandler(item.url))" :src="item.url" />
+              <i style="font-size:0.8rem;color:#37c8db" v-else-if="['doc','docx','document'].includes(fileNameHandler(item.url))" class="iconfont icon-worddefuben"></i>
+              <i style="font-size:0.8rem;color:#9c27b0" v-else-if="['xls','xlsx'].includes(fileNameHandler(item.url))" class="iconfont icon-word"></i>
+              <i class="iconfont icon-excel" style="font-size:0.8rem;color:#ff68e2" v-else-if="['mp4','WebM'].includes(fileNameHandler(item.url))"></i>
+              <i class="iconfont icon-pdftubiao" style="font-size:0.8rem;color:#e00b3c" v-else-if="['pdf'].includes(fileNameHandler(item.url))"></i>
+              <i class="iconfont icon-ppttubiao" style="font-size:0.8rem;color:#d24624" v-else-if="['ppt','pptx'].includes(fileNameHandler(item.url))"></i>
+              <i class="iconfont icon-ZIPtubiao" style="font-size:0.8rem;color:#474de2" v-else-if="['zip'].includes(fileNameHandler(item.url))"></i>
+              <i style="font-size:0.8rem" v-else class="iconfont icon-worddefuben"></i>
             </div>
             <div class="info">
               <div class="title">{{ cutName(item.title) }}</div>
@@ -541,13 +549,16 @@ export default {
         const typeIndex = title.lastIndexOf('.')
         const fileType = title.substr(typeIndex + 1)
         const fileName = title.substr(0, typeIndex)
-        if (fileName.length > 19) {
-          return fileName.substr(0, 10) + '...' + fileName.substr(fileName.length - 5) + '.' +fileType
+        if (fileName.length > 15) {
+          return fileName.substr(0, 6) + '...' + fileName.substr(fileName.length - 5) + '.' +fileType
         } else {
           return title
         }
       }
-    }
+    },
+    fileNameHandler(url) {
+      return String(url).split('.').pop(); 
+    },
   }
 }
 </script>
