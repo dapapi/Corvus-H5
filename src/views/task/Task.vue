@@ -198,7 +198,6 @@ export default {
     }
   },
   mounted () {
-    this.delAnnex()
     const query = this.query
     if (query.resourceType) {
       this.resourceId = query.resourceType
