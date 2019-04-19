@@ -46,10 +46,14 @@ body {
   }
 }
 .mint-cell-value {
-  color: #666;
+  // color: #666;
+  color: #a4a4a4;
 }
 .mint-field .mint-cell-title {
   width: 2.01rem;
+}
+.mint-cell-text {
+  color: #333;
 }
 .mint-cell-value.is-link {
   margin-right: .48rem;
@@ -146,5 +150,12 @@ img{
 .mint-popup, .mint-popup-bottom {
   max-height: 75%;
   overflow-y: scroll;
+}
+.mint-msgbox-message {
+  min-height: 80px;
+  line-height: 80px;
+}
+.del-btn {
+  color: #f44336;
 }
 </style>

@@ -198,6 +198,7 @@ export default {
     }
   },
   mounted () {
+    this.delAnnex()
     const query = this.query
     if (query.resourceType) {
       this.resourceId = query.resourceType
@@ -458,7 +459,17 @@ export default {
     },
     // 删除附件
     delAnnex (index, data) {
-      MessageBox.confirm('确定执行此操作?').then(res => {
+      // MessageBox.confirm({
+      //   title: '',
+      //   message: '确定要删除该附件吗?',
+      // }).then(res => {
+      MessageBox({
+        title: '',
+        message: '确认要删除该附件吗?',
+        showCancelButton: true,
+        confirmButtonText: '删除',
+        confirmButtonClass: 'del-btn'
+      }).confirm().then(res => {
         if (data.id) {
           fetch('delete', '/tasks/' + this.taskId + '/affixes/' + data.id).then(res => {
             this.annexArr.splice(index, 1)
