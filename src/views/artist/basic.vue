@@ -146,9 +146,11 @@
         <div v-show="videoPlay" class="modal">
            
            <div class="modal-wrapper">
-               <i class="iconfont icon-guanbi1" @click="closeVideo"></i>
-               <img v-if="['png','gif','bmp','jpg','jpeg'].includes(fileNameHandler(affixVideo))" :src="affixVideo" alt="">
-               <video v-else-if="['mp4','WebM'].includes(fileNameHandler(affixVideo))"  ref="videoPlay" controls autoplay="autoplay"  :src="affixVideo"></video>
+               <!-- <i class="iconfont icon-guanbi1" @click="closeVideo"></i> -->
+               <div>
+                   <img v-if="['png','gif','bmp','jpg','jpeg'].includes(fileNameHandler(affixVideo))" :src="affixVideo" alt="">
+                   <video v-else-if="['mp4','WebM'].includes(fileNameHandler(affixVideo))"  ref="videoPlay" controls autoplay="autoplay"  :src="affixVideo"></video>
+               </div>
            </div>
         </div>
     </div>
@@ -305,7 +307,7 @@ export default {
     .list{
         margin:.2rem;
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
     }
     .listleft{
@@ -426,6 +428,9 @@ export default {
     top:0px;
     bottom:0px;
     background-color:rgba(0,0,0,0.2);
+    display: flex;
+    align-items:center;
+    justify-content:center;
     .icon-guanbi1{
         position: absolute;
         top:.1rem;
@@ -435,12 +440,8 @@ export default {
     }
     .modal-wrapper{
         width: 100%;
-        display: flex;
-        align-items:center;
-        justify-content:center;
         background-color:#fff;
         video,img{
-            margin-top:.7rem;
             width: 100%;
         }
         
