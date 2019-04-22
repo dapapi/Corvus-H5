@@ -146,7 +146,7 @@
         <div v-show="videoPlay" class="modal">
            
            <div class="modal-wrapper">
-               <!-- <i class="iconfont icon-guanbi1" @click="closeVideo"></i> -->
+               <i class="iconfont icon-guanbi1" @click="closeVideo"></i>
                <div>
                    <img v-if="['png','gif','bmp','jpg','jpeg'].includes(fileNameHandler(affixVideo))" :src="affixVideo" alt="">
                    <video v-else-if="['mp4','WebM'].includes(fileNameHandler(affixVideo))"  ref="videoPlay" controls autoplay="autoplay"  :src="affixVideo"></video>
@@ -307,7 +307,7 @@ export default {
     .list{
         margin:.2rem;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
     .listleft{
