@@ -84,7 +84,7 @@
             </div> -->
         </div>
         <!--选择平台-->
-        <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" :originTitle="'新增艺人'" :newTitle="'艺人平台'" :rightClick="addArtist" :leftClick ="leftClick" @change="seletedData"/>
+        <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :multiple="true" :originTitle="originTitle" :newTitle="'艺人平台'" :rightClick="addArtist" :leftClick ="leftClick" @change="seletedData"/>
     </div>
 </template>
 <script>
@@ -145,7 +145,8 @@ export default {
             handler:function(e){
                 e.preventDefault()
             },
-            reSubmit:false //重复提交参数
+            reSubmit:false, //重复提交参数
+            originTitle:'',
         }
     },
     computed:{
@@ -202,10 +203,12 @@ export default {
     created(){
         this.startDate = new Date('1900')
         if(this.$route.params.id){
+            this.originTitle = '编辑艺人'
             this.getArtist()
+        }else{
+            this.originTitle = '新增艺人'
         }
         window.rightClick = this.addArtist
-       
     },
     mounted () {
         window.leftClick = this.leftClick

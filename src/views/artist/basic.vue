@@ -209,15 +209,17 @@ export default {
         },
         //预览
         preview:function(url){
-           if(['png','gif','bmp','jpg','jpeg'].includes(this.fileNameHandler(url))){
-               this.videoPlay = true
-               this.affixVideo = url
-           }else if(['mp4','WebM'].includes(this.fileNameHandler(url))){
-               this.videoPlay = true
-               this.affixVideo = url
-           }else{
-               config.deviceWay('attachment',url)
-           }
+            if(config.whichDevice() === 'ios'){
+                config.deviceWay('attachment',url)
+            }else if(['png','gif','bmp','jpg','jpeg'].includes(this.fileNameHandler(url))){
+                this.videoPlay = true
+                this.affixVideo = url
+            }else if(['mp4','WebM'].includes(this.fileNameHandler(url))){
+                this.videoPlay = true
+                this.affixVideo = url
+            }else{
+                config.deviceWay('attachment',url)
+            }
            
         },
         closeVideo:function(){

@@ -48,6 +48,9 @@
             <!--沟通状态-->
             <Cell class="require" title="沟通状态" is-link  @click.native="changeState('popupArtistStatus',!popupArtistStatus)" :value="artistStatus.name"></Cell>
             <Selector :visible="popupArtistStatus" :data="artistStatusArr" @change="changeArtistStatus" />
+            <!--博主级别-->
+            <Cell v-if="$route.params.id" title="级别" is-link  @click.native="changeState('popupArtistLevel',!popupArtistLevel)" :value="artistLevel.name"></Cell>
+            <Selector :visible="popupArtistLevel" :data="artistLevelArr" @change="changeArtistLevel" />
             <!--商务合作要求-->
             <a class="edit" v-if="$route.params.id">
                 <div class="edit-left">商务合作要求</div>
@@ -89,7 +92,7 @@
                 <button style="margin-top:10px;width:100px;height:48px;background-color:red" @click="addBlog()">提交</button>
             </div> -->
         </div>
-        <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="'新增博主'" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
+        <CheckList v-if='popupPlatform' :selectorData="artistPlatformList" :selectedData="selectedPlatform" :originTitle="originTitle" :newTitle="'博主平台'" :rightClick="addBlog" :leftClick ="leftClick" :multiple="true" @change="seletedData"/>
     </div>
 </template>
 <script>
@@ -120,6 +123,11 @@ export default {
             artistStatusArr:config.papiCommunicationStatusArr,//沟通状态
             popupArtistStatus:false,
             artistStatus:{},
+            artistLevelArr:config.levelArr,//博主级别
+            popupArtistLevel:false,
+            artistLevel:{},
+           
+
             cooperation_demand:'',
             yesOrNo:config.blogBoolean,
             popupIntention:false,//签约意向
@@ -134,7 +142,8 @@ export default {
             hatch_star_at:'',
             hatch_end_at:'',
             defaultDate:new Date(),
-            startDate:null
+            startDate:null,
+            originTitle:'',//title
 
         }
         
@@ -148,8 +157,12 @@ export default {
     watch:{
         blogDetail(){
             this.username = this.blogDetail.nickname
+
             this.blogTypeSelect = this.blogType.find(item =>item.value == this.blogDetail.type.data.id)
             this.artistStatus = this.artistStatusArr.find(item => item.value == this.blogDetail.communication_status)
+            if(this.blogDetail.level){
+                this.artistLevel = this.artistLevelArr.find(item => item.value == this.blogDetail.level)
+            }
             if(this.blogDetail.intention == false){
                 this.intention = this.yesOrNo.find(item => item.value == 0)
             }else{
@@ -196,7 +209,10 @@ export default {
         this.startDate = new Date('1900')
         this.getBlogType()
         if(this.$route.params.id){
+            this.originTitle = '编辑博主'
             this.getBlog()
+        }else{
+            this.originTitle = '新增博主'
         }
         this.startDate = new Date('1900')
         window.rightClick = this.addBlog
@@ -233,6 +249,12 @@ export default {
             this.popupArtistStatus = !this.popupArtistStatus
             if(data){
                 this.artistStatus = data
+            }
+        },
+        changeArtistLevel:function(data){
+            this.popupArtistLevel = !this.popupArtistLevel
+            if(data){
+                this.artistLevel = data
             }
         },
         //签约意向
@@ -387,6 +409,7 @@ export default {
                 star_xiaohongshu_infos: {url: this.xhsUrl,avatar: this.xhsFansNum},
                 desc: this.remark,//  备注
                 avatar: this.uploadUrl,
+                level:this.artistLevel.value
             }
             if(id&&this.hatch_star_at!=='***'&&this.hatch_end_at!=='***'){
                 params.data.hatch_star_at = this.hatch_star_at

@@ -1,6 +1,5 @@
 <template>
-    
-    <div >
+    <div class="details">
         <h4 class="head-title"><i class="iconfont icon-biaoti"></i>基本资料</h4>
         <div class="list">
             <span class="listleft">项目名称:</span>
