@@ -279,9 +279,14 @@ export default {
         },
         // 平台
         seletedData:function(data,isHidden){
-           if(isHidden){
-               this.popupPlatform = false
-           }
+            if(isHidden){
+                this.popupPlatform = false
+            }
+            if(this.$route.params.id){
+                this.originTitle = '编辑博主'
+            }else{
+                this.originTitle = '新增博主'
+            }
            let platformName =[]
            this.selectedPlatform = data
         //    console.log(this.selectedPlatform)

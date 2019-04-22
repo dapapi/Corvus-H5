@@ -293,8 +293,12 @@ export default {
         },
         // 平台
         seletedData:function(data,isHidden){
-            this.popupPlatform = !this.popupPlatform
-       
+           this.popupPlatform = !this.popupPlatform
+           if(this.$route.params.id){
+            this.originTitle = '编辑艺人'
+            }else{
+                this.originTitle = '新增艺人'
+            }
            let platformName =[]
            this.selectedPlatform = data
            data.map(n => {
